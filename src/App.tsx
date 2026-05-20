@@ -1,4 +1,5 @@
 
+import AboutUS from './AboutUS/AboutUS'
 import './App.css'
 import PharmaProduct from './Products/PharmaProduct'
 
@@ -8,6 +9,7 @@ function App() {
     <>
       <div>
         <PharmaProduct />
+        <AboutUS />
       </div>
     </>
   )
