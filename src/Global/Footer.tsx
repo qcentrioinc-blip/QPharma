@@ -45,7 +45,7 @@ const Footer = () => {
       </div>
 
       {/* ── Footer ── */}
-      <footer className="w-full bg-[#113227]">
+      <footer className="w-full rounded-t-4xl bg-[#113227]">
 
         {/* ── Main grid ── */}
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pt-10 pb-6">
@@ -65,7 +65,7 @@ const Footer = () => {
               <p className="text-xs tracking-widest text-white/60 mt-1 mb-4">
                 Organic. Nuetra. Pharma
               </p>
-              <p className="text-sm text-white/80 leading-snug max-w-[380px]">
+              <p className="text-sm text-white/80 leading-snug max-w-95">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
                 tempor incididunt ut labore et dolore magna.
               </p>
