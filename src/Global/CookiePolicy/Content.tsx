@@ -20,7 +20,7 @@ const Content = () => {
     {/* Left Text */}
     <div className="max-w-lg">
       <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
-        Privacy Policy
+        Cookie Policy
       </h1>
 
       <p className="text-sm text-white/80 leading-relaxed">
