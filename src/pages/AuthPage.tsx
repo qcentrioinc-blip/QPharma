@@ -39,11 +39,14 @@ const AuthPage = () => {
   }
 
   useEffect(() => {
-    setForm({
-      name: '',
-      email: '',
-      password: '',
-    })
+    // Reset form when switching between login/signup
+    return () => {
+      setForm({
+        name: '',
+        email: '',
+        password: '',
+      })
+    }
   }, [isLogin])
 
   const FormPanel = (
