@@ -10,6 +10,10 @@ import BlogPage from './pages/Blog/BlogPage'
 import BlogDetailPage from './pages/Blog/BlogDetailPage'
 import Contact from './Global/ContactPage/Contact'
 import UserProfile from './components/UserProfile/UserProfile'
+import Terms from './Global/Terms/Terms'
+import ProductDetail from './components/ProductsDetail.tsx/ProductDetail'
+
+import PaymentGate from './Global/Payment/PaymentGate'
 // import PharmaProduct from './Products/PharmaProduct'
 
 function App() {
@@ -26,9 +30,18 @@ function App() {
       {/* Privacy Route */}
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/cookie-policy" element={<CookiePolicy />} /> 
+      <Route path="/terms" element={<Terms />} />
 
 {/* UserProfile */}
       <Route path="/profile" element={<UserProfile />} />
+
+
+      {/* Product Detail Route */}
+      <Route path="/product/:slug" element={<ProductDetail />} />
+
+
+{/* Payments */}
+<Route path="/payment" element={<PaymentGate />} />
 
       {/* Blog Routes */}
 <Route path="/blog" element={<BlogPage />} />
