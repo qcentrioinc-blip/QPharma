@@ -6,6 +6,15 @@ import HomePage from './HomePage/HomePage'
 import AboutUS from './AboutUS/AboutUS'
 import Privacy from './Global/Privacy/Privacy'
 import AuthPage from './pages/AuthPage'
+
+import BlogPage from './pages/Blog/BlogPage'
+import BlogDetailPage from './pages/Blog/BlogDetailPage'
+// 
+import Terms from './Global/Terms/Terms'
+import ProductDetail from './components/ProductsDetail.tsx/ProductDetail'
+
+import PaymentGate from './Global/Payment/PaymentGate'
+// import PharmaProduct from './Products/PharmaProduct'
 import ProductPage from './ProductPage/ProductPage'
 import HerbalPage from './ProductPage/HerbalPage'
 import NutraceuticalPage from './ProductPage/NutraceuticalPage'
@@ -26,16 +35,33 @@ function App() {
       <CartProvider>
         <BrowserRouter>
 
+     
           <Routes>
+             {/* Privacy Route */}
+     
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<AuthPage />} />
             <Route path="/signup" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage />} />
 
             {/* Privacy Route */}
-            <Route path="/privacy" element={<Privacy />} />
+             <Route path="/privacy" element={<Privacy />} />
+             <Route path="/terms" element={<Terms />} />
 
-            {/* AboutUS Route */}
-            <Route path="/aboutus" element={<AboutUS />} />
+      {/* Product Detail Route */}
+      <Route path="/product/:slug" element={<ProductDetail />} />
+
+
+{/* Payments */}
+<Route path="/payment" element={<PaymentGate />} />
+
+      {/* Blog Routes */}
+<Route path="/blog" element={<BlogPage />} />
+<Route path="/blog/:slug" element={<BlogDetailPage />} />  {/* dynamic URL */}
+  <Route path="/aboutus" element={<AboutUS />} />
+
+
+
+  <Route path="/aboutus" element={<AboutUS />} />
 
             {/* Product Page Route */}
             <Route path="/productpage" element={<ProductPage />} />
@@ -60,8 +86,16 @@ function App() {
             <Route path="/production" element={<ProductionPage />} />
             <Route path="/rnd" element={<RnDPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
-          </Routes>
-        </BrowserRouter>
+    </Routes>
+    </BrowserRouter>
+     
+ {/* <div>
+        <PharmaProduct />
+      </div> */}
+      
+      
+    
+          
       </CartProvider>
     </>
   )

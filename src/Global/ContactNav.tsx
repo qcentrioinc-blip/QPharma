@@ -2,10 +2,11 @@
 import { FiSearch, FiShoppingCart, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { useState, useRef, useEffect} from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "./UseCart";
+ 
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DATA
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 const CURRENCIES = [
   { iso: "us", code: "USD", label: "US Dollar" },
@@ -133,6 +134,7 @@ function PillDropdown<T extends DropdownOption>({ options, selected, onSelect, k
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+
   return (
     <div ref={ref} style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
       {/* ── Trigger ── */}
@@ -205,6 +207,7 @@ const ContactNav = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [currency, setCurrency] = useState(CURRENCIES[0]);
   const [language, setLanguage] = useState(LANGUAGES[0]);
+  const { cartCount } = useCart();
 
   // Apply dir + lang to document when language changes
   useEffect(() => {
@@ -266,15 +269,17 @@ const ContactNav = () => {
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
               className="lg:hidden text-2xl text-black"
-            >
+            >   
               {mobileMenu ? <FiX /> : <FiMenu />}
             </button>
 
             {/* Left Nav */}
             <div className="hidden lg:flex items-center gap-8 text-[15px] text-[#2c2c2c]">
-              <button className="bg-[#0f6c8d] text-white px-5 py-2 rounded-full font-medium">
+              <Link to="/">
+              <button    className="bg-[#0f6c8d] text-white px-5 py-2 rounded-full font-medium">
                 {t.home}
               </button>
+              </Link>
               <button className="hover:text-[#0f6c8d] transition-all">
                 {t.helpCenter}
               </button>
@@ -308,12 +313,20 @@ const ContactNav = () => {
                 <FiSearch />
               </button>
 
-              <button className="text-2xl text-black hover:text-[#0f6c8d] transition-all">
-                <FiShoppingCart />
-              </button>
-              <button className="text-[34px] text-black hover:text-[#0f6c8d] transition-all">
-                <FaUserCircle />
-              </button>
+              <div className="relative">
+  <FiShoppingCart className="text-2xl" />
+
+  {cartCount > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {cartCount}
+    </span>
+  )}
+</div>
+             <Link to="/profile">
+  <button className="text-[34px] text-black hover:text-[#0f6c8d] transition-all">
+    <FaUserCircle />
+  </button>
+</Link>
             </div>
           </div>
 
@@ -333,9 +346,11 @@ const ContactNav = () => {
 
               {/* Links */}
               <div className="flex flex-col gap-4 text-[15px] text-[#2c2c2c]">
-                <button className="bg-[#0f6c8d] text-white px-5 py-3 rounded-full font-medium w-full sm:w-fit">
-                  {t.home}
-                </button>
+                <Link to="/">
+                  <button className="bg-[#0f6c8d] text-white px-5 py-3 rounded-full font-medium w-full sm:w-fit">
+                    {t.home}
+                  </button>
+                </Link>
                 <button className="text-left hover:text-[#0f6c8d] transition-all">
                   {t.helpCenter}
                 </button>

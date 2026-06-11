@@ -15,7 +15,7 @@ const Navbar = () => {
     { name: 'Products +', path: '/productpage', hasDropdown: true },
     { name: 'R & D', path: '/rnd' },
     { name: 'Production', path: '/production' },
-    { name: 'Gallery', path: '/gallery' },
+    { name: 'Get In Touch', path: '/contact' },
   ];
 
   return (
@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="flex-shrink-0 flex justify-center">
           <Link to="/">
             <img
-              src="/Zephyr.png"
+              src="/Global/Logo.png"
               alt="Zephyr Logo"
               className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300"
             />
