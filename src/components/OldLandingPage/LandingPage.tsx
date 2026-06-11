@@ -3,9 +3,9 @@
 import ContactNav from '../../Global/ContactNav'
 import Footer from '../../Global/Footer'
 import Banner from './Banner'
-import CTA from './CTA'
-import Delivery from './Delivery'
-import FAQ from './FAQ'
+import CTA from '../../HomePage/CTA'
+import Delivery from '../../HomePage/Delivery'
+
  
 import HeroSection from './HeroSection'
 import ImageBanner from './ImageBanner'
@@ -21,7 +21,7 @@ const LandingPage = () => {
       <ImageBanner/>
       <CTA/>
       <Delivery/>
-      <FAQ/>
+    
       <Footer/>                                
     </div>
   )

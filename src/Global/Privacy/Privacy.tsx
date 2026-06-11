@@ -1,15 +1,16 @@
- 
-import Footer from "../Footer"
-import Content from "./Content"
 
+import Footer from "../Footer";
+import Navbar from "../Navbar";
+import Content from "./Content";
 
 const Privacy = () => {
   return (
     <div>
-      <Content/>
-      <Footer/>
+      <Navbar />
+      <Content />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default Privacy

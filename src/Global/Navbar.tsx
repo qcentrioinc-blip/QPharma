@@ -1,145 +1,113 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Search, ShoppingCart, User } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const navigate = useNavigate()
+  const [productsOpen, setProductsOpen] = useState(false);
+  const { items } = useCart();
+  const location = useLocation();
+
+  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Products +', path: '/productpage', hasDropdown: true },
+    { name: 'R & D', path: '/rnd' },
+    { name: 'Production', path: '/production' },
+    { name: 'Get In Touch', path: '/contact' },
+  ];
 
   return (
-    <nav className="w-full bg-teal-400 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
+    <nav className="w-full bg-white/80 backdrop-blur-md sticky top-0 z-[100] px-4 md:px-8 py-4 border-b border-gray-100">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
 
-          {/* Left — Nav links */}
-          <div className="hidden md:flex items-center gap-1">
-            <Link
-              to="/"
-              className="bg-teal-600 text-white text-sm font-medium px-3 py-1.5 rounded"
-            >
-              Home
-            </Link>
-            <Link
-              to="/help"
-              className="text-white text-sm font-medium px-3 py-1.5 hover:bg-teal-500 rounded transition"
-            >
-              Help Center
-            </Link>
-            <Link
-              to="/customer-service"
-              className="text-white text-sm font-medium px-3 py-1.5 hover:bg-teal-500 rounded transition"
-            >
-              Customer Service
-            </Link>
+        {/* Left - Navigation Pill */}
+        <div className="hidden lg:flex items-center bg-[#F1F3F4] rounded-full px-1.5 py-1.5 shadow-sm">
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            return (
+              <div key={link.name} className="relative group">
+                <Link
+                  to={link.path}
+                  className={`
+                                        flex items-center gap-1.5 px-6 py-2.5 rounded-full text-[14.5px] font-medium transition-all duration-300
+                                        ${isActive
+                      ? 'bg-[#2D2E32] text-white'
+                      : 'text-[#4A4B4F] hover:text-black'
+                    }
+                                    `}
+                  onMouseEnter={() => link.hasDropdown && setProductsOpen(true)}
+                >
+                  {link.name}
+                </Link>
+
+                {/* Simple Dropdown for Products */}
+                {link.hasDropdown && productsOpen && (
+                  <div
+                    className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300"
+                    onMouseLeave={() => setProductsOpen(false)}
+                  >
+                    <Link to="/herbal" className="block px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium">Herbal</Link>
+                    <Link to="/nutraceutical" className="block px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium">Nutraceutical</Link>
+                    <Link to="/organic" className="block px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium">Organic</Link>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Center - Zephyr Logo */}
+        <div className="flex-shrink-0 flex justify-center">
+          <Link to="/">
+            <img
+              src="/Global/Logo.png"
+              alt="Zephyr Logo"
+              className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300"
+            />
+          </Link>
+        </div>
+
+        {/* Right - Actions */}
+        <div className="flex items-center gap-3 md:gap-5">
+          {/* Search Bar Pill */}
+          <div className="hidden sm:flex items-center bg-[#F1F3F4] rounded-full px-5 py-2.5 w-[200px] md:w-[280px] group focus-within:bg-[#E8EAED] transition-all duration-300">
+            <input
+              type="text"
+              placeholder="Search"
+              className="bg-transparent text-[14px] w-full outline-none text-black placeholder:text-[#80868B] font-medium"
+            />
+            <Search className="w-[18px] h-[18px] text-[#5F6368] group-hover:text-black transition-colors" />
           </div>
 
-          {/* Center — Brand */}
-          <div className="absolute left-1/2 -translate-x-1/2">
-            <Link to="/" className="text-lg font-bold text-white tracking-wide whitespace-nowrap">
-              Q - Pharma
+          {/* Icons */}
+          <div className="flex items-center gap-2">
+            <button
+              className="p-3 text-black hover:bg-[#F1F3F4] rounded-full transition-all relative group"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingCart className="w-[22px] h-[22px]" />
+              {itemCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-bold text-white shadow-sm transform group-hover:scale-110">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+
+            <Link
+              to="/login"
+              className="p-3 text-black hover:bg-[#F1F3F4] rounded-full transition-all"
+              aria-label="User Profile"
+            >
+              <User className="w-[22px] h-[22px]" />
             </Link>
-          </div>
-
-          {/* Right — Search + Icons */}
-          <div className="flex items-center gap-2 ml-auto">
-            {/* Search bar (desktop) */}
-            <div className="hidden sm:flex items-center bg-white rounded overflow-hidden border border-teal-200">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-sm px-3 py-1 w-40 lg:w-56 outline-none text-gray-700"
-              />
-              <button className="px-2 py-1 text-gray-500 hover:text-teal-700 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Search icon (mobile) */}
-            <button
-              className="sm:hidden text-white hover:text-teal-100 transition"
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Toggle search"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-              </svg>
-            </button>
-
-            {/* Cart */}
-            <button className="text-white hover:text-teal-100 transition relative" aria-label="Cart">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13H5.4M10 21a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-              </svg>
-            </button>
-
-            {/* User */}
-            <button  onClick={() => navigate('/signup')} className="text-white hover:text-teal-100 transition" aria-label="Account">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A8.966 8.966 0 0 1 12 15c2.21 0 4.231.8 5.879 2.11M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-              </svg>
-            </button>
-
-            {/* Hamburger (mobile) */}
-            <button
-              className="md:hidden text-white hover:text-teal-100 transition"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {menuOpen
-                  ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                }
-              </svg>
-            </button>
           </div>
         </div>
 
-        {/* Mobile search bar */}
-        {searchOpen && (
-          <div className="sm:hidden pb-2">
-            <div className="flex items-center bg-white rounded overflow-hidden border border-teal-200">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-sm px-3 py-1.5 flex-1 outline-none text-gray-700"
-              />
-              <button className="px-2 text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="md:hidden pb-3 flex flex-col gap-1">
-            <Link to="/" onClick={() => setMenuOpen(false)}
-              className="text-white text-sm font-medium px-3 py-2 hover:bg-teal-500 rounded transition">
-              Home
-            </Link>
-            <Link to="/help" onClick={() => setMenuOpen(false)}
-              className="text-white text-sm font-medium px-3 py-2 hover:bg-teal-500 rounded transition">
-              Help Center
-            </Link>
-            <Link to="/customer-service" onClick={() => setMenuOpen(false)}
-              className="text-white text-sm font-medium px-3 py-2 hover:bg-teal-500 rounded transition">
-              Customer Service
-            </Link>
-          </div>
-        )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
