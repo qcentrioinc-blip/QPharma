@@ -110,7 +110,7 @@ const Banner = () => {
                 </h3>
 
                 <p className="text-sm text-gray-500 mt-1">
-                  30 tabs Included
+                  30 tablets Included
                 </p>
               </div>
             ))}
