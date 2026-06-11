@@ -37,7 +37,7 @@ export default function OrganicItemList() {
     image: dummyProductImage,
   }));
 
-  const ProductCard = ({ item }) => (
+  const ProductCard = ({ item }: { item: typeof items[0] }) => (
     <article className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white px-[10px] pb-[10px] pt-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
       <button
         type="button"

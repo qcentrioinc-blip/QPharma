@@ -1,13 +1,17 @@
 import Navbar from '../Global/Navbar';
 import Footer from '../Global/Footer';
 import AboutSection from './AboutSection';
-import LorumIpsumSection from './LorumIpsumSection';
-import FAQ from './FAQ';
+
+
 import RelatedArticles from './RelatedArticles';
 import Zephyr from './Zephyr';
-import Explore from '../ProductPage/Explore';
-import Production from './Production';
-import Promotion from './Promotion';
+import Explore from './Explore';
+// import Production from './Production';
+
+import FAQ from './FAQ';
+
+import CTA from './CTA';
+import Delivery from './Delivery';
 
 const HomePage = () => {
     return (
@@ -17,13 +21,14 @@ const HomePage = () => {
                 <Zephyr />
                 <AboutSection />
                 <Explore />
-                <Production />
-                <LorumIpsumSection />
-                <Promotion />
+                {/* <Production /> */}
+               <CTA />
+               <Delivery />
                 <FAQ />
                 <RelatedArticles />
             </main>
             <Footer />
+          
         </div>
     );
 };

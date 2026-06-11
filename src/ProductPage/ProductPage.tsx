@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Product from "./Product";
-import Explore from "./Explore";
+import Explore from "../HomePage/Explore";
 import ProductList from "./ProductList";
 import ProductExplore from "./ProductExplore";
 // import Natural from "../AboutUS/Natural";
