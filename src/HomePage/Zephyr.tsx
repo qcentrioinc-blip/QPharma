@@ -116,7 +116,7 @@ const Zephyr = () => {
             animate={{ opacity: 0.12, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            className="text-[12vw] font-bold text-white text-center leading-none tracking-tight whitespace-nowrap"
+            className="text-[8rem] font-bold text-white text-center leading-none tracking-tight whitespace-nowrap"
           >
             {slide.title.toUpperCase()}
           </motion.h1>

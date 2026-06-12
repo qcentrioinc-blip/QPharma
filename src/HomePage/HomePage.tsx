@@ -1,6 +1,6 @@
 import Navbar from '../Global/Navbar';
 import Footer from '../Global/Footer';
-import AboutSection from './AboutSection';
+// import AboutSection from './AboutSection';
 
 
 import RelatedArticles from './RelatedArticles';
@@ -12,6 +12,7 @@ import FAQ from './FAQ';
 
 import CTA from './CTA';
 import Delivery from './Delivery';
+import JointPain from './JointPain';
 
 const HomePage = () => {
     return (
@@ -19,7 +20,8 @@ const HomePage = () => {
             <Navbar />
             <main>
                 <Zephyr />
-                <AboutSection />
+                <JointPain />
+                {/* <AboutSection /> */}
                 <Explore />
                 {/* <Production /> */}
                <CTA />

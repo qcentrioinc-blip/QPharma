@@ -16,9 +16,9 @@ import ProductDetail from './components/ProductsDetail.tsx/ProductDetail'
 import PaymentGate from './Global/Payment/PaymentGate'
 // import PharmaProduct from './Products/PharmaProduct'
 import ProductPage from './ProductPage/ProductPage'
-import HerbalPage from './ProductPage/HerbalPage'
-import NutraceuticalPage from './ProductPage/NutraceuticalPage'
-// import OrganicPage from './ProductPage/OrganicPage'
+
+
+
 import CheckoutPage from './ProductPage/CheckoutPage'
 import TrackOrder from './ProductPage/TrackOrder'
 
@@ -27,6 +27,11 @@ import CustomerService from './Global/CustomerService/CustomerService'
 import ProductionPage from './pages/ProductionPage'
 import RnDPage from './pages/RnDPage'
 import GalleryPage from './pages/GalleryPage'
+
+
+
+
+
 import Organic from './Organic/Organic'
 
 function App() {
@@ -65,12 +70,19 @@ function App() {
 
             {/* Product Page Route */}
             <Route path="/productpage" element={<ProductPage />} />
+ 
+           
+           {/* conditional rendeing  */}
+ {/* <Route path="/organic" element={<OrganicPage/>} />
 
-            {/* Category Routes */}
-            <Route path="/herbal" element={<HerbalPage />} />
-            <Route path="/nutraceutical" element={<NutraceuticalPage />} />
-            <Route path="/organic" element={<Organic />} />
+        <Route path="/herbal" element={<HerbalPage />} />
 
+        <Route
+          path="/nutraceutical"
+          element={<NutraceuticalPage />}
+        /> */}
+
+        <Route path="/:category" element={<Organic />} />
             {/* Checkout Route */}
             <Route path="/checkout/:orderId" element={<CheckoutPage />} />
 

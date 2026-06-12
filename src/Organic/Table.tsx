@@ -1,23 +1,67 @@
-export default function Table() {
+type Props = {
+  variant: "organic" | "herbal" | "nutraceutical";
+};
+
+export default function Table({ variant }: Props) {
+
+  const colorConfig = {
+  organic: {
+    badgeBg: "#718A4B",
+    headingColor: "#0C4A24",
+    cardBg: "#B7DDB3",
+    buttonBg: "#0B4A1C",
+  },
+
+  herbal: {
+    badgeBg: "#C38046",
+    headingColor: "#C38046",
+    cardBg: "#F9F4ED",
+    buttonBg: "#C38046",
+  },
+
+  nutraceutical: {
+    badgeBg: "#4AA3A7",
+    headingColor: "#4AA3A7",
+    cardBg: "#EDF9F9",
+    buttonBg: "#4AA3A7",
+  },
+};
+
+const colors = colorConfig[variant];
   const dummyImage =
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80";
 
   return (
     <section className="w-full bg-white py-8 md:py-12">
-      <div className="mx-auto w-full max-w-[1180px] px-4 md:px-6">
+      <div className="mx-auto w-full  px-4 md:px-10">
         <div className="mb-8 md:mb-10">
-          <span className="inline-flex h-[48px] items-center rounded-[10px] bg-[#718a4b] px-5 text-[18px] font-normal text-white shadow-sm">
+          <span
+  className="inline-flex h-[48px] items-center rounded-[10px] px-5 text-[18px] font-normal text-white shadow-sm"
+  style={{
+    backgroundColor: colors.badgeBg,
+  }}
+>
             Lorum Ipsum
           </span>
 
-          <h2 className="mt-7 text-[44px] font-normal leading-[0.96] tracking-[-0.04em] text-[#0c4a24] md:text-[64px] lg:text-[68px]">
+          <h2
+  className="mt-7 text-[44px] font-normal leading-[0.96] tracking-[-0.04em] md:text-[64px] lg:text-[68px]"
+  style={{
+    color: colors.headingColor,
+  }}
+>
             Lorum Ipsum Dolor sit
           </h2>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.02fr_1.02fr_1fr] md:gap-10">
-          <div className="relative flex min-h-[500px] flex-col justify-between rounded-[14px] bg-[#b7ddb3] px-9 py-10 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
-            <p className="max-w-[265px] text-[23px] font-normal leading-[1.28] tracking-[-0.02em]">
+       <div
+  className="relative flex min-h-[550px] flex-col justify-between rounded-[14px] px-9 py-10 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)]"
+  style={{
+    backgroundColor: colors.cardBg,
+  }}
+>
+            <p className="max-w-full text-[23px] font-normal leading-[1.28] p-4 tracking-[-0.02em]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -51,11 +95,11 @@ export default function Table() {
             <img
               src={dummyImage}
               alt="Modern interior"
-              className="h-full min-h-[500px] w-full object-cover"
+              className="h-full min-h-[550px] w-full object-cover"
             />
           </div>
 
-          <div className="flex min-h-[500px] flex-col gap-4">
+          <div className="flex min-h-[550px] flex-col gap-4">
             <div className="rounded-[14px] bg-[#dff4d9] px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
               <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#0d4c25]">
                 5 minutes
@@ -74,10 +118,13 @@ export default function Table() {
               </p>
             </div>
 
-            <button
-              type="button"
-              className="mt-auto flex h-[104px] items-center justify-between rounded-[14px] bg-[#0b4a1c] px-9 text-left text-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-transform duration-200 hover:translate-y-[-1px]"
-            >
+           <button
+  type="button"
+  className="mt-auto flex h-[120px] items-center justify-between rounded-[14px] px-9 text-left text-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-transform duration-200 hover:translate-y-[4px]"
+  style={{
+    backgroundColor: colors.buttonBg,
+  }}
+>
               <span className="text-[21px] font-normal tracking-[-0.02em]">
                 Lorum Ipsum
               </span>
