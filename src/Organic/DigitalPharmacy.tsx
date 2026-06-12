@@ -1,5 +1,5 @@
 type Props = {
-  variant: "organic" | "herbal" | "nutraceuticals";
+  variant: "organic" | "herbal" | "nutraceutical";
 };
 
 const DigitalPharmacy = ({ variant }: Props) => {
