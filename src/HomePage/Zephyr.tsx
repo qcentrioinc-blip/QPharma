@@ -108,7 +108,7 @@ const Zephyr = () => {
       style={{ backgroundColor: slide.bg }}
     >
       {/* ── BACKGROUND WATERMARK CONTAINER ── */}
-      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start pt-[5%] pointer-events-none select-none z-0 overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start  pointer-events-none select-none z-0 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.h1
             key={current}

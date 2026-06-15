@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const items = [
   {
     title: "Herbal",
     image:
       "/Homepage/Organic.png",
-    color: "bg-orange-500",
+    color: "bg-[#C38046]",
       borderColor: "#C38046",
     textColor: "#C38046",
 
@@ -16,7 +16,7 @@ const items = [
     title: "Nutraceutical",
     image:
       "/Homepage/Nutra.png",
-    color: "bg-sky-500",
+    color: "bg-[#4AA3A7]",
       borderColor: "#4AA3A7",
     textColor: "#4AA3A7",
   },
@@ -24,53 +24,38 @@ const items = [
     title: "Organic",
     image:
       "/Homepage/Herbal.png",
-    color: "bg-green-500",
+    color: "bg-[#547A3D]",
        borderColor: "#547A3D",
     textColor: "#547A3D",
   },
 ];
 
 const Explore = () => {
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    let lastScroll = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      const delta = currentScroll - lastScroll;
-
-      setRotation((prev) => prev + delta * 0.4);
-
-      lastScroll = currentScroll;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section className="w-full py-10 lg:py-20">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-8xl ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
           {items.map((item, index) => (
             <div
               key={index}
               className="flex flex-col items-center group cursor-pointer"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
               <h3 className=" text-4xl  mb-3">
     {item.title}
   </h3>
               {/* Circle Wrapper */}
-              <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[300px] md:h-[300px]">
+              <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[350px] md:h-[350px]">
                 {/* Rotating Circular Text */}
               <svg
   viewBox="0 0 300 300"
   className="absolute inset-0 w-full h-full"
   style={{
-    transform: `rotate(${rotation}deg)`,
-    transition: "transform 0.3s linear",
+    transform: `rotate(${hoveredIndex === index ? 360 : 0}deg)`,
+    transition: "transform 3s ease-in-out",
   }}
 >
   <defs>
@@ -109,7 +94,7 @@ const Explore = () => {
 
 
 {/* Main Circle — inset matches inner border r=108 → inset ~42px */}
-<div className="absolute inset-[42px] rounded-full overflow-hidden shadow-lg">
+<div className="absolute inset-[48px] rounded-full overflow-hidden shadow-lg">
   
                   <img
                     src={item.image}

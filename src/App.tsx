@@ -33,6 +33,7 @@ import GalleryPage from './pages/GalleryPage'
 
 
 import Organic from './Organic/Organic'
+import Research from './components/Research/Research'
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
 
      
           <Routes>
-             {/* Privacy Route */}
+           
      
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<AuthPage />} />
@@ -54,6 +55,10 @@ function App() {
 
       {/* Product Detail Route */}
       <Route path="/product/:slug" element={<ProductDetail />} />
+
+      {/* research route */}
+
+      <Route path="/research" element={<Research/>}/>
 
 
 {/* Payments */}
@@ -96,7 +101,7 @@ function App() {
 
             {/* New Routes */}
             <Route path="/production" element={<ProductionPage />} />
-            <Route path="/rnd" element={<RnDPage />} />
+            {/* <Route path="/rnd" element={<RnDPage />} /> */}
             <Route path="/gallery" element={<GalleryPage />} />
     </Routes>
     </BrowserRouter>

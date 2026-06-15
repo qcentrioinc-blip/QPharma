@@ -9,6 +9,7 @@ import OrganicItemList from "./OrganicItemList";
 import DigitalPharmacy from "./DigitalPharmacy";
 import Ingredient from "./Ingredient";
 import Table from "./Table";
+import TwoCard from "./TwoCard";
 
 
 const Organic = () => {
@@ -31,6 +32,7 @@ const Organic = () => {
       <DigitalPharmacy variant={variant} />
 <Ingredient variant={variant} />
   <Table variant={variant} />
+  <TwoCard/>
 
       <Footer />
     </>

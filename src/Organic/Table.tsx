@@ -100,7 +100,9 @@ const colors = colorConfig[variant];
           </div>
 
           <div className="flex min-h-[550px] flex-col gap-4">
-            <div className="rounded-[14px] bg-[#dff4d9] px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+            <div className="rounded-[14px]  px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]" style={{
+    backgroundColor: colors.cardBg,
+  }}>
               <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#0d4c25]">
                 5 minutes
               </h3>
@@ -109,7 +111,9 @@ const colors = colorConfig[variant];
               </p>
             </div>
 
-            <div className="rounded-[14px] bg-[#dff4d9] px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+            <div className="rounded-[14px]  px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]" style={{
+    backgroundColor: colors.cardBg,
+  }}>
               <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#0d4c25]">
                 50%
               </h3>
