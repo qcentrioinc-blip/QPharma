@@ -25,7 +25,7 @@ import TrackOrder from './ProductPage/TrackOrder'
 import HelpCenter from './Global/HelpCenter/HelpCenter'
 import CustomerService from './Global/CustomerService/CustomerService'
 import ProductionPage from './pages/ProductionPage'
-import RnDPage from './pages/RnDPage'
+// import RnDPage from './pages/RnDPage'
 import GalleryPage from './pages/GalleryPage'
 
 
