@@ -50,56 +50,39 @@ const Zephyr = () => {
 
   // ── ELLIPSE TRACK SETTINGS ──
   const trackSettings = {
-    maxWidth: "1450px",
-    height: "520px",
+    maxWidth: "1550px",
     nodeSize: "16px",
   };
 
-  // ── CURVED PATH ANIMATIONS (Following ellipse arc) ──
+  // ── CURVED PATH TRAJECTORY ANIMATIONS ──
+  // Adjusted Y-values so the item stays elevated in the center and moves down toward the nodes
   const productVariants: Variants = {
     initial: (dir: number) => ({
-      x: dir === 1 ? 400 : -400,  // Enter from right (next) or left (prev)
-      y: 140,
-      scale: 0.3,
+      x: dir === 1 ? 380 : -380,   // Slide in from right endpoint or left endpoint
+      y: 120,                     // Lower elevation at sides to track the ellipse curve
+      scale: 0.45,
       opacity: 0,
     }),
     animate: {
       x: 0,
-      y: 140,
+      y: 20,                      // Lifted higher in the center completely above the line
       scale: 1,
       opacity: 1,
       transition: {
-        duration: 0.75,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: 0.85,
+        ease: [0.25, 1, 0.5, 1],  // Clean custom cubic-bezier ease out
       },
     },
     exit: (dir: number) => ({
-      x: dir === 1 ? -420 : 420,  // Exit left (next direction) or right (prev direction)
-      y: 160,
-      scale: 0.35,
+      x: dir === 1 ? -380 : 380,  // Slide out to opposite side node
+      y: 120,                     // Drop back down down toward track horizon line
+      scale: 0.45,
       opacity: 0,
       transition: {
-        duration: 0.75,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: 0.85,
+        ease: [0.25, 1, 0.5, 1],
       },
     }),
-
-    // NEXT PRODUCT (Right waiting position)
-    rightPosition: {
-      x: 400,
-      y: 140,
-      scale: 0.3,
-      opacity: 0,
-    },
-    
-    // NEXT PRODUCT (Ready at right - small, visible)
-    rightReady: {
-      x: 400,
-      y: 150,
-      scale: 0.32,
-      opacity: 0.7,
-      transition: { duration: 0 },
-    },
   };
 
   return (
@@ -108,7 +91,7 @@ const Zephyr = () => {
       style={{ backgroundColor: slide.bg }}
     >
       {/* ── BACKGROUND WATERMARK CONTAINER ── */}
-      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start  pointer-events-none select-none z-0 overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start pointer-events-none select-none z-0 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.h1
             key={current}
@@ -158,94 +141,70 @@ const Zephyr = () => {
         </button>
 
         {/* Presentation Stack */}
-        <div className="relative flex flex-col items-start justify-center w-full max-w-5xl h-[600px]">
+        <div className="relative flex flex-col items-center justify-center w-full max-w-5xl h-[500px]">
           
-          {/* Products Container - 2 PRODUCTS WITH CURVED ANIMATION */}
+          {/* Products Container - MULTIPLE COMPONENT SHIFT VIA POPLAYOUT */}
           <div className="absolute inset-0 z-20 flex items-start justify-center pointer-events-none">
-            
-            <AnimatePresence mode="wait">
-              
-              {/* CURRENT PRODUCT (Center) - Animates In & Out */}
+            <AnimatePresence mode="popLayout" custom={direction}>
               <motion.div
-                key={`current-${current}`}
+                key={`product-${current}`}
                 custom={direction}
                 variants={productVariants}
                 initial="initial"
                 animate="animate"
-                exit={((dir: any) => ({
-                  x: dir === 1 ? -420 : 420,
-                  y: 160,
-                  scale: 0.25,
-                  opacity: 0,
-                  transition: {
-                    duration: 0.75,
-                    ease: [0.25, 0.46, 0.45, 0.94] as const,
-                  },
-                })) as any}
-                className="absolute z-30"
-                style={{ pointerEvents: "auto" }}
+                exit="exit"
+                className="absolute"
+                style={{ pointerEvents: "auto", top: "10%" }}
               >
                 <img
                   src={slide.imgSrc}
                   alt={slide.title}
-                  className="w-[200px] sm:w-[260px] md:w-[320px] lg:w-[420px] object-contain drop-shadow-[0_40px_50px_rgba(0,0,0,0.45)] select-none"
+                  className="w-[180px] sm:w-[240px] md:w-[280px] lg:w-[350px] object-contain drop-shadow-[0_35px_45px_rgba(0,0,0,0.4)] select-none"
                 />
               </motion.div>
-
-              {/* NEXT PRODUCT (Right) - Waiting Position */}
-              {/* <motion.div
-                key={`next-${nextIdx}`}
-                initial={productVariants.rightPosition}
-                animate={productVariants.rightReady}
-                exit={{ opacity: 0, transition: { duration: 0.3 } }}
-                className="absolute z-10"
-                style={{ pointerEvents: "auto" }}
-              >
-                <img
-                  src={SLIDES[nextIdx].imgSrc}
-                  alt={SLIDES[nextIdx].title}
-                  className="w-[120px] sm:w-[150px] md:w-[200px] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)] select-none"
-                />
-              </motion.div> */}
-
             </AnimatePresence>
-
           </div>
 
-          {/* Outer Ring Orbit Path Layout - BOTTOM POSITIONED */}
+          {/* ── Outer Ring Orbit Path Layout ── */}
           <div
-            className="absolute z-0 bottom-0"
+            className="absolute left-1/2 -translate-x-1/2 bottom-4 pointer-events-none"
             style={{
-              width: "100%",
+              width: "110%",
               maxWidth: trackSettings.maxWidth,
-              height: trackSettings.height,
-              border: "2px solid rgba(255,255,255,0.18)",
+              height: "360px",
               borderRadius: "50%",
-              transform: "rotateX(72deg) rotateZ(-12deg)",
+              transform: "perspective(1200px) rotateX(64deg) rotateZ(-10deg)",
               transformStyle: "preserve-3d",
-              pointerEvents: "none",
+              zIndex: 10,
+              border: "2px solid transparent",
+              backgroundImage: "linear-gradient(to top, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.05) 80%)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "border-box",
+              WebkitMask: "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
             }}
           >
             {/* Left Endpoint Dot */}
             <div
-              className="absolute rounded-full bg-white shadow-[0_0_16px_rgba(255,255,255,0.85)]"
+              className="absolute rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,1)]"
               style={{ 
                 width: trackSettings.nodeSize, 
                 height: trackSettings.nodeSize,
-                left: "5%", 
-                top: "30%", 
+                left: "14%", 
+                top: "24%", 
                 transform: "translate(-50%, -50%)" 
               }}
             />
             
             {/* Right Endpoint Dot */}
             <div
-              className="absolute rounded-full bg-white shadow-[0_0_16px_rgba(255,255,255,0.85)]"
+              className="absolute rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,1)]"
               style={{ 
                 width: trackSettings.nodeSize, 
                 height: trackSettings.nodeSize,
-                right: "5%", 
-                bottom: "30%", 
+                right: "14%", 
+                bottom: "24%", 
                 transform: "translate(50%, 50%)" 
               }}
             />

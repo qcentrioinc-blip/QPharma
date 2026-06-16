@@ -281,10 +281,14 @@ const ContactNav = () => {
               </button>
               </Link>
               <button className="hover:text-[#0f6c8d] transition-all">
+                <a href="/help-center">
                 {t.helpCenter}
+                </a>
               </button>
               <button className="hover:text-[#0f6c8d] transition-all">
+                <a href="/customer-service">
                 {t.customerService}
+                </a>
               </button>
             </div>
 

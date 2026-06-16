@@ -24,16 +24,16 @@ import TrackOrder from './ProductPage/TrackOrder'
 
 import HelpCenter from './Global/HelpCenter/HelpCenter'
 import CustomerService from './Global/CustomerService/CustomerService'
-import ProductionPage from './pages/ProductionPage'
+// import ProductionPage from './pages/ProductionPage'
 // import RnDPage from './pages/RnDPage'
-import GalleryPage from './pages/GalleryPage'
-
-
-
 
 
 import Organic from './Organic/Organic'
 import Research from './components/Research/Research'
+import Production from './components/Production/Production'
+import Contact from './Global/ContactPage/Contact'
+import UserProfile from './components/UserProfile/UserProfile'
+import CookiePolicy from './Global/CookiePolicy/CookiePolicy'
 
 function App() {
   return (
@@ -52,6 +52,7 @@ function App() {
             {/* Privacy Route */}
              <Route path="/privacy" element={<Privacy />} />
              <Route path="/terms" element={<Terms />} />
+             <Route path="/cookies" element={<CookiePolicy/>}/>
 
       {/* Product Detail Route */}
       <Route path="/product/:slug" element={<ProductDetail />} />
@@ -60,7 +61,16 @@ function App() {
 
       <Route path="/research" element={<Research/>}/>
 
+{/* Production Route  */}
 
+<Route path ="/production" element={<Production/>}/>
+
+{/* ContactPage */}
+
+<Route path="/contact" element={<Contact/>}/>
+
+ {/* user profile */}
+ <Route path="/user-profile" element={<UserProfile/>}/>
 {/* Payments */}
 <Route path="/payment" element={<PaymentGate />} />
 
@@ -100,9 +110,9 @@ function App() {
             <Route path="/customer-service" element={<CustomerService />} />
 
             {/* New Routes */}
-            <Route path="/production" element={<ProductionPage />} />
+            {/* <Route path="/production" element={<ProductionPage />} /> */}
             {/* <Route path="/rnd" element={<RnDPage />} /> */}
-            <Route path="/gallery" element={<GalleryPage />} />
+           
     </Routes>
     </BrowserRouter>
      

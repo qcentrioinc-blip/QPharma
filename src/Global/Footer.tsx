@@ -5,9 +5,27 @@ const Footer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const shopLinks = ["Herbal Products", "Nuetra Products", "Organic Products", "Offers and Deals"];
-  const companyLinks = ["About Us", "R & D Production", "Blogs", "Contact Us"];
-  const careLinks = ["My Account", "Track order", "FAQ's", "T & Conditions"];
+ const shopLinks = [
+    { name: "Herbal Products", url: "/herbal" },
+    { name: "Nuetra Products", url: "/nutraceutical" },
+    { name: "Organic Products", url: "/organic" },
+    { name: "Offers and Deals", url: "/" },
+  ];
+  // const companyLinks = ["About Us", "R & D Production", "Blogs", "Contact Us"];
+  const companyLinks=[
+{name: "About Us ", url:"/aboutus"},
+{name: "Research", url:"/research"},
+{name: "Production",  url:"/production"},
+{name: "Blogs", url:"/blog"}
+
+
+  ]
+  // const careLinks = ["My Account", "Track order", "FAQ's", "T & Conditions"];
+   const careLinks=[
+    {name: "My Account", url:"/user-profile"},
+    {name: "Track Order", url:"/track-order"},
+    {name: "Cookie Policy", url:"/cookies"}
+   ]
 
   const features = [
     { title: "Free Shipping", desc: "Lorem ipsum dolor sit" },
@@ -174,7 +192,7 @@ const Footer = () => {
 <>
      <div className="w-full bg-white  py-6">
       <div className="max-w-7xl mx-auto">
-        <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14 px-6 sm:px-8 lg:px-12 border border-[#e2e8f0]/50 shadow-sm">
+        <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14 border border-[#e2e8f0]/50 shadow-sm">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
             {featuress.map((item, idx) => (
               <div 
@@ -217,10 +235,10 @@ const Footer = () => {
 
       {/* ── Main Footer Grid ── */}
       <div className="relative z-10 max-w-7xl mx-auto ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8 xl:gap-16 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8 xl:gap-20 mb-16">
           
           {/* 1. Brand Column */}
-          <div className="flex flex-col items-center text-center px-4">
+          <div className="flex flex-col items-center text-center ">
               <div className=" flex items-center justify-center shrink-0 bg-transparent">
                   {/* Leaf Image */}
                   <img 
@@ -247,11 +265,15 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {shopLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
-                  </a>
-                </li>
+               <li key={link.name}>
+                    <a 
+                      href={link.url} 
+                    
+                      className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
               ))}
             </ul>
           </div>
@@ -263,9 +285,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {companyLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
+                <li key={link.name}>
+                  <a href={link.url} className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -279,9 +301,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {careLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
+                <li key={link.name}>
+                  <a href={link.url} className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -320,11 +342,11 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center gap-4 order-1 md:order-2">
-            <a href="#" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
+            <a href="/privacy" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
               Privacy Policy
             </a>
             <span className="text-white/40 text-[13px]">|</span>
-            <a href="#" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
+            <a href="terms" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
               Terms and Conditions
             </a>
           </div>
