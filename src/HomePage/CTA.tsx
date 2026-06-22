@@ -46,16 +46,14 @@ const bars = [2,3,4,3,5,4,6,5,7,6,8,7,10,8,12,10,14,12,16,14,18,16,20,18,22,20,2
 
 const CTA = () => {
   return (
-    <section className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="w-full bg-white py-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Text content */}
-      <div className="max-w-4xl mx-auto text-center mb-10 sm:mb-14">
+      <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight text-gray-900 mb-4 sm:mb-6">
           Lorum IPsum
         </h1>
-        <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
-          lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum
-          lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum
-          lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum
+        <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-4xl mx-auto">
+         lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum lorum ipsum 
         </p>
       </div>
 

@@ -1,0 +1,184 @@
+import React, { useState } from 'react';
+
+interface StatCard {
+  number: string;
+  description: string;
+}
+
+interface CircleData {
+  id: number;
+  text: string;
+  position: string;
+}
+
+const Stats: React.FC = () => {
+  const [hoveredCircle, setHoveredCircle] = useState<number | null>(null);
+
+  const statCards: StatCard[] = [
+    {
+      number: '178K+',
+      description:
+        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero Lorem ipsum dolor amet.',
+    },
+    {
+      number: '362',
+      description:
+        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero Lorem ipsum dolor amet.',
+    },
+  ];
+
+  const circleData: CircleData[] = [
+    { id: 1, text: 'EXPLORE • DISCOVER • PHARMA • YOUR • JOURNEY • STARTS • HERE', position: 'top' },
+    { id: 2, text: 'CREATE • SHARE • BUILD • YOUR • DREAMS • COME • TRUE', position: 'bottom-left' },
+    { id: 3, text: 'INSPIRE • CONNECT • GROW • YOUR • STORY • BEGINS • NOW', position: 'bottom-right' },
+  ];
+
+  const CircleWithText: React.FC<{ data: CircleData }> = ({ data }) => {
+    const isHovered = hoveredCircle === data.id;
+
+    return (
+      <div
+        className="relative w-48 h-48    sm:w-56 sm:h-56 lg:w-72 lg:h-72 transition-transform duration-500"
+        onMouseEnter={() => setHoveredCircle(data.id)}
+        onMouseLeave={() => setHoveredCircle(null)}
+        
+      >
+        <svg
+          viewBox="0 0 200 200"
+          className="w-full h-full"
+          style={{
+            filter: isHovered ? 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1))' : 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05))',
+            transition: 'filter 0.3s ease',
+          }}
+        >
+          {/* Circle border */}
+          <circle
+            cx="100"
+            cy="100"
+            r="95"
+            fill="none"
+            stroke="#333"
+            strokeWidth="1"
+          />
+
+          {/* Rotating text path - Inner circumference */}
+          <defs>
+            <path
+              id={`textPath-${data.id}`}
+              d="M 100, 100 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0"
+              fill="white"
+            />
+            <style>{`
+              @keyframes rotate-${data.id} {
+                from {
+                  transform: rotate(0deg);
+                }
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+              
+              .circle-${data.id} {
+                animation: ${isHovered ? `rotate-${data.id}` : 'none'} 8s linear infinite;
+                transform-origin: 100px 100px;
+              }
+            `}</style>
+          </defs>
+
+          {/* Animated text */}
+          <text
+            className={`circle-${data.id}`}
+            fontSize="12"
+            fill="#333"
+            letterSpacing="4"
+            style={{
+              animation: isHovered ? `rotate-${data.id} 8s linear infinite` : 'none',
+              transformOrigin: '100px 100px',
+            }}
+          >
+            <textPath href={`#textPath-${data.id}`} startOffset="0%">
+              {data.text}
+            </textPath>
+          </text>
+
+          {/* Center heart */}
+          <g>
+            <path
+              d="M100,130 C85,110 70,105 70,95 C70,85 78,80 85,80 C92,80 100,88 100,88 C100,88 108,80 115,80 C122,80 130,85 130,95 C130,105 115,110 100,130 Z"
+              fill="#000"
+            />
+          </g>
+        </svg>
+      </div>
+    );
+  };
+
+  return (
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left Side - Stats & Content */}
+          <div className="space-y-8">
+            {/* Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {statCards.map((stat, index) => (
+                <div
+                  key={index}
+                  className="bg-blue-100 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300"
+                >
+                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                    {stat.number}
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {stat.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Content Section */}
+            <div className="  bg-[#F4F4F4] rounded-3xl   p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300">
+              <h4 className="text-xl sm:text-2xl font-bold text-gray-900">
+                Title
+              </h4>
+              <div className="flex flex-col  sm:flex-row gap-6 items-center">
+                <p className="text-sm sm:text-[18px] text-gray-700 leading-relaxed flex-1">
+                 Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero.Lorem ipsum dolor amet. Lorem ipsum dolor amet, consectetur adipiscing elit.
+                </p>
+                <div className="w-full sm:w-40 lg:w-48 flex-shrink-0">
+                  <img
+                    src="/Research/ResearchStats.png"
+                    alt="Content showcase"
+                    className="w-full h-auto object-contain shadow-md"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Animated Circles */}
+          <div className="flex justify-center items-center">
+            <div className="relative w-96 h-96 sm:w-[480px] sm:h-[480px] lg:w-[600px] lg:h-[500px]">
+              {/* Top Circle */}
+              <div className="absolute bottom-0 left-1/2 transform   -translate-x-1/2 z-40">
+                <CircleWithText data={circleData[0]} />
+              </div>
+
+              {/* Bottom Left Circle */}
+              <div className="absolute top-0 left-0 z-20">
+                <CircleWithText data={circleData[1]} />
+              </div>
+
+              {/* Bottom Right Circle */}
+              <div className="absolute top-0 right-10 z-10">
+                <CircleWithText data={circleData[2]} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Stats;

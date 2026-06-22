@@ -236,6 +236,7 @@ const AuthPage = () => {
           </>
         )}
       </p>
+      <p className=' flex items-center justify-center mt-2'> Back to  <a href="/" className=' px-1 text-[#006384]'> Home</a></p>
     </div>
   )
 

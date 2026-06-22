@@ -1,34 +1,32 @@
 import  { useEffect, useRef } from "react";
 
-// Custom Leaf SVG to match the exact logo perfectly
-const LeafIcon = ({ className = "w-8 h-8", color = "#103023" }) => (
-  <svg viewBox="0 0 100 100" fill="none" className={className}>
-    <path
-      d="M50 85 V50 C50 30, 30 20, 20 30 C10 40, 20 60, 40 60 C45 60, 50 55, 50 50"
-      stroke={color}
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M50 65 C50 45, 70 35, 80 45 C90 55, 80 75, 60 75 C55 75, 50 70, 50 65"
-      stroke={color}
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path d="M25 45 L35 55" stroke={color} strokeWidth="3" strokeLinecap="round" />
-    <path d="M75 55 L65 65" stroke={color} strokeWidth="3" strokeLinecap="round" />
-  </svg>
-);
 
 const Footer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+53
 
-  const shopLinks = ["Herbal Products", "Nuetra Products", "Organic Products", "Offers and Deals"];
-  const companyLinks = ["About Us", "R & D Production", "Blogs", "Contact Us"];
-  const careLinks = ["My Account", "Track order", "FAQ's", "T & Conditions"];
+ const shopLinks = [
+    { name: "Herbal Products", url: "/herbal" },
+    { name: "Nuetra Products", url: "/nutraceutical" },
+    { name: "Organic Products", url: "/organic" },
+    { name: "Offers and Deals", url: "/" },
+  ];
+  // const companyLinks = ["About Us", "R & D Production", "Blogs", "Contact Us"];
+  const companyLinks=[
+{name: "About Us ", url:"/aboutus"},
+{name: "Research", url:"/research"},
+{name: "Production",  url:"/production"},
+{name: "Blogs", url:"/blog"}
+
+
+  ]
+  // const careLinks = ["My Account", "Track order", "FAQ's", "T & Conditions"];
+   const careLinks=[
+    {name: "My Account", url:"/user-profile"},
+    {name: "Track Order", url:"/track-order"},
+    {name: "Cookie Policy", url:"/cookies"}
+   ]
 
   const features = [
     { title: "Free Shipping", desc: "Lorem ipsum dolor sit" },
@@ -182,8 +180,50 @@ const Footer = () => {
       container.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
+  
+  const featuress = [
+    { title: "100 % Natural", desc: "Pure ingredients" },
+    { title: "100 % Natural", desc: "Pure ingredients" },
+    { title: "100 % Natural", desc: "Pure ingredients" },
+    { title: "100 % Natural", desc: "Pure ingredients" },
+  ];
 
   return (
+
+<>
+     <div className="w-full bg-white  py-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14   md:px-0  border border-[#e2e8f0]/50 shadow-sm">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
+            {featuress.map((item, idx) => (
+              <div 
+                key={idx} 
+                className="flex  flex-col md:flex-row items-center gap-4 justify-start sm:justify-center lg:justify-start"
+              >
+                {/* Thin outlined circle wrapper matching the image lines */}
+                <div className=" flex  items-center   justify-center shrink-0 bg-transparent">
+                  {/* Leaf Image */}
+                  <img 
+                    src="/Global/LeafIcon.png" 
+                    alt="Leaf icon" 
+                    className="w-full h-full  object-cover"
+                  />
+                </div>
+                
+                <div className="flex flex-col space-y-2">
+                  <span className="text-[15px] font-bold text-[#557c56] tracking-wide leading-tight">
+                    {item.title}
+                  </span>
+                  <span className="text-[13px] text-[#222222] font-medium mt-0.5 leading-snug">
+                    {item.desc}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
     <footer 
       ref={containerRef}
       className="relative w-full bg-[#143224] text-white overflow-hidden rounded-t-[32px] font-sans pt-16 pb-8"
@@ -195,14 +235,19 @@ const Footer = () => {
       />
 
       {/* ── Main Footer Grid ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8 xl:gap-16 mb-16">
+      <div className="relative z-10 max-w-7xl mx-auto  px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8  xl:gap-20 mb-16">
           
           {/* 1. Brand Column */}
-          <div className="flex flex-col items-center text-center px-4">
-            <div className="w-[88px] h-[88px] bg-[#f9fdf8] rounded-full flex items-center justify-center mb-5 shadow-sm">
-              <LeafIcon />
-            </div>
+          <div className="flex flex-col items-center text-center ">
+              <div className=" flex items-center justify-center shrink-0 bg-transparent">
+                  {/* Leaf Image */}
+                  <img 
+                    src="/Global/LeafIcon.png" 
+                    alt="Leaf icon" 
+                    className="w-full h-full  object-cover"
+                  />
+                </div>  
             <h2 className="text-[34px] font-bold text-white tracking-wide mb-2 leading-none">
              Zephyr
             </h2>
@@ -221,11 +266,15 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {shopLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
-                  </a>
-                </li>
+               <li key={link.name}>
+                    <a 
+                      href={link.url} 
+                    
+                      className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
               ))}
             </ul>
           </div>
@@ -237,9 +286,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {companyLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
+                <li key={link.name}>
+                  <a href={link.url} className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -253,9 +302,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[18px]">
               {careLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
-                    {link}
+                <li key={link.name}>
+                  <a href={link.url} className="text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -269,8 +318,13 @@ const Footer = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10 lg:divide-x-0">
             {features.map((f, idx) => (
               <div key={f.title} className={`flex items-center gap-4 ${idx !== 0 ? 'pt-4 sm:pt-0 sm:pl-4 lg:pl-0' : ''}`}>
-                <div className="w-[42px] h-[42px] bg-white rounded-full shrink-0 flex items-center justify-center">
-                  <LeafIcon className="w-5 h-5" />
+                  <div className=" rounded-full flex items-center justify-center shrink-0 bg-transparent">
+                  {/* Leaf Image */}
+                  <img 
+                    src="/Global/LeafIcon.png" 
+                    alt="Leaf icon" 
+                    className="w-14 h-14  object-contain"
+                  />
                 </div>
                 <div>
                   <h4 className="text-[15px] font-bold text-white leading-tight">{f.title}</h4>
@@ -289,11 +343,11 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center gap-4 order-1 md:order-2">
-            <a href="#" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
+            <a href="/privacy" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
               Privacy Policy
             </a>
             <span className="text-white/40 text-[13px]">|</span>
-            <a href="#" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
+            <a href="terms" className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide">
               Terms and Conditions
             </a>
           </div>
@@ -324,6 +378,8 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </>
+  
   );
 };
 
