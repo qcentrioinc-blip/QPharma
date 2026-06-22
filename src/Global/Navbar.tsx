@@ -13,17 +13,17 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Products +', path: '/productpage', hasDropdown: true },
-    { name: 'R & D', path: '/rnd' },
+    { name: 'R & D', path: '/research' },
     { name: 'Production', path: '/production' },
     { name: 'Get In Touch', path: '/contact' },
   ];
 
   return (
-    <nav className="w-full bg-white/80 backdrop-blur-md sticky top-0 z-[100] px-4 md:px-8 py-4 border-b border-gray-100">
+    <nav className="w-full bg-transparent backdrop-blur-md sticky top-0 z-[100] px-4 md:px-8 py-2 border-b border-gray-100">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
 
         {/* Left - Navigation Pill */}
-        <div className="hidden lg:flex items-center bg-[#F1F3F4] rounded-full px-1.5 py-1.5 shadow-sm">
+        <div className="hidden lg:flex items-center bg-[#F1F3F4] rounded-full px-1.5 py-1 shadow-sm">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
             return (

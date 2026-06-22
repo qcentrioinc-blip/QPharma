@@ -1,6 +1,20 @@
-export default function Ingredient() {
+
+
+type Props = {
+  variant: "organic" | "herbal" | "nutraceutical";
+};
+
+export default function Ingredient({ variant }: Props)  {
+const colorConfig = {
+  organic: "#547A3D",
+  herbal: "#C38046",
+  nutraceutical: "#114887",
+};
+
+const accentColor = colorConfig[variant];
+
   const dummyImage =
-    "https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=1200&q=80";
+    "/Ingredients.png";
 
   const items = Array.from({ length: 8 }, (_, i) => ({
     id: i + 1,
@@ -18,7 +32,7 @@ export default function Ingredient() {
 
   return (
     <section className="w-full bg-white py-4 md:py-6">
-      <div className="mx-auto w-full max-w-[1140px] px-4 md:px-6">
+      <div className="mx-auto w-full  px-4 md:px-10">
         <h2 className="mb-6 text-[34px] font-normal leading-none tracking-[-0.03em] text-black md:mb-8 md:text-[44px] lg:text-[58px]">
           Ingredients we use
         </h2>
@@ -27,7 +41,7 @@ export default function Ingredient() {
           {items.map((item) => (
             <article
               key={item.id}
-              className="overflow-hidden rounded-[2px] border border-[#e8e5de] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+              className="overflow-hidden rounded-[4px] border border-[#e8e5de] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
             >
               <div className="relative h-[160px] w-full overflow-hidden bg-[#f4f4f1]">
                 <img
@@ -56,7 +70,12 @@ export default function Ingredient() {
               </div>
 
               <div className="px-3 pb-4 pt-3">
-                <h3 className="text-[22px] font-semibold leading-[1.02] tracking-[-0.03em] text-[#6f8556]">
+             <h3
+  className="text-[22px] font-semibold leading-[1.02] tracking-[-0.03em]"
+  style={{
+    color: accentColor,
+  }}
+>
                   {item.title}
                 </h3>
 
@@ -69,7 +88,13 @@ export default function Ingredient() {
                 <ul className="mt-3 space-y-[10px]">
                   {item.points.map((point, index) => (
                     <li key={index} className="flex items-center gap-3">
-                      <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-[#8a9a6c] text-[#8a9a6c]">
+                     <span
+  className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border"
+  style={{
+    borderColor: accentColor,
+    color: accentColor,
+  }}
+>
                         <svg
                           viewBox="0 0 24 24"
                           className="h-[11px] w-[11px]"

@@ -1,10 +1,10 @@
-import Navbar from '../Global/Navbar';
+// import Navbar from '../Global/Navbar';
 import Footer from '../Global/Footer';
-import AboutSection from './AboutSection';
+// import AboutSection from './AboutSection';
 
 
 import RelatedArticles from './RelatedArticles';
-import Zephyr from './Zephyr';
+// import Zephyr from './Zephyr';
 import Explore from './Explore';
 // import Production from './Production';
 
@@ -14,6 +14,8 @@ import CTA from './CTA';
 import Delivery from './Delivery';
 // import MainSec from './HeroCarousal/MainSec';
 import MainSec from './MainSec';
+import JointPain from './JointPain';
+import Para from './Para';
 
 const HomePage = () => {
     return (
@@ -23,8 +25,13 @@ const HomePage = () => {
                 {/* <Zephyr /> */}
                 <MainSec/>
                 {/* <MainSec/> */}
-                <AboutSection />
+                {/* <AboutSection /> */}
+
+                <JointPain />
+                {/* <AboutSection /> */}
+              
                 <Explore />
+                  <Para/> 
                 {/* <Production /> */}
                <CTA />
                <Delivery />

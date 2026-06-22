@@ -1,48 +1,69 @@
+import { useLocation } from 'react-router-dom';
+
+interface ColorConfig {
+  category: 'herbal' | 'organic' | 'nutraceuticals';
+  ctaButtonColor: string;
+  ctaButtonHover: string;
+  enquiresBgColor: string;
+  badge: string;
+  badgeHover: string;
+}
+
+const colorConfigs: Record<string, ColorConfig> = {
+  herbal: {
+    category: 'herbal',
+    ctaButtonColor: '#C38046',
+    ctaButtonHover: '#5a9a2b',
+    enquiresBgColor: '#FDEDD2',
+    badge: '#68A833',
+    badgeHover: '#5fa42f',
+  },
+  organic: {
+    category: 'organic',
+    ctaButtonColor: '#68A833',
+    ctaButtonHover: '#3d8a8e',
+    enquiresBgColor: '#EDFAEB',
+    badge: '#68A833',
+    badgeHover: '#3d8a8e',
+  },
+  nutraceuticals: {
+    category: 'nutraceuticals',
+    ctaButtonColor: '#4AA3A7',
+    ctaButtonHover: '#b0712c',
+    enquiresBgColor: '#D3EFF066',
+    badge: '#4AA3A7',
+    badgeHover: '#b0712c',
+  },
+};
+
+const getColorConfig = (pathname: string): ColorConfig => {
+  if (pathname.includes('/herbal')) return colorConfigs.herbal;
+  if (pathname.includes('/organic')) return colorConfigs.organic;
+  if (pathname.includes('/nutraceutical')) return colorConfigs.nutraceuticals;
+  return colorConfigs.organic; // default
+};
+
 export default function OrganicItemList() {
-  const dummyProductImage = `data:image/svg+xml;utf8,${encodeURIComponent(`
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 230'>
-      <rect width='320' height='230' fill='#fbfbf9'/>
-      <rect x='28' y='182' width='264' height='4' rx='2' fill='#d9d9d6'/>
-      <ellipse cx='74' cy='173' rx='18' ry='8' fill='#ffc928'/>
-      <ellipse cx='94' cy='172' rx='11' ry='5' fill='#ffb700'/>
-      <rect x='128' y='28' width='62' height='134' rx='8' fill='#f4a800'/>
-      <rect x='128' y='17' width='62' height='18' rx='4' fill='#f4f4f1'/>
-      <rect x='137' y='42' width='44' height='110' rx='2' fill='#ff7f00' opacity='0.38'/>
-      <g fill='#ef8f00' opacity='0.95'>
-        <ellipse cx='154' cy='56' rx='15' ry='8' transform='rotate(-22 154 56)'/>
-        <ellipse cx='162' cy='73' rx='15' ry='8' transform='rotate(-24 162 73)'/>
-        <ellipse cx='154' cy='90' rx='15' ry='8' transform='rotate(-20 154 90)'/>
-        <ellipse cx='164' cy='107' rx='15' ry='8' transform='rotate(-26 164 107)'/>
-        <ellipse cx='154' cy='124' rx='15' ry='8' transform='rotate(-18 154 124)'/>
-        <ellipse cx='163' cy='141' rx='15' ry='8' transform='rotate(-24 163 141)'/>
-      </g>
-      <rect x='24' y='20' width='272' height='160' rx='8' fill='url(#fade)' opacity='0.22'/>
-      <defs>
-        <linearGradient id='fade' x1='0' y1='0' x2='1' y2='1'>
-          <stop offset='0' stop-color='#ffffff'/>
-          <stop offset='1' stop-color='#ecece8'/>
-        </linearGradient>
-      </defs>
-    </svg>
-  `)}`;
+  const location = useLocation();
+  const colors = getColorConfig(location.pathname);
 
   const items = Array.from({ length: 9 }, (_, index) => ({
     id: index + 1,
-    title: "Lorum Ipsum",
-    description: "Lorum Ipsum Lorum ipsum Lorum Ipsum Lorum.",
-    badge: "Organic",
-    bulk: "Bulk Pack",
-    moq: "MOQ: 10000 units",
-    extra: "Lorum Ipsum",
-    image: dummyProductImage,
+    title: 'Lorum Ipsum',
+    description: 'Lorum Ipsum Lorum ipsum Lorum Ipsum Lorum.',
+    badge: 'Organic',
+    bulk: 'Bulk Pack',
+    moq: 'MOQ: 10000 units',
+    extra: 'Lorum Ipsum',
+    image: '/Global/Tablet.png',
   }));
 
-  const ProductCard = ({ item }: { item: typeof items[0] }) => (
+  const ProductCard = ({ item }: { item: (typeof items)[0] }) => (
     <article className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white px-[10px] pb-[10px] pt-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
       <button
         type="button"
         aria-label="Wishlist"
-        className="absolute right-[12px] top-[12px] z-10 flex h-[20px] w-[20px] items-center justify-center text-black"
+        className="absolute right-[12px] top-[12px] z-10 flex h-[20px] w-[20px] items-center justify-center text-black transition-transform hover:scale-110"
       >
         <svg
           viewBox="0 0 24 24"
@@ -57,7 +78,7 @@ export default function OrganicItemList() {
         </svg>
       </button>
 
-      <div className="flex h-[132px] items-center justify-center overflow-hidden rounded-[4px] bg-[#f8f8f5]">
+      <div className="flex h-52 items-center justify-center overflow-hidden rounded-[4px] bg-[#f8f8f5]">
         <img
           src={item.image}
           alt={item.title}
@@ -66,7 +87,10 @@ export default function OrganicItemList() {
       </div>
 
       <div className="pt-[8px]">
-        <span className="inline-flex h-[18px] items-center rounded-[4px] bg-[#6fb139] px-[10px] text-[10px] font-medium leading-none text-white">
+        <span
+          className="inline-flex h-[18px] items-center rounded-[4px] px-[10px] text-[10px] font-medium leading-none text-white transition-colors hover:opacity-90"
+          style={{ backgroundColor: colors.badge }}
+        >
           {item.badge}
         </span>
 
@@ -94,13 +118,17 @@ export default function OrganicItemList() {
 
   return (
     <section className="w-full bg-white py-6 md:py-8">
-      <div className="mx-auto w-full max-w-[1210px] px-4 md:px-6">
+      <div className="mx-auto w-full  px-4 md:px-6">
         <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-[42px] lg:gap-y-[46px]">
           {items.slice(0, 4).map((item) => (
             <ProductCard key={item.id} item={item} />
           ))}
 
-          <aside className="rounded-[20px] bg-[#edf8e8] px-[18px] pb-[18px] pt-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+          {/* Enquiries Sidebar - Colors change based on category */}
+          <aside
+            className="rounded-[20px] px-[18px] pb-[18px] pt-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+            style={{ backgroundColor: colors.enquiresBgColor }}
+          >
             <h2 className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-black">
               For Enquiries
             </h2>
@@ -111,7 +139,7 @@ export default function OrganicItemList() {
             </div>
 
             <ul className="mt-[10px] space-y-[8px]">
-              {["Lorum Ipsum Lorum.", "Lorum Ipsum Lorum."].map((text, idx) => (
+              {['Lorum Ipsum Lorum.', 'Lorum Ipsum Lorum.'].map((text, idx) => (
                 <li key={idx} className="flex items-center gap-[9px] text-[14px] text-[#3b3b3b]">
                   <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#2d2d2d] text-[#2d2d2d]">
                     <svg
@@ -123,7 +151,13 @@ export default function OrganicItemList() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="1.8"
+                        fill="currentColor"
+                        stroke="none"
+                      />
                       <path d="M12 5.2a6.8 6.8 0 1 0 0 13.6" />
                     </svg>
                   </span>
@@ -133,39 +167,30 @@ export default function OrganicItemList() {
             </ul>
 
             <div className="mt-[16px] space-y-[10px]">
+              {/* Connect Us Button - Color changes based on category */}
               <button
                 type="button"
-                className="flex h-[42px] w-full items-center justify-center rounded-[10px] bg-[#6fad33] text-[16px] font-semibold text-white shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)]"
+                className="flex h-[42px] w-full items-center justify-center rounded-[10px] text-[16px] font-semibold text-white shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)] transition-all hover:opacity-90"
+                style={{ backgroundColor: colors.ctaButtonColor }}
               >
                 Connect Us
               </button>
 
+              {/* Download Catalog Button - Border color changes based on category */}
               <button
                 type="button"
-                className="flex h-[42px] w-full items-center justify-center rounded-[10px] border border-[#9bc26a] bg-transparent text-[16px] font-semibold text-[#75aa3d]"
+                className="flex h-[42px] w-full items-center justify-center rounded-[10px] border-2 bg-transparent text-[16px] font-semibold transition-all hover:opacity-90"
+                style={{
+                  borderColor: colors.ctaButtonColor,
+                  color: colors.ctaButtonColor,
+                }}
               >
                 Download Catalog
               </button>
             </div>
           </aside>
 
-          <button
-            type="button"
-            aria-label="Next items"
-            className="absolute right-[280px] top-[148px] z-20 hidden h-[38px] w-[38px] -translate-y-1/2 items-center justify-center rounded-full bg-[#e7e7e7] text-black shadow-[0_2px_6px_rgba(0,0,0,0.12)] lg:flex"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-[20px] w-[20px]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+    
 
           {items.slice(4).map((item) => (
             <ProductCard key={item.id} item={item} />
