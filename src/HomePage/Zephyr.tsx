@@ -125,7 +125,7 @@ const Zephyr = () => {
 
       {/* ── TOP SECTION ── */}
       <div className="relative w-full px-8 md:px-16 pt-12 z-10 flex justify-between items-start">
-        <div className="max-w-[280px]">
+        <div className="max-w-70">
           <p className="text-white/80 text-xs md:text-sm leading-relaxed font-normal">
             {slide.desc}
           </p>

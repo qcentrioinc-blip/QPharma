@@ -12,13 +12,17 @@ import FAQ from './FAQ';
 
 import CTA from './CTA';
 import Delivery from './Delivery';
+// import MainSec from './HeroCarousal/MainSec';
+import MainSec from './MainSec';
 
 const HomePage = () => {
     return (
         <div className="min-h-screen bg-white">
-            <Navbar />
+            {/* <Navbar /> */}
             <main>
-                <Zephyr />
+                {/* <Zephyr /> */}
+                <MainSec/>
+                {/* <MainSec/> */}
                 <AboutSection />
                 <Explore />
                 {/* <Production /> */}
