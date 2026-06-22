@@ -1,39 +1,39 @@
 const JointPain = () => {
   return (
-    <section className="w-full   py-12 lg:py-20">
-      <div className="container max-w-6xl mx-auto ">
+    <section className="w-full   py-10">
+      <div className="container max-w-7xl mx-auto ">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           
           {/* Images */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-            <div className="w-32 h-52  md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d"
-                alt="Joint Pain"
-                className="w-full h-full object-cover"
-              />
-            </div>
+       <div className="flex flex-nowrap justify-center gap-2 md:gap-6 overflow-x-auto">
+  <div className="w-24 h-40 md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg flex-shrink-0">
+    <img
+      src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d"
+      alt="Joint Pain"
+      className="w-full h-full object-cover"
+    />
+  </div>
 
-            <div className="w-32 h-52  md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6"
-                alt="Medicinal Herbs"
-                className="w-full h-full object-cover"
-              />
-            </div>
+  <div className="w-24 h-40 md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg flex-shrink-0">
+    <img
+      src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6"
+      alt="Medicinal Herbs"
+      className="w-full h-full object-cover"
+    />
+  </div>
 
-            <div className="w-32 h-52 md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae"
-                alt="Medicine Dropper"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+  <div className="w-24 h-40 md:w-40 md:h-72 overflow-hidden rounded-[80px] shadow-lg flex-shrink-0">
+    <img
+      src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae"
+      alt="Medicine Dropper"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</div>
 
           {/* Content */}
-          <div className="max-w-lg text-left">
-            <div className="w-12 h-1 bg-lime-500 mx-auto lg:mx-0 mb-4"></div>
+          <div className=" max-w-sm  px-4  lg:px-0 lg:max-w-lg   text-left">
+            <div className="w-full xl:w-[50%] h-1 bg-lime-500 mx-auto lg:mx-0 mb-4"></div>
 
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Lorem Ipsum Dolor

@@ -13,6 +13,7 @@ import FAQ from './FAQ';
 import CTA from './CTA';
 import Delivery from './Delivery';
 import JointPain from './JointPain';
+import Para from './Para';
 
 const HomePage = () => {
     return (
@@ -22,7 +23,9 @@ const HomePage = () => {
                 <Zephyr />
                 <JointPain />
                 {/* <AboutSection /> */}
+              
                 <Explore />
+                  <Para/> 
                 {/* <Production /> */}
                <CTA />
                <Delivery />

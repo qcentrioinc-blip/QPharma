@@ -1,38 +1,50 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
 
 const SLIDES = [
   {
     id: 1,
     title: "Herbal Medicine",
     bg: "#3FB369",
+    route: "/herbal",
     titleColor: "#FFFFFF",
     btnColor: "#3FB369",
     imgSrc: "/Homepage/HerbalBottle.png",
     desc: "From fast-growing startups to global enterprises, we connect data and modernize core platforms.",
+      desc2:
+    "From fast-growing startups to global enterprises, we connect data and modernize core platforms. From fast-growing startups to global enterprises, we connect data and modernize core platforms."
   },
   {
     id: 2,
     title: "Nutraeuticals",
     bg: "#247D7D",
+     route: "/nutraceutical",
     titleColor: "#FFFFFF",
     btnColor: "#247D7D",
     imgSrc: "/Homepage/NutraBottle.png",
     desc: "From fast-growing startups to global enterprises, we connect data and modernize core platforms.",
+      desc2:
+    "From fast-growing startups to global enterprises, we connect data and modernize core platforms. From fast-growing startups to global enterprises, we connect data and modernize core platforms."
   },
   {
     id: 3,
     title: "Organic Medicine",
     bg: "#B97941",
+    route: "/organic",
     titleColor: "#FFFFFF",
     btnColor: "#B97941",
     imgSrc: "/Homepage/OrganicBottle.png",
     desc: "From fast-growing startups to global enterprises, we connect data and modernize core platforms.",
+      desc2:
+    "From fast-growing startups to global enterprises, we connect data and modernize core platforms. From fast-growing startups to global enterprises, we connect data and modernize core platforms."
   },
 ];
 
 const Zephyr = () => {
+  const navigate= useNavigate();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0); // 1 = next, -1 = prev
 
@@ -107,17 +119,15 @@ const Zephyr = () => {
       </div>
 
       {/* ── TOP SECTION ── */}
-      <div className="relative w-full px-8 md:px-16 pt-12 z-10 flex justify-between items-start">
-        <div className="max-w-[280px]">
-          <p className="text-white/80 text-xs md:text-sm leading-relaxed font-normal">
-            {slide.desc}
-          </p>
-        </div>
-        <div className="w-10 h-10" />
-      </div>
+      {/* TOP DESCRIPTION */}
+<div className="absolute top-40 left-8 md:left-16 z-20 max-w-sm">
+  <p className="text-white text-lg leading-relaxed font-thin">
+    {slide.desc}
+  </p>
+</div>
 
       {/* ── CENTER STAGE (3D ELLIPSE ORBIT) ── */}
-      <div className="relative flex-1 w-full flex items-center justify-center z-10 px-6 my-auto">
+      <div className="relative flex-1 w-full flex items-center justify-center z-10 px-6 ">
         
         {/* Navigation Controls */}
         <button
@@ -214,23 +224,56 @@ const Zephyr = () => {
       </div>
 
       {/* ── BOTTOM SECTION ── */}
-      <div className="relative w-full px-8 md:px-16 pb-12 z-10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
-        <div className="max-w-md">
-          <p className="text-white text-sm font-bold tracking-wide mb-1">
-            {slide.title}
-          </p>
-          <p className="text-white/80 text-xs md:text-sm leading-relaxed font-normal">
-            {slide.desc}
-          </p>
-        </div>
-
-        <button
-          className="shrink-0 px-6 py-2.5 rounded-full bg-white font-semibold text-xs md:text-sm shadow-md hover:scale-105 active:scale-95 transition-all duration-300"
-          style={{ color: slide.btnColor }}
-        >
-          Explore Formulas ▾
-        </button>
+      <div
+  className="
+    absolute
+    left-8 md:left-16
+    bottom-16
+    z-20
+    max-w-full
+  "
+>
+      
       </div>
+
+      {/* Bottom Content */}
+<div
+  className="
+    absolute
+    left-8 md:left-16
+    bottom-24
+    z-20
+    max-w-lg
+  "
+>
+  <p className="text-white text-sm font-bold tracking-wide ">
+    {slide.title}
+  </p>
+
+  <p className="text-white/80 text-xs md:text-sm leading-relaxed">
+    {slide.desc2}
+  </p>
+</div>
+
+{/* CTA Button */}
+<button
+onClick={() => navigate(slide.route)}
+  className="
+    absolute
+    right-8 md:right-16
+    bottom-24
+    z-20
+    px-6 py-3
+    rounded-full
+    bg-white
+    text-sm
+    font-semibold
+    shadow-md
+  "
+  style={{ color: slide.btnColor }}
+>
+  Explore Solutions →
+</button>
 
     </div>
   );

@@ -4,6 +4,7 @@ import  { useEffect, useRef } from "react";
 const Footer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+53
 
  const shopLinks = [
     { name: "Herbal Products", url: "/herbal" },
@@ -192,15 +193,15 @@ const Footer = () => {
 <>
      <div className="w-full bg-white  py-6">
       <div className="max-w-7xl mx-auto">
-        <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14 border border-[#e2e8f0]/50 shadow-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
+        <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14   md:px-0  border border-[#e2e8f0]/50 shadow-sm">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
             {featuress.map((item, idx) => (
               <div 
                 key={idx} 
-                className="flex items-center gap-4 justify-start sm:justify-center lg:justify-start"
+                className="flex  flex-col md:flex-row items-center gap-4 justify-start sm:justify-center lg:justify-start"
               >
                 {/* Thin outlined circle wrapper matching the image lines */}
-                <div className=" flex items-center justify-center shrink-0 bg-transparent">
+                <div className=" flex  items-center   justify-center shrink-0 bg-transparent">
                   {/* Leaf Image */}
                   <img 
                     src="/Global/LeafIcon.png" 
@@ -234,8 +235,8 @@ const Footer = () => {
       />
 
       {/* ── Main Footer Grid ── */}
-      <div className="relative z-10 max-w-7xl mx-auto ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8 xl:gap-20 mb-16">
+      <div className="relative z-10 max-w-7xl mx-auto  px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8  xl:gap-20 mb-16">
           
           {/* 1. Brand Column */}
           <div className="flex flex-col items-center text-center ">

@@ -54,14 +54,14 @@ const colors = colorConfig[variant];
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.02fr_1.02fr_1fr] md:gap-10">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.02fr_1.02fr_1fr] md:gap-10">
        <div
-  className="relative flex min-h-[550px] flex-col justify-between rounded-[14px] px-9 py-10 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)]"
+  className="relative flex   min-h-[300px] lg:min-h-[550px] flex-col justify-between rounded-[14px] px-4 md:px-9 py-10 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)]"
   style={{
     backgroundColor: colors.cardBg,
   }}
 >
-            <p className="max-w-full text-[23px] font-normal leading-[1.28] p-4 tracking-[-0.02em]">
+            <p className="max-w-full text-[23px] font-normal leading-[1.28] md:p-4 tracking-[-0.02em]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -106,7 +106,7 @@ const colors = colorConfig[variant];
               <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#0d4c25]">
                 5 minutes
               </h3>
-              <p className="mt-4 max-w-[290px] text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#183828]">
+              <p className="mt-4 max-w-full  xl:max-w-[290px] text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#183828]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
@@ -117,7 +117,7 @@ const colors = colorConfig[variant];
               <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#0d4c25]">
                 50%
               </h3>
-              <p className="mt-4 max-w-[290px] text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#183828]">
+              <p className="mt-4 max-w-full  xl:max-w-[290px] text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#183828]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             </div>
