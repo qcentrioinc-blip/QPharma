@@ -32,7 +32,7 @@ const JointPain = () => {
 </div>
 
           {/* Content */}
-          <div className=" max-w-sm  px-4  lg:px-0 lg:max-w-lg   text-left">
+          <div className=" max-w-sm  px-4  lg:px-0 lg:max-w-2xl   text-left">
             <div className="w-full xl:w-[50%] h-1 bg-lime-500 mx-auto lg:mx-0 mb-4"></div>
 
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -40,7 +40,7 @@ const JointPain = () => {
             </h2>
 
             <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
           </div>
 

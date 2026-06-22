@@ -12,10 +12,10 @@ import FAQ from './FAQ';
 
 import CTA from './CTA';
 import Delivery from './Delivery';
-// import MainSec from './HeroCarousal/MainSec';
 import MainSec from './MainSec';
 import JointPain from './JointPain';
 import Para from './Para';
+import NewFooter from '../Global/NewFooter';
 
 const HomePage = () => {
     return (
@@ -24,9 +24,6 @@ const HomePage = () => {
             <main>
                 {/* <Zephyr /> */}
                 <MainSec/>
-                {/* <MainSec/> */}
-                {/* <AboutSection /> */}
-
                 <JointPain />
                 {/* <AboutSection /> */}
               
@@ -39,6 +36,7 @@ const HomePage = () => {
                 <RelatedArticles />
             </main>
             <Footer />
+            <NewFooter />
           
         </div>
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const items = [
   {
@@ -35,7 +36,7 @@ const Explore = () => {
 
   return (
     <section className="w-full py-10 lg:py-20">
-      <div className="mx-auto max-w-8xl ">
+      <div className="mx-auto max-w-7xl ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
           {items.map((item, index) => (
             <div
@@ -44,18 +45,21 @@ const Explore = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <h3 className=" text-4xl  mb-3">
+              {/* <h3 className=" text-4xl  mb-3">
     {item.title}
-  </h3>
+  </h3> */}
               {/* Circle Wrapper */}
               <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[350px] md:h-[350px]">
                 {/* Rotating Circular Text */}
-              <svg
+              <motion.svg
   viewBox="0 0 300 300"
   className="absolute inset-0 w-full h-full"
-  style={{
-    transform: `rotate(${hoveredIndex === index ? 360 : 0}deg)`,
-    transition: "transform 3s ease-in-out",
+  animate={{
+    rotate: hoveredIndex === index ? 25 : 0,
+  }}
+  transition={{
+    duration: 1.4,
+    ease: [0.22, 1, 0.36, 1],
   }}
 >
   <defs>
@@ -90,7 +94,7 @@ const Explore = () => {
       {`${item.title} • `.repeat(20)}
     </textPath>
   </text>
-</svg>
+</motion.svg>
 
 
 {/* Main Circle — inset matches inner border r=108 → inset ~42px */}
@@ -107,7 +111,9 @@ const Explore = () => {
   className={`absolute inset-0 ${item.color}
   flex flex-col items-center justify-center
   text-center p-6
-  transition-[clip-path] duration-500 ease-in-out
+  transition-[clip-path]
+duration-700
+ease-[cubic-bezier(0.22,1,0.36,1)]
   [clip-path:inset(100%_0_0_0)]
   group-hover:[clip-path:inset(0%_0_0_0)]`}
 >
