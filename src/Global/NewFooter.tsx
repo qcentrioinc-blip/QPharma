@@ -450,7 +450,7 @@ const NewFooter = () => {
                   paytm
                 </span>
               </div>
-              <div className="bg-white rounded px-2.5 py-[3px] flex items-center justify-center h-6 min-w-[40px]">
+              <div className="bg-white rounded px-2.5 py-0.75 flex items-center justify-center h-6 min-w-10">
                 <span className="text-[#5f6368] text-[10px] font-medium tracking-tight">
                   <span className="text-[#ea4335] font-bold">G</span> Pay
                 </span>

@@ -14,7 +14,7 @@ import CTA from './CTA';
 import Delivery from './Delivery';
 import MainSec from './MainSec';
 import JointPain from './JointPain';
-import Para from './Para';
+// import Para from './Para';
 import NewFooter from '../Global/NewFooter';
 
 const HomePage = () => {
@@ -28,7 +28,7 @@ const HomePage = () => {
                 {/* <AboutSection /> */}
               
                 <Explore />
-                  <Para/> 
+                  {/* <Para/>  */}
                 {/* <Production /> */}
                <CTA />
                <Delivery />

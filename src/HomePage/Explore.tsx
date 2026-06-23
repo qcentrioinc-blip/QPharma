@@ -35,7 +35,7 @@ const Explore = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full py-10 lg:py-20">
+    <section className="w-full py-10">
       <div className="mx-auto max-w-7xl ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
           {items.map((item, index) => (

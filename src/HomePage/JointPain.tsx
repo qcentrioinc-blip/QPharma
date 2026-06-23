@@ -33,7 +33,7 @@ const JointPain = () => {
 
           {/* Content */}
           <div className=" max-w-sm  px-4  lg:px-0 lg:max-w-2xl   text-left">
-            <div className="w-full xl:w-[50%] h-1 bg-lime-500 mx-auto lg:mx-0 mb-4"></div>
+            <div className="w-full xl:w-[50%] h-1 bg-gray-500 mx-auto lg:mx-0 mb-4"></div>
 
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Lorem Ipsum Dolor
