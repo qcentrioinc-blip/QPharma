@@ -99,11 +99,11 @@ const Zephyr = () => {
 
   return (
     <div
-      className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between transition-colors duration-700"
+      className="relative w-full min-h-screen  overflow-hidden flex flex-col justify-between transition-colors duration-700"
       style={{ backgroundColor: slide.bg }}
-    >
+    > 
       {/* ── BACKGROUND WATERMARK CONTAINER ── */}
-      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start pointer-events-none select-none z-0 overflow-hidden">
+      <div className="absolute top-0 left-0  pt-28 xl:pt-24 w-full h-full flex justify-center items-start pointer-events-none select-none z-0 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.h1
             key={current}
@@ -111,7 +111,11 @@ const Zephyr = () => {
             animate={{ opacity: 0.12, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            className="text-[8rem] font-bold text-white text-center leading-none tracking-tight whitespace-nowrap"
+            className="
+text-[3rem]
+sm:text-[5rem]
+lg:text-[8rem]
+ font-bold text-white text-center leading-none tracking-tight whitespace-nowrap"
           >
             {slide.title.toUpperCase()}
           </motion.h1>
@@ -169,7 +173,12 @@ const Zephyr = () => {
                 <img
                   src={slide.imgSrc}
                   alt={slide.title}
-                  className="w-[180px] sm:w-[240px] md:w-[280px] lg:w-[350px] object-contain drop-shadow-[0_35px_45px_rgba(0,0,0,0.4)] select-none"
+                  className="
+w-[140px]
+sm:w-[200px]
+md:w-[280px]
+lg:w-[350px]
+object-contain drop-shadow-[0_35px_45px_rgba(0,0,0,0.4)] select-none"
                 />
               </motion.div>
             </AnimatePresence>
@@ -179,9 +188,9 @@ const Zephyr = () => {
           <div
             className="absolute left-1/2 -translate-x-1/2 bottom-4 pointer-events-none"
             style={{
-              width: "110%",
+              width: "100%",
               maxWidth: trackSettings.maxWidth,
-              height: "360px",
+              height: window.innerWidth < 640 ? "220px" : "360px",
               borderRadius: "50%",
               transform: "perspective(1200px) rotateX(64deg) rotateZ(-10deg)",
               transformStyle: "preserve-3d",

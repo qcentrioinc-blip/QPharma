@@ -6,15 +6,15 @@ import labImg from "/Production/ProductionsHeroLeft.png";
 const HeroSection = () => {
   return (
    <section className="relative w-full overflow-hidden">
-  <div className="mx-auto max-w-7xl py-12 md:py-20 lg:py-24">
+  <div className="mx-auto max-w-7xl py-12   md:py-20  lg:py-10 xl:py-24">
 
     {/* Heading */}
-    <div className="max-w-xl">
+    <div className="max-w-full">
       <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-gray-800 leading-tight">
         Lorum Ipsum
       </h1>
 
-      <p className="mt-6 text-base md:text-lg leading-8 max-w-lg">
+      <p className="mt-6  lg:mb-4 xl:mb-0 text-base md:text-lg leading-8  max-w-full  lg:max-w-2xl xl:max-w-lg">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Faucibus in libero risus semper habitant arcu eget.
         Et integer facilisi eget.
@@ -22,16 +22,16 @@ const HeroSection = () => {
     </div>
 
     {/* Layout Area */}
-    <div className="relative mt-10 lg:mt-0 lg:h-[750px]">
+    <div className="relative mt-10 xl:mt-0 xl:h-[750px]">
 
       {/* RIGHT IMAGE */}
-      <div className="lg:absolute lg:right-0 lg:top-[-180px]">
+      <div className="absolute xl:right-0 xl:top-[-180px]">
         <img
           src={heroImg}
           alt=""
           className="
             w-full
-            lg:w-[500px]
+            xl:w-[500px]
             xl:w-[560px]
             2xl:w-[620px]
             h-auto
@@ -41,13 +41,13 @@ const HeroSection = () => {
       </div>
 
       {/* LEFT IMAGE */}
-      <div className="mt-10 lg:absolute lg:left-0 lg:top-[120px]">
+      <div className="mt-10 xl:absolute xl:left-0 xl:top-[120px]">
         <img
           src={labImg}
           alt=""
           className="
             w-full
-            lg:w-[430px]
+            xl:w-[430px]
             xl:w-[500px]
             2xl:w-[560px]
             h-auto
@@ -58,16 +58,21 @@ const HeroSection = () => {
 
       {/* GLASS CARD */}
       <div
+      style={{
+  background:
+    "linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(153,149,149,0.9) 100%)",
+  backdropFilter: "blur(24px)",
+}}
         className="
           mt-6
-          lg:absolute
-          lg:left-[220px]
+          xl:absolute
+          xl:left-[220px]
           xl:left-[450px]
           lg:bottom-0
           w-full
           lg:w-[700px]
           xl:w-[850px]
-          rounded-full
+          md:rounded-full
           backdrop-blur-xl
           bg-[#999595]
           border border-white/40

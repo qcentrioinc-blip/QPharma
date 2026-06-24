@@ -1,5 +1,6 @@
+
 // import Navbar from '../Global/Navbar';
-import Footer from '../Global/Footer';
+
 // import AboutSection from './AboutSection';
 
 
@@ -21,7 +22,9 @@ import FeaturesSection from './FeaturesSection';
 
 const HomePage = () => {
     return (
-        <div className="min-h-screen bg-white">
+  
+           
+        <div className="min-h-screen">
             {/* <Navbar /> */}
             <main>
                 {/* <Zephyr /> */}
@@ -38,8 +41,10 @@ const HomePage = () => {
                <Delivery />
                 <FAQ />
                 <RelatedArticles />
-            </main>
-            <Footer />
+            </main> 
+         
+         
+            
             {/* <NewFooter /> */}
           
         </div>

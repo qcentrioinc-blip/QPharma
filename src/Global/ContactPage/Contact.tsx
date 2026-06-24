@@ -1,5 +1,5 @@
 import ContactNav from "../ContactNav"
-import Footer from "../Footer"
+
 import Content from "./Content"
  
 
@@ -8,7 +8,7 @@ const Contact = () => {
     <div>
         <ContactNav/>
         <Content/>
-        <Footer/>
+   
     </div>
   )
 }
