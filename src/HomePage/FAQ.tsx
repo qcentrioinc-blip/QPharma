@@ -54,10 +54,24 @@ const FAQ = () => {
           {/* LEFT SIDE */}
           <div className="space-y-4">
             {faqs.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-2xl border border-gray-200 bg-white overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md"
-              >
+             <div
+  key={index}
+  className={`
+    rounded-2xl
+    border
+    bg-white
+    overflow-hidden
+    transition-all
+    duration-300
+    
+    hover:shadow-md
+    ${
+      openIndex === index
+        ? "border-gray-300 border-l-[8px] border-l-black"
+        : "border-gray-200"
+    }
+  `}
+>
                 <button
                   onClick={() => toggle(index)}
                   aria-expanded={openIndex === index}

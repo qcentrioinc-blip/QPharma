@@ -229,7 +229,7 @@ const NewFooter = () => {
     <>
       <div className="w-full bg-white py-6">
         <div className="max-w-7xl mx-auto">
-          <div className="w-full bg-[#F7F8F2] rounded-[24px] py-14 md:px-0 border border-[#e2e8f0]/50 shadow-sm">
+          <div className="w-full bg-[#F7F8F2] rounded-3xl py-14 md:px-0 border border-[#e2e8f0]/50 shadow-sm">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
               {featuress.map((item, idx) => (
                 <div
@@ -267,7 +267,7 @@ const NewFooter = () => {
           relative
           w-full
           overflow-hidden
-          rounded-t-[32px]
+          rounded-t-4xl
           text-white
           pt-16
           pb-8
