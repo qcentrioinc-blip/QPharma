@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const products = [
   {
     id: 1,
-    title: "HERBAL MEDICINE ",
+    title: "HERBAL MEDICINES ",
     description:
       "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
     color: "#3FB369",
@@ -21,7 +21,7 @@ const products = [
   },
   {
     id: 3,
-    title: "ORGANIC MEDICINE",
+    title: "ORGANIC MEDICINES",
     description:
       "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
     color: "#F99526",
