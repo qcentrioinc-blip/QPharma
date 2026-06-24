@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
 
-import Footer from "../Global/Footer";
-import Navbar from "../Global/Navbar";
 
 import OrganicLanding from "./OrganicLanding";
 import OrganicItemList from "./OrganicItemList";
@@ -24,7 +22,7 @@ const Organic = () => {
 
   return (
     <>
-      <Navbar />
+     
 
       <OrganicLanding variant={variant} />
 
@@ -34,7 +32,7 @@ const Organic = () => {
   <Table variant={variant} />
   <TwoCard/>
 
-      <Footer />
+   
     </>
   );
 };

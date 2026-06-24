@@ -34,6 +34,8 @@ import Production from './components/Production/Production'
 import Contact from './Global/ContactPage/Contact'
 import UserProfile from './components/UserProfile/UserProfile'
 import CookiePolicy from './Global/CookiePolicy/CookiePolicy'
+import Navbar from './Global/Navbar'
+import Footer from './Global/Footer'
 
 function App() {
   return (
@@ -41,7 +43,8 @@ function App() {
       <CartProvider>
         <BrowserRouter>
 
-     
+     <div className="relative">
+  <Navbar />
           <Routes>
            
      
@@ -69,7 +72,7 @@ function App() {
 
 <Route path="/contact" element={<Contact/>}/>
 
- {/* user profile */}
+ {/* user profile */}';'
  <Route path="/user-profile" element={<UserProfile/>}/>
 {/* Payments */}
 <Route path="/payment" element={<PaymentGate />} />
@@ -114,6 +117,8 @@ function App() {
             {/* <Route path="/rnd" element={<RnDPage />} /> */}
            
     </Routes>
+    <Footer/>
+    </div>
     </BrowserRouter>
      
  {/* <div>

@@ -1,5 +1,4 @@
-import Footer from "../../Global/Footer"
-import Navbar from "../../Global/Navbar"
+ 
 import Explore from "../../HomePage/Explore"
 import Gallery from "./Gallery"
 import HeroSection from "./HeroSection"
@@ -9,14 +8,14 @@ import ManufacturingHighlight from "./ManufacturingHighlight"
 
 const Production = () => {
   return (
-    <div>
-         <Navbar/>
+    <div className="px-4">
+        
       <HeroSection/>
       <Gallery/>
       <ManufacturingHighlight/>
       <LorumTextAnim/>
       <Explore/>
-      <Footer/>
+      
     </div>
   )
 }

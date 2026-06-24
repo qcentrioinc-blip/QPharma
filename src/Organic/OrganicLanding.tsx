@@ -9,10 +9,10 @@ export default function OrganicLanding({ variant }: Props) {
   const config = landingConfigs[variant];
 
   return (
-    <section className="w-full bg-white py-4 sm:py-6">
-      <div className="mx-auto w-full px-4 sm:px-6">
+    <section className="w-full  bg-white py-4 sm:py-6">
+      <div className="mx-auto   w-full px-4 sm:px-6">
         <div
-          className="relative overflow-hidden rounded-[22px] shadow-[0_8px_28px_rgba(121,145,66,0.08)]"
+          className="relative absolute pt-28   xl:pt-24 overflow-hidden rounded-[22px] shadow-[0_8px_28px_rgba(121,145,66,0.08)]"
           style={{
             backgroundColor: config.colors.sectionBg,
           }}

@@ -1,5 +1,4 @@
-import Navbar from '../Global/Navbar';
-import Footer from '../Global/Footer';
+
 // import AboutSection from './AboutSection';
 
 
@@ -18,7 +17,7 @@ import Para from './Para';
 const HomePage = () => {
     return (
         <div className="min-h-screen ">
-            <Navbar />
+           
             <main>
                 <Zephyr />
                 <JointPain />
@@ -31,8 +30,8 @@ const HomePage = () => {
                <Delivery />
                 <FAQ />
                 <RelatedArticles />
-            </main>
-            <Footer />
+            </main> 
+         
           
         </div>
     );

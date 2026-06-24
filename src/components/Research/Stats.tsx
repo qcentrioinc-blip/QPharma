@@ -56,7 +56,7 @@ const Stats: React.FC = () => {
             cx="100"
             cy="100"
             r="95"
-            fill="none"
+            fill="white"
             stroke="#333"
             strokeWidth="1"
           />
@@ -114,9 +114,9 @@ const Stats: React.FC = () => {
   };
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-10 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-12 items-center">
           {/* Left Side - Stats & Content */}
           <div className="space-y-8">
             {/* Stat Cards */}
@@ -158,19 +158,19 @@ const Stats: React.FC = () => {
 
           {/* Right Side - Animated Circles */}
           <div className="flex justify-center items-center">
-            <div className="relative w-96 h-96 sm:w-[480px] sm:h-[480px] lg:w-[600px] lg:h-[500px]">
+            <div className="relative w-96 h-96 sm:w-[400px] sm:h-[400px] lg:w-[600px] lg:h-[500px]">
               {/* Top Circle */}
-              <div className="absolute bottom-0 left-1/2 transform   -translate-x-1/2 z-40">
+              <div className="absolute    bottom-10    md:bottom-0 left-1/2 transform   -translate-x-1/2 z-40">
                 <CircleWithText data={circleData[0]} />
               </div>
 
               {/* Bottom Left Circle */}
-              <div className="absolute top-0 left-0 z-20">
+              <div className="absolute  top-0  -left-2 md:left-0 z-20">
                 <CircleWithText data={circleData[1]} />
               </div>
 
               {/* Bottom Right Circle */}
-              <div className="absolute top-0 right-10 z-10">
+              <div className="absolute top-0  -right-2 md:right-10 z-10">
                 <CircleWithText data={circleData[2]} />
               </div>
             </div>

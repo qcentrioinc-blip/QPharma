@@ -9,7 +9,7 @@ const LorumTextAnim = () => {
   const columns = [0, 1, 2, 3];
 
   return (
-    <div className="min-h-screen w-full bg-white text-black flex items-center justify-center p-6  ">
+    <div className="  w-full bg-white text-black flex items-center justify-center p-6  ">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2  items-center">
         
         {/* LEFT CONTENT SECTION */}
@@ -44,7 +44,7 @@ const LorumTextAnim = () => {
                     "
                   >
                     <span
-                      className={`transform -rotate-90 inline-block ${
+                      className={`transform  -rotate-90 inline-block ${
                         colIndex === 0 ? "text-black" : "text-transparent"
                       }`}
                       style={
