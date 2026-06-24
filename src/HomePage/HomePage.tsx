@@ -14,8 +14,10 @@ import CTA from './CTA';
 import Delivery from './Delivery';
 import MainSec from './MainSec';
 import JointPain from './JointPain';
-import Para from './Para';
-import NewFooter from '../Global/NewFooter';
+// import Para from './Para';
+// import NewFooter from '../Global/NewFooter';
+import ShowreelSection from './ShowreelSection';
+import FeaturesSection from './FeaturesSection';
 
 const HomePage = () => {
     return (
@@ -28,7 +30,9 @@ const HomePage = () => {
                 {/* <AboutSection /> */}
               
                 <Explore />
-                  <Para/> 
+                <FeaturesSection/>
+                <ShowreelSection/>
+                  {/* <Para/>  */}
                 {/* <Production /> */}
                <CTA />
                <Delivery />
@@ -36,7 +40,7 @@ const HomePage = () => {
                 <RelatedArticles />
             </main>
             <Footer />
-            <NewFooter />
+            {/* <NewFooter /> */}
           
         </div>
     );
