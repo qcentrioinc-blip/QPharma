@@ -35,13 +35,34 @@ const Stats: React.FC = () => {
 
   const CircleWithText: React.FC<{ data: CircleData }> = ({ data }) => {
     const isHovered = hoveredCircle === data.id;
+    const ref = React.useRef<HTMLDivElement | null>(null);
+
+    const handleMove = (e: React.MouseEvent) => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      // consider the interactive radius slightly smaller than half width
+      const radius = Math.min(rect.width, rect.height) / 2 * 0.9;
+      if (distance <= radius) {
+        setHoveredCircle(data.id);
+      } else {
+        setHoveredCircle(null);
+      }
+    };
+
+    const handleLeave = () => setHoveredCircle(null);
 
     return (
       <div
+        ref={ref}
         className="relative w-48 h-48    sm:w-56 sm:h-56 lg:w-72 lg:h-72 transition-transform duration-500"
-        onMouseEnter={() => setHoveredCircle(data.id)}
-        onMouseLeave={() => setHoveredCircle(null)}
-        
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
       >
         <svg
           viewBox="0 0 200 200"

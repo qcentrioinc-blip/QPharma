@@ -1,131 +1,240 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
-const items = [
+interface ExploreItem {
+  title: string;
+  image: string;
+  color: string;
+  borderColor: string;
+  textColor: string;
+}
+
+const ITEMS: ExploreItem[] = [
   {
-    title: "Herbal",
-    image:
-      "/Homepage/Organic.png",
+    title: "Organic",
+    image: "/Homepage/Organic.png",
     color: "bg-[#C38046]",
-      borderColor: "#C38046",
+    borderColor: "#C38046",
     textColor: "#C38046",
-
   },
   {
     title: "Nutraceutical",
-    image:
-      "/Homepage/Nutra.png",
+    image: "/Homepage/Nutra.png",
     color: "bg-[#4AA3A7]",
-      borderColor: "#4AA3A7",
+    borderColor: "#4AA3A7",
     textColor: "#4AA3A7",
   },
   {
-    title: "Organic",
-    image:
-      "/Homepage/Herbal.png",
+    title: "Herbal",
+    image: "/Homepage/Herbal.png",
     color: "bg-[#547A3D]",
-       borderColor: "#547A3D",
+    borderColor: "#547A3D",
     textColor: "#547A3D",
   },
 ];
 
-const Explore = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+const ROTATION_ON_HOVER = 25;
+const ROTATION_TRANSITION = {
+  duration: 1.4,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
+function CircularLabel({
+  title,
+  index,
+  textColor,
+  borderColor,
+  rotated,
+}: {
+  title: string;
+  index: number;
+  textColor: string;
+  borderColor: string;
+  rotated: boolean;
+}) {
+  const pathId = `circlePath-${index}`;
 
   return (
-    <section className="w-full py-10 lg:py-20">
-      <div className="mx-auto max-w-8xl ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center group cursor-pointer"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <h3 className=" text-4xl  mb-3">
-    {item.title}
-  </h3>
-              {/* Circle Wrapper */}
-              <div className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[350px] md:h-[350px]">
-                {/* Rotating Circular Text */}
-              <svg
-  viewBox="0 0 300 300"
-  className="absolute inset-0 w-full h-full"
-  style={{
-    transform: `rotate(${hoveredIndex === index ? 360 : 0}deg)`,
-    transition: "transform 3s ease-in-out",
-  }}
->
-  <defs>
-    <path
-      id={`circlePath-${index}`}
-      d="
-        M 150,150
-        m -118,0
-        a 118,118 0 1,1 236,0
-        a 118,118 0 1,1 -236,0
-      "
-    />
-  </defs>
-
-  {/* Outer border circle */}
-<circle cx="150" cy="150" r="145" fill="none" stroke={item.borderColor} strokeWidth="1" />
-
-{/* Inner border circle */}
-<circle cx="150" cy="150" r="108" fill="none" stroke={item.borderColor} strokeWidth="1" />
-
-{/* Text */}
-<text
-  fill={item.textColor}
-  fontSize="13"
-  letterSpacing="4.2"
-  fontWeight="400"
->
-    <textPath
-      href={`#circlePath-${index}`}
-      startOffset="0%"
+    <motion.svg
+      viewBox="0 0 300 300"
+      className="absolute inset-0 w-full h-full"
+      animate={{ rotate: rotated ? ROTATION_ON_HOVER : 0 }}
+      transition={ROTATION_TRANSITION}
+      aria-hidden="true"
     >
-      {`${item.title} • `.repeat(20)}
-    </textPath>
-  </text>
-</svg>
+      <defs>
+        <path
+          id={pathId}
+          d="
+            M 150,150
+            m -118,0
+            a 118,118 0 1,1 236,0
+            a 118,118 0 1,1 -236,0
+          "
+        />
+      </defs>
 
+      {/* Outer border circle */}
+      <circle cx="150" cy="150" r="145" fill="none" stroke={borderColor} strokeWidth="1" />
+      {/* Inner border circle */}
+      <circle cx="150" cy="150" r="108" fill="none" stroke={borderColor} strokeWidth="1" />
 
-{/* Main Circle — inset matches inner border r=108 → inset ~42px */}
-<div className="absolute inset-[48px] rounded-full overflow-hidden shadow-lg">
-  
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 "
-                  />
+      {/* Repeating rotating label */}
+      <text fill={textColor} fontSize="13" letterSpacing="4.2" fontWeight="400">
+        <textPath href={`#${pathId}`} startOffset="0%">
+          {`${title} • `.repeat(20)}
+        </textPath>
+      </text>
+    </motion.svg>
+  );
+}
 
-{/* Hover Overlay — bottom to top reveal */}
-<div
-  className={`absolute inset-0 ${item.color}
-  flex flex-col items-center justify-center
-  text-center p-6
-  transition-[clip-path] duration-500 ease-in-out
-  [clip-path:inset(100%_0_0_0)]
-  group-hover:[clip-path:inset(0%_0_0_0)]`}
->
-  <h3 className="text-white text-xl font-semibold mb-3">
-    {item.title}
-  </h3>
-  <p className="text-white text-sm leading-relaxed">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-  </p>
-</div>
-                  </div>
-                </div>
-              </div>
+/**
+ * A single circular card. `sizeClassName` controls the outer diameter and
+ * `insetClassName` must match it proportionally (inner border sits at 72%
+ * of the outer radius, i.e. r=108/150) so the image ring stays flush
+ * against the inner SVG border at every size this card is used at.
+ */
+function ExploreCard({
+  item,
+  index,
+  sizeClassName,
+  insetClassName,
+}: {
+  item: ExploreItem;
+  index: number;
+  sizeClassName: string;
+  insetClassName: string;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
 
-              
-           
-          ))}
+  return (
+    <div
+      className="flex flex-col items-center group cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className={`relative ${sizeClassName}`}>
+        <CircularLabel
+          title={item.title}
+          index={index}
+          textColor={item.textColor}
+          borderColor={item.borderColor}
+          rotated={isHovered}
+        />
+
+        <div className={`absolute ${insetClassName} rounded-full overflow-hidden shadow-lg`}>
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-500"
+          />
+
+          {/* Hover overlay — bottom to top reveal */}
+          <div
+            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)]`}
+          >
+            <h3 className="text-white text-base sm:text-lg md:text-xl font-semibold mb-1.5 sm:mb-2 md:mb-3">
+              {item.title}
+            </h3>
+            <p className="text-white text-xs sm:text-sm leading-relaxed">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Mobile-only semi-circle arc: center item sits forward and larger,
+ * the two side items sit smaller and lower, mirroring the homepage
+ * CTA arc layout.
+ */
+function MobileArcLayout({ items }: { items: ExploreItem[] }) {
+  const [left, center, right] = items;
+
+  return (
+    <div className="sm:hidden flex justify-center">
+      <div className="relative w-full max-w-[360px] h-[230px]">
+        {/* Left circle */}
+        <div className="absolute left-0 bottom-0">
+          <ExploreCard
+            item={left}
+            index={0}
+            sizeClassName="w-[140px] h-[140px]"
+            insetClassName="inset-[20px]"
+          />
+        </div>
+
+        {/* Center circle */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 z-10">
+          <ExploreCard
+            item={center}
+            index={1}
+            sizeClassName="w-[190px] h-[190px]"
+            insetClassName="inset-[27px]"
+          />
+        </div>
+
+        {/* Right circle */}
+        <div className="absolute right-0 bottom-0">
+          <ExploreCard
+            item={right}
+            index={2}
+            sizeClassName="w-[140px] h-[140px]"
+            insetClassName="inset-[20px]"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Tablet (sm–lg): a single horizontal row, sized to fit three circles side by side. */
+function TabletRowLayout({ items }: { items: ExploreItem[] }) {
+  return (
+    <div className="hidden sm:flex lg:hidden justify-center items-end gap-6 md:gap-10">
+      {items.map((item, index) => (
+        <ExploreCard
+          key={item.title}
+          item={item}
+          index={index}
+          sizeClassName="w-[190px] h-[190px] md:w-[230px] md:h-[230px]"
+          insetClassName="inset-[27px] md:inset-[33px]"
+        />
+      ))}
+    </div>
+  );
+}
+
+/** Desktop (lg+): original evenly-spaced grid. */
+function DesktopGridLayout({ items }: { items: ExploreItem[] }) {
+  return (
+    <div className="hidden lg:grid grid-cols-3 gap-10 place-items-center">
+      {items.map((item, index) => (
+        <ExploreCard
+          key={item.title}
+          item={item}
+          index={index}
+          sizeClassName="w-[350px] h-[350px]"
+          insetClassName="inset-[49px]"
+        />
+      ))}
+    </div>
+  );
+}
+
+const Explore = () => {
+  return (
+    <section className="w-full py-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <MobileArcLayout items={ITEMS} />
+        <TabletRowLayout items={ITEMS} />
+        <DesktopGridLayout items={ITEMS} />
       </div>
     </section>
   );

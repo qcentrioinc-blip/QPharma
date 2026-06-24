@@ -3,10 +3,10 @@
 const LorumTextAnim = () => {
   // Vertically stacked rows matching the layout from top to bottom
   // Array matching layout from top to bottom
-  const rows = ["M", "E", "R", "O", "L"];
-  
+const desktopRows = ["Z", "E", "P", "H", "Y", "R"];
+const mobileRows = [...desktopRows].reverse();
   // 0 represents the solid letter, 1-3 represent the outline letters
-  const columns = [0, 1, 2, 3];
+  const columns = [0, 1, 2, 3, 4];
 
   return (
     <div className="  w-full bg-white text-black flex items-center justify-center p-6  ">
@@ -29,37 +29,39 @@ const LorumTextAnim = () => {
         {/* RIGHT ARTISTIC SECTION (WITH CORRECT CELL ROTATION) */}
      <div className="flex justify-center lg:justify-end order-1 lg:order-2 select-none w-full">
           {/* Vertical Grid Container */}
-          <div className="flex flex-col">
-            {rows.map((letter, rowIndex) => (
-              <div key={rowIndex} className="flex flex-row">
-                {columns.map((colIndex) => (
-                  <div
-                    key={colIndex}
-                    className="
-                      w-14 h-14 sm:w-20 sm:h-20 md:w-20 md:h-22 font-serif
-                      font-extrabold
-                      flex items-center justify-center 
-                      text-5xl sm:text-7xl md:text-8xl 
-                       tracking-tighter
-                    "
-                  >
-                    <span
-                      className={`transform  -rotate-90 inline-block ${
-                        colIndex === 0 ? "text-black" : "text-transparent"
-                      }`}
-                      style={
-                        colIndex > 0
-                          ? { WebkitTextStroke: "1px rgba(0, 0, 0, 0.85)" }
-                          : {}
-                      }
-                    >
-                      {letter}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ))}
+         <div className="flex flex-col">
+  {(window.innerWidth < 640 ? mobileRows : desktopRows).map(
+    (letter, rowIndex) => (
+      <div key={rowIndex} className="flex flex-row">
+        {columns.map((colIndex) => (
+          <div
+            key={colIndex}
+            className="
+              w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-22
+              font-serif font-extrabold
+              flex items-center justify-center
+              text-5xl sm:text-7xl md:text-8xl
+              tracking-tighter
+            "
+          >
+            <span
+              className={`transform xl:-rotate-90 inline-block ${
+                colIndex === 0 ? "text-black" : "text-transparent"
+              }`}
+              style={
+                colIndex > 0
+                  ? { WebkitTextStroke: "1px rgba(0,0,0,0.85)" }
+                  : {}
+              }
+            >
+              {letter}
+            </span>
           </div>
+        ))}
+      </div>
+    )
+  )}
+</div>
         </div>
 
       </div>
