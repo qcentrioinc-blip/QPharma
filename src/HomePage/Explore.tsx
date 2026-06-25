@@ -162,7 +162,7 @@ function MobileArcLayout({ items }: { items: ExploreItem[] }) {
 
   return (
     <div className="sm:hidden flex justify-center">
-      <div className="relative w-full max-w-[360px] h-[220px]">
+      <div className="relative w-full max-w-90 h-55">
         {/* Left circle — glides out from behind center to its arc position */}
         <motion.div
           className="absolute bottom-0 z-10"

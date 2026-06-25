@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const products = [
   {
     id: 1,
-    title: "HERBAL MEDICI ",
+    title: "HERBAL MEDICINE ",
     description:
       "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
     color: "#3FB369",
@@ -21,7 +21,7 @@ const products = [
   },
   {
     id: 3,
-    title: "ORGANIC MEDIC",
+    title: "ORGANIC MEDICINE",
     description:
       "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
     color: "#F99526",
@@ -167,10 +167,10 @@ const MainSec: React.FC = () => {
         duration: 0.8,
         ease: "easeInOut",
       }}
-      className="relative overflow-hidden h-screen"
+      className="relative overflow-hidden  h-screen"
     >
       {/* Glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-0  flex items-center justify-center">
         <motion.div
           key={product.id}
           initial={{
@@ -210,6 +210,8 @@ const MainSec: React.FC = () => {
                 duration: 0.7,
               }}
               className="
+               pt-10
+              text-nowrap
                 font-bricolage
                 font-extrabold
                 leading-none
@@ -238,7 +240,7 @@ const MainSec: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.1 }}
-              className="text-lg leading-relaxed text-white md:text-xl"
+              className="text-md  leading-relaxed text-white md:text-md"
             >
               {product.description}
             </motion.p>
@@ -297,7 +299,7 @@ const MainSec: React.FC = () => {
           {/* Fixed Orbit */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <svg
-              className="absolute h-[360px] w-[900px] translate-y-6 -rotate-6"
+              className="absolute h-[360px] w-[900px] translate-y-16 -rotate-6"
               viewBox="0 0 1200 420"
               fill="none"
             >
@@ -322,7 +324,7 @@ const MainSec: React.FC = () => {
               which is what produced the abrupt "glitchy" snap, especially
               when a transition was interrupted mid-flight. */}
           <div
-            className="relative z-20 -translate-y-10 md:-translate-y-16 lg:-translate-y-28"
+            className="relative z-20 -translate-y-10 md:-translate-y-16 lg:-translate-y-20"
             style={{ perspective: 1200 }}
           >
             <AnimatePresence mode="popLayout" custom={direction} initial={false}>

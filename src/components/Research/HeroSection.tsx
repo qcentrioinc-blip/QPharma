@@ -33,7 +33,7 @@ const HeroSection: React.FC = () => {
   return (
     <section className="relative w-full ">
       {/* Top Content Area - Heading and Description */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 pt-6 lg:pt-10 pb-0">
+      <div className="w-full px-4  xl:pt-24 sm:px-6 xl:px-8 pt-28   pb-0">
         <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16 lg:mb-20">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
             Find the project you love
