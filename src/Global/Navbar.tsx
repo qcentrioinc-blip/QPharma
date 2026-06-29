@@ -19,8 +19,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-transparent backdrop-blur-md sticky top-0 z-[100] px-4 md:px-8 py-2 border-b border-gray-100">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+    <nav className="w-full bg-transparent backdrop-blur-md sticky top-0 z-[100] px-3 md:px-6 py-2 border-b border-gray-100">
+      <div className="max-w-[1440px] shadow-sm mx-auto flex items-center justify-between gap-2 md:gap-4">
 
         {/* Left - Navigation Pill */}
         <div className="hidden lg:flex items-center bg-[#F1F3F4] rounded-full px-1.5 py-1 shadow-sm">
@@ -31,7 +31,7 @@ const Navbar = () => {
                 <Link
                   to={link.path}
                   className={`
-                                        flex items-center gap-1.5 px-6 py-2.5 rounded-full text-[14.5px] font-medium transition-all duration-300
+                                        flex items-center gap-1.5 px-3 xl:px-6 py-2.5 rounded-full text-[13px] xl:text-[14.5px] font-medium transition-all duration-300 whitespace-nowrap
                                         ${isActive
                       ? 'bg-[#2D2E32] text-white'
                       : 'text-[#4A4B4F] hover:text-black'
@@ -70,9 +70,9 @@ const Navbar = () => {
         </div>
 
         {/* Right - Actions */}
-        <div className="flex items-center gap-3 md:gap-5">
+        <div className="flex items-center gap-2 md:gap-4">
           {/* Search Bar Pill */}
-          <div className="hidden sm:flex items-center bg-[#F1F3F4] rounded-full px-5 py-2.5 w-[200px] md:w-[280px] group focus-within:bg-[#E8EAED] transition-all duration-300">
+          <div className="hidden sm:flex items-center bg-[#F1F3F4] rounded-full px-4 py-2.5 w-[140px] lg:w-[180px] xl:w-[280px] group focus-within:bg-[#E8EAED] transition-all duration-300">
             <input
               type="text"
               placeholder="Search"
@@ -83,7 +83,8 @@ const Navbar = () => {
 
           {/* Icons */}
           <div className="flex items-center gap-2">
-            <button
+            <Link
+              to="/payment"
               className="p-3 text-black hover:bg-[#F1F3F4] rounded-full transition-all relative group"
               aria-label="Shopping Cart"
             >
@@ -93,7 +94,7 @@ const Navbar = () => {
                   {itemCount}
                 </span>
               )}
-            </button>
+            </Link>
 
             <Link
               to="/login"

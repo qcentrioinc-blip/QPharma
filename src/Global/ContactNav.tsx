@@ -1,10 +1,10 @@
- 
+
 import { FiSearch, FiShoppingCart, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./UseCart";
- 
+
 
 
 
@@ -269,25 +269,25 @@ const ContactNav = () => {
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
               className="lg:hidden text-2xl text-black"
-            >   
+            >
               {mobileMenu ? <FiX /> : <FiMenu />}
             </button>
 
             {/* Left Nav */}
             <div className="hidden lg:flex items-center gap-8 text-[15px] text-[#2c2c2c]">
               <Link to="/">
-              <button    className="bg-[#0f6c8d] text-white px-5 py-2 rounded-full font-medium">
-                {t.home}
-              </button>
+                <button className="bg-[#0f6c8d] text-white px-5 py-2 rounded-full font-medium">
+                  {t.home}
+                </button>
               </Link>
               <button className="hover:text-[#0f6c8d] transition-all">
                 <a href="/help-center">
-                {t.helpCenter}
+                  {t.helpCenter}
                 </a>
               </button>
               <button className="hover:text-[#0f6c8d] transition-all">
                 <a href="/customer-service">
-                {t.customerService}
+                  {t.customerService}
                 </a>
               </button>
             </div>
@@ -317,20 +317,20 @@ const ContactNav = () => {
                 <FiSearch />
               </button>
 
-              <div className="relative">
-  <FiShoppingCart className="text-2xl" />
+              <Link to="/payment" className="relative cursor-pointer">
+                <FiShoppingCart className="text-2xl" />
 
-  {cartCount > 0 && (
-    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-      {cartCount}
-    </span>
-  )}
-</div>
-             <Link to="/profile">
-  <button className="text-[34px] text-black hover:text-[#0f6c8d] transition-all">
-    <FaUserCircle />
-  </button>
-</Link>
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+              <Link to="/profile">
+                <button className="text-[34px] text-black hover:text-[#0f6c8d] transition-all">
+                  <FaUserCircle />
+                </button>
+              </Link>
             </div>
           </div>
 

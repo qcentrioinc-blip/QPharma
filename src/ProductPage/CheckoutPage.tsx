@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import Navbar from "../Global/Navbar";
 import Footer from "../Global/Footer";
@@ -100,6 +100,7 @@ export default function CheckoutPage() {
         return Object.keys(newErrors).length === 0;
     };
 
+    const navigate = useNavigate();
     const handlePlaceOrder = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -120,7 +121,7 @@ export default function CheckoutPage() {
                 totalPrice,
                 shippingInfo: { ...formData },
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                status: "Processing"
+                status: "Order Placed"
             };
 
             const existingOrders = JSON.parse(localStorage.getItem("qpharma_orders") || "[]");
@@ -129,42 +130,31 @@ export default function CheckoutPage() {
             setIsProcessing(false);
             setIsSuccess(true);
             clearCart();
+
+            // Redirect to track order after a short delay
+            setTimeout(() => {
+                navigate(`/track-order/${orderId}`);
+            }, 1500);
         }, 2000);
     };
 
     if (isSuccess) {
         return (
-            <div className="min-h-screen bg-[#f8f7f3]">
+            <div className="min-h-screen bg-[#f8f7f3] flex flex-col">
                 <Navbar />
-                <div className="mx-auto flex max-w-[600px] flex-col items-center px-4 py-20 text-center">
-                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#5B9740] shadow-lg shadow-[#5B9740]/20">
-                        <CheckIcon />
-                    </div>
-                    <h1 style={titleFont} className="mb-3 text-[36px] font-bold text-[#1E4734]">Order Placed Successfully!</h1>
-                    <p className="mb-8 text-[18px] text-[#4a5a42]">
-                        Thank you for your purchase. Your health is our priority.
-                    </p>
-                    <div className="mb-10 w-full rounded-2xl bg-white p-8 shadow-sm border border-[#e8e8e8]">
-                        <p className="text-sm font-medium uppercase tracking-widest text-[#999]">Order ID</p>
-                        <p className="mt-1 text-[24px] font-bold text-[#1E4734]">{orderId}</p>
-                        <hr className="my-6 border-[#f0f0f0]" />
-                        <p className="text-[15px] text-[#666]">
-                            A confirmation email has been sent to your registered email address with all the details ({formData.email}).
+                <div className="flex-1 flex items-center justify-center p-6">
+                    <div className="max-w-[500px] w-full bg-white rounded-[32px] p-10 shadow-xl border border-[#e8e8e8] text-center animate-in fade-in zoom-in duration-500">
+                        <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#5B9740] shadow-2xl shadow-[#5B9740]/30 animate-bounce">
+                            <CheckIcon />
+                        </div>
+                        <h1 style={titleFont} className="mb-4 text-[38px] font-bold text-[#1E4734]">Payment Successful!</h1>
+                        <p className="text-[17px] text-[#4a5a42] mb-8 font-medium">
+                            Thank you for choosing QPharma. Redirecting you to track your order...
                         </p>
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Link
-                            to="/productpage"
-                            className="rounded-full border-2 border-[#1E4734] bg-transparent px-10 py-3.5 text-[16px] font-bold text-[#1E4734] transition-all hover:bg-[#1E4734]/5"
-                        >
-                            Continue Shopping
-                        </Link>
-                        <Link
-                            to={`/track-order/${orderId}`}
-                            className="rounded-full bg-[#1E4734] px-10 py-3.5 text-[16px] font-bold text-white transition-all hover:bg-[#153325] hover:shadow-xl"
-                        >
-                            Track Order
-                        </Link>
+                        <div className="w-full bg-[#f8f9fa] rounded-2xl p-6 border border-[#f0f0f0]">
+                            <p className="text-xs font-bold uppercase tracking-widest text-[#999] mb-1">Confirmation ID</p>
+                            <p className="text-[24px] font-black text-[#1E4734]">{orderId}</p>
+                        </div>
                     </div>
                 </div>
                 <Footer />

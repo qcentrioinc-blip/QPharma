@@ -118,29 +118,29 @@ export default function OrganicItemList() {
 
   return (
     <section className="w-full bg-white py-6 md:py-8">
-      <div className="mx-auto w-full  px-4 md:px-6">
-        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-[42px] lg:gap-y-[46px]">
+      <div className="mx-auto w-full px-4 md:px-6 max-w-[1440px]">
+        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 lg:gap-x-6 xl:gap-x-[42px] lg:gap-y-10 xl:gap-y-[46px]">
           {items.slice(0, 4).map((item) => (
             <ProductCard key={item.id} item={item} />
           ))}
 
           {/* Enquiries Sidebar - Colors change based on category */}
           <aside
-            className="rounded-[20px] px-[18px] pb-[18px] pt-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+            className="rounded-[20px] px-3 xl:px-[22px] pb-[18px] pt-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             style={{ backgroundColor: colors.enquiresBgColor }}
           >
-            <h2 className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-black">
+            <h2 className="text-[20px] xl:text-[24px] font-semibold leading-none tracking-[-0.03em] text-black">
               For Enquiries
             </h2>
 
-            <div className="mt-[10px] space-y-[6px] text-[15px] leading-[1.18] text-[#303030]">
+            <div className="mt-[10px] space-y-[6px] text-[13px] xl:text-[15px] leading-tight text-[#303030]">
               <p>Lorum Ipsum Lorum ipsum</p>
               <p>Lorum Ipsum Lorum.</p>
             </div>
 
             <ul className="mt-[10px] space-y-[8px]">
               {['Lorum Ipsum Lorum.', 'Lorum Ipsum Lorum.'].map((text, idx) => (
-                <li key={idx} className="flex items-center gap-[9px] text-[14px] text-[#3b3b3b]">
+                <li key={idx} className="flex items-start gap-[9px] text-[12.5px] xl:text-[14px] text-[#3b3b3b]">
                   <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#2d2d2d] text-[#2d2d2d]">
                     <svg
                       viewBox="0 0 24 24"
@@ -170,7 +170,7 @@ export default function OrganicItemList() {
               {/* Connect Us Button - Color changes based on category */}
               <button
                 type="button"
-                className="flex h-[42px] w-full items-center justify-center rounded-[10px] text-[16px] font-semibold text-white shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)] transition-all hover:opacity-90"
+                className="flex h-[42px] w-full items-center justify-center rounded-[10px] text-[14px] xl:text-[16px] font-semibold text-white shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)] transition-all hover:opacity-90 whitespace-nowrap px-2"
                 style={{ backgroundColor: colors.ctaButtonColor }}
               >
                 Connect Us
@@ -179,7 +179,7 @@ export default function OrganicItemList() {
               {/* Download Catalog Button - Border color changes based on category */}
               <button
                 type="button"
-                className="flex h-[42px] w-full items-center justify-center rounded-[10px] border-2 bg-transparent text-[16px] font-semibold transition-all hover:opacity-90"
+                className="flex h-[42px] w-full items-center justify-center rounded-[10px] border-2 bg-transparent text-[14px] xl:text-[16px] font-semibold transition-all hover:opacity-90 whitespace-nowrap px-2"
                 style={{
                   borderColor: colors.ctaButtonColor,
                   color: colors.ctaButtonColor,
@@ -190,7 +190,7 @@ export default function OrganicItemList() {
             </div>
           </aside>
 
-    
+
 
           {items.slice(4).map((item) => (
             <ProductCard key={item.id} item={item} />
