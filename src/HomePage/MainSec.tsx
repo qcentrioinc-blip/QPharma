@@ -1,85 +1,159 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const products = [
   {
     id: 1,
-    title: "Herbal Medicine",
+    title: "HERBAL MEDICINE ",
+    description:
+      "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
     color: "#3FB369",
     image: "/Homepage/HerbalBottle.png",
   },
   {
     id: 2,
-    title: "Nutraceuticals",
+    title: "NUTRACEUTICALS",
+    description:
+      "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality.",
     color: "#247D7D",
     image: "/Homepage/NutraBottle.png",
   },
   {
     id: 3,
-    title: "Organic Medi",
+    title: "ORGANIC MEDICINE",
+    description:
+      "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
     color: "#F99526",
     image: "/Homepage/OrganicBottle.png",
   },
 ];
 
+const AUTOPLAY_DELAY = 5000;
+const TRANSITION_DURATION = 900; // ms, matches the framer-motion transition below
+
 const MainSec: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const nextSlide = () => {
-    setDirection(1);
-    setCurrent((prev) => (prev + 1) % products.length);
+  // Refs avoid the stale-closure problem that state has inside setInterval /
+  // rapid-fire click handlers. The ref is always read synchronously and is
+  // the single source of truth for "are we mid-transition right now".
+  const isAnimatingRef = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const unlockTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearAutoplay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
   };
 
-  const prevSlide = () => {
-    setDirection(-1);
-
-    setCurrent((prev) =>
-      prev === 0 ? products.length - 1 : prev - 1
-    );
+  const startAutoplay = () => {
+    clearAutoplay();
+    intervalRef.current = setInterval(() => {
+      goToSlide((c) => (c + 1) % products.length, 1);
+    }, AUTOPLAY_DELAY);
   };
+
+  // Central, race-condition-safe slide changer. Every navigation path
+  // (autoplay, prev/next buttons, indicator dots) goes through this.
+  const goToSlide = (
+    resolveIndex: (current: number) => number,
+    dir: number
+  ) => {
+    if (isAnimatingRef.current) return;
+
+    isAnimatingRef.current = true;
+    setIsAnimating(true);
+    setDirection(dir);
+    setCurrent(resolveIndex);
+
+    // Safety-net unlock: in case onAnimationComplete never fires (e.g. tab
+    // backgrounded, animation interrupted by unmount), don't leave the
+    // carousel stuck locked forever.
+    if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
+    unlockTimeoutRef.current = setTimeout(() => {
+      isAnimatingRef.current = false;
+      setIsAnimating(false);
+    }, TRANSITION_DURATION + 150);
+  };
+
+  const handleAnimationComplete = () => {
+    if (unlockTimeoutRef.current) {
+      clearTimeout(unlockTimeoutRef.current);
+      unlockTimeoutRef.current = null;
+    }
+    isAnimatingRef.current = false;
+    setIsAnimating(false);
+  };
+
+  const nextSlide = () => goToSlide((c) => (c + 1) % products.length, 1);
+  const prevSlide = () =>
+    goToSlide((c) => (c === 0 ? products.length - 1 : c - 1), -1);
+
+  const goToIndex = (index: number) => {
+    if (index === current) return;
+    goToSlide(() => index, index > current ? 1 : -1);
+  };
+
+  // Autoplay: starts on mount, restarts every time the user manually
+  // navigates so a manual click never races against a pending tick.
+  useEffect(() => {
+    startAutoplay();
+    return clearAutoplay;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 7000);
-
-    return () => clearInterval(timer);
+    return () => {
+      clearAutoplay();
+      if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
+    };
   }, []);
 
   const product = products[current];
 
   const imageVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 450 : -450,
-      y: 150,
-      rotate: direction > 0 ? 18 : -18,
-      scale: 0.8,
+    enter: (dir: number) => ({
+      x: dir > 0 ? 300 : -300,
+      y: 60,
+      scale: 0.45,
+      rotateY: dir > 0 ? 35 : -35,
+      rotateZ: dir > 0 ? 8 : -8,
       opacity: 0,
+      filter: "blur(8px)",
     }),
 
     center: {
       x: 0,
       y: 0,
-      rotate: 0,
       scale: 1,
+      rotateY: 0,
+      rotateZ: 0,
       opacity: 1,
+      filter: "blur(0px)",
+
       transition: {
-        duration: 1,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: 0.9,
+        ease: [0.25, 1, 0.5, 1] as const,
       },
     },
 
-    exit: (direction: number) => ({
-      x: direction > 0 ? -450 : 450,
-      y: -150,
-      rotate: direction > 0 ? -18 : 18,
-      scale: 0.8,
+    exit: (dir: number) => ({
+      x: dir > 0 ? -300 : 300,
+      y: 60,
+      scale: 0.45,
+      rotateY: dir > 0 ? -35 : 35,
+      rotateZ: dir > 0 ? -8 : 8,
       opacity: 0,
+      filter: "blur(8px)",
+
       transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: 0.9,
+        ease: [0.25, 1, 0.5, 1] as const,
       },
     }),
   };
@@ -93,13 +167,10 @@ const MainSec: React.FC = () => {
         duration: 0.8,
         ease: "easeInOut",
       }}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden  h-screen"
     >
-      {/* Background Circle */}
-      <div className="absolute left-1/2 -top-[500px] h-[2000px] w-[2000px] -translate-x-1/2 rounded-full bg-white opacity-10" />
-
       {/* Glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-0  flex items-center justify-center">
         <motion.div
           key={product.id}
           initial={{
@@ -113,15 +184,14 @@ const MainSec: React.FC = () => {
           transition={{
             duration: 1.2,
           }}
-          className="absolute h-[500px] w-[500px] rounded-full bg-white/70 blur-[220px]"
+          className="absolute h-[900px] w-[900px] rounded-full bg-white/50 blur-[220px]"
         />
-
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-6 pt-12 lg:px-16">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-6 pt-12 lg:px-16 h-full">
         {/* Heading */}
         <div className="flex justify-center">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.h1
               key={product.id}
               initial={{
@@ -139,7 +209,22 @@ const MainSec: React.FC = () => {
               transition={{
                 duration: 0.7,
               }}
-              className="font-bricolage text-[64px] font-extrabold leading-none text-white/30 md:text-[100px] lg:text-[150px]"
+              className="
+               pt-10
+              text-nowrap
+                font-bricolage
+                font-extrabold
+                leading-none
+                text-white/30
+                text-[52px]
+                sm:text-[70px]
+                md:text-[90px]
+                lg:text-[92px]
+                xl:text-[140px]
+                2xl:text-[150px]
+                text-center
+                px-4
+              "
             >
               {product.title}
             </motion.h1>
@@ -148,22 +233,20 @@ const MainSec: React.FC = () => {
 
         {/* Description */}
         <div className="mt-8 max-w-md">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={`desc-${product.id}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.1 }}
-              className="text-lg leading-relaxed text-white md:text-xl"
+              className="text-md  leading-relaxed text-white md:text-md"
             >
-              Crafted with premium ingredients and backed by quality standards,
-              our wellness solutions support healthier lifestyles and long-term
-              well-being for modern consumers.
+              {product.description}
             </motion.p>
           </AnimatePresence>
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.button
               key={`btn-${product.id}`}
               initial={{ opacity: 0, y: 20 }}
@@ -187,26 +270,36 @@ const MainSec: React.FC = () => {
         {/* Navigation */}
         <div className="hidden lg:block">
           <button
+            type="button"
             onClick={prevSlide}
-            className="absolute left-6 top-[58%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10"
+            disabled={isAnimating}
+            aria-label="Previous product"
+            className={`absolute left-6 top-[80%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+              isAnimating ? "opacity-50 pointer-events-none" : ""
+            }`}
           >
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
 
           <button
+            type="button"
             onClick={nextSlide}
-            className="absolute right-6 top-[58%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10"
+            disabled={isAnimating}
+            aria-label="Next product"
+            className={`absolute right-6 top-[80%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+              isAnimating ? "opacity-50 pointer-events-none" : ""
+            }`}
           >
             <ArrowRight className="h-5 w-5 text-white" />
           </button>
         </div>
 
         {/* Product Area */}
-        <div className="relative mt-4 flex h-[340px] justify-center">
+        <div className="relative -mt-32 flex h-[380px] md:h-[420px] lg:h-[500px] justify-center">
           {/* Fixed Orbit */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <svg
-              className="absolute h-[420px] w-[1000px] -translate-y-4 -rotate-6"
+              className="absolute h-[360px] w-[900px] translate-y-16 -rotate-6"
               viewBox="0 0 1200 420"
               fill="none"
             >
@@ -225,50 +318,68 @@ const MainSec: React.FC = () => {
           </div>
 
           {/* Product Image */}
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={product.id}
-              custom={direction}
-              variants={imageVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="relative z-20 -translate-y-20 md:-translate-y-28 lg:-translate-y-64"
-            >
-              <img
-                src={product.image}
-                alt={product.title}
-                className="
-                  pointer-events-none
-                  select-none
-                  w-[320px]
-                  object-contain
-                  drop-shadow-[0_40px_80px_rgba(0,0,0,0.18)]
-                  md:w-[480px]
-                  lg:w-[520px]
-                "
-              />
-            </motion.div>
-          </AnimatePresence>
+          {/* `perspective` must live on a non-animating PARENT wrapper.
+              Putting it on the same element that rotates (as the old code
+              did) means the rotation has no real depth to project onto,
+              which is what produced the abrupt "glitchy" snap, especially
+              when a transition was interrupted mid-flight. */}
+          <div
+            className="relative z-20 -translate-y-10 md:-translate-y-16 lg:-translate-y-20"
+            style={{ perspective: 1200 }}
+          >
+            <AnimatePresence mode="popLayout" custom={direction} initial={false}>
+              <motion.div
+                key={product.id}
+                custom={direction}
+                variants={imageVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                onAnimationComplete={handleAnimationComplete}
+                style={{
+                  transformStyle: "preserve-3d",
+                  willChange: "transform, opacity, filter",
+                  backfaceVisibility: "hidden",
+                }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  draggable={false}
+                  className="
+                    pointer-events-none
+                    select-none
+                    w-[180px]
+                    sm:w-[220px]
+                    md:w-[320px]
+                    lg:w-[420px]
+                    xl:w-[480px]
+                    object-contain
+                    drop-shadow-[0_50px_100px_rgba(0,0,0,0.25)]
+                  "
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
+      </div>
 
-        {/* Indicators */}
-        <div className="flex justify-center gap-3 pb-10">
-          {products.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setDirection(index > current ? 1 : -1);
-                setCurrent(index);
-              }}
-              className={`h-2 rounded-full transition-all duration-500 ${
-                current === index
-                  ? "w-10 bg-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
-                  : "w-2 bg-white/50"
-              }`}
-            />
-          ))}
-        </div>
+      {/* Indicators (bottom-right) */}
+      <div className="absolute right-6 bottom-6 flex gap-3 z-30">
+        {products.map((_, index) => (
+          <button
+            type="button"
+            key={index}
+            onClick={() => goToIndex(index)}
+            disabled={isAnimating}
+            aria-label={`Go to slide ${index + 1}`}
+            className={`h-2 rounded-full transition-all duration-500 ${
+              current === index
+                ? "w-10 bg-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
+                : "w-2 bg-white/50"
+            } ${isAnimating ? "pointer-events-none" : ""}`}
+          />
+        ))}
       </div>
     </motion.section>
   );

@@ -15,7 +15,7 @@ const Content = () => {
   
 
   {/* Content */}
-  <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 flex items-center justify-between gap-8 min-h-[420px]">
+  <div className="relative z-10 max-w-7xl   pt-28 xl:pt-24 mx-auto px-6 sm:px-8 lg:px-12 py-10 flex items-center justify-between gap-8 min-h-[420px]">
 
     {/* Left Text */}
     <div className="max-w-lg">

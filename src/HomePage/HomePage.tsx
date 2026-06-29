@@ -1,5 +1,6 @@
+
 // import Navbar from '../Global/Navbar';
-import Footer from '../Global/Footer';
+
 // import AboutSection from './AboutSection';
 
 
@@ -12,33 +13,39 @@ import FAQ from './FAQ';
 
 import CTA from './CTA';
 import Delivery from './Delivery';
-// import MainSec from './HeroCarousal/MainSec';
 import MainSec from './MainSec';
 import JointPain from './JointPain';
-import Para from './Para';
+// import Para from './Para';
+// import NewFooter from '../Global/NewFooter';
+import ShowreelSection from './ShowreelSection';
+import FeaturesSection from './FeaturesSection';
 
 const HomePage = () => {
     return (
-        <div className="min-h-screen bg-white">
+  
+           
+        <div className="min-h-screen">
             {/* <Navbar /> */}
             <main>
                 {/* <Zephyr /> */}
                 <MainSec/>
-                {/* <MainSec/> */}
-                {/* <AboutSection /> */}
-
                 <JointPain />
                 {/* <AboutSection /> */}
               
                 <Explore />
-                  <Para/> 
+                <FeaturesSection/>
+                <ShowreelSection/>
+                  {/* <Para/>  */}
                 {/* <Production /> */}
                <CTA />
                <Delivery />
                 <FAQ />
                 <RelatedArticles />
-            </main>
-            <Footer />
+            </main> 
+         
+         
+            
+            {/* <NewFooter /> */}
           
         </div>
     );

@@ -34,6 +34,8 @@ import Production from './components/Production/Production'
 import Contact from './Global/ContactPage/Contact'
 import UserProfile from './components/UserProfile/UserProfile'
 import CookiePolicy from './Global/CookiePolicy/CookiePolicy'
+import Footer from './Global/Footer'
+import Navbar from './Global/Navbar'
 
 function App() {
   return (
@@ -41,51 +43,53 @@ function App() {
       <CartProvider>
         <BrowserRouter>
 
-          <Routes>
+          <div className="relative">
+            <Navbar />
+            <Routes>
 
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<AuthPage />} />
-            <Route path="/login" element={<AuthPage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<AuthPage />} />
+              <Route path="/login" element={<AuthPage />} />
 
-            {/* Privacy Route */}
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/cookies" element={<CookiePolicy />} />
+              {/* Privacy Route */}
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/cookies" element={<CookiePolicy />} />
 
-            {/* Product Detail Route */}
-            <Route path="/product/:slug" element={<ProductDetail />} />
+              {/* Product Detail Route */}
+              <Route path="/product/:slug" element={<ProductDetail />} />
 
-            {/* research route */}
+              {/* research route */}
 
-            <Route path="/research" element={<Research />} />
+              <Route path="/research" element={<Research />} />
 
-            {/* Production Route  */}
+              {/* Production Route  */}
 
-            <Route path="/production" element={<Production />} />
+              <Route path="/production" element={<Production />} />
 
-            {/* ContactPage */}
+              {/* ContactPage */}
 
-            <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Contact />} />
 
-            {/* user profile */}
-            <Route path="/user-profile" element={<UserProfile />} />
-            {/* Payments */}
-            <Route path="/payment" element={<PaymentGate />} />
+              {/* user profile */}';'
+              <Route path="/user-profile" element={<UserProfile />} />
+              {/* Payments */}
+              <Route path="/payment" element={<PaymentGate />} />
 
-            {/* Blog Routes */}
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogDetailPage />} />  {/* dynamic URL */}
-            <Route path="/aboutus" element={<AboutUS />} />
-
-
-
-            <Route path="/aboutus" element={<AboutUS />} />
-            {/* Product Page Route */}
-            <Route path="/productpage" element={<ProductPage />} />
+              {/* Blog Routes */}
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogDetailPage />} />  {/* dynamic URL */}
+              <Route path="/aboutus" element={<AboutUS />} />
 
 
-            {/* conditional rendeing  */}
-            {/* <Route path="/organic" element={<OrganicPage/>} />
+
+              <Route path="/aboutus" element={<AboutUS />} />
+              {/* Product Page Route */}
+              <Route path="/productpage" element={<ProductPage />} />
+
+
+              {/* conditional rendeing  */}
+              {/* <Route path="/organic" element={<OrganicPage/>} />
 
         <Route path="/herbal" element={<HerbalPage />} />
 
@@ -94,20 +98,26 @@ function App() {
           element={<NutraceuticalPage />}
         /> */}
 
-            {/* Checkout Route */}
-            <Route path="/checkout/:orderId" element={<CheckoutPage />} />
+              {/* Checkout Route */}
+              <Route path="/checkout/:orderId" element={<CheckoutPage />} />
 
-            {/* Track Order Route */}
-            <Route path="/track-order" element={<TrackOrder />} />
-            <Route path="/track-order/:orderId" element={<TrackOrder />} />
+              {/* Track Order Route */}
+              <Route path="/track-order" element={<TrackOrder />} />
+              <Route path="/track-order/:orderId" element={<TrackOrder />} />
 
-            <Route path="/:category" element={<Organic />} />
+              <Route path="/:category" element={<Organic />} />
 
-            {/* Help & Support Routes */}
-            <Route path="/help-center" element={<HelpCenter />} />
-            <Route path="/customer-service" element={<CustomerService />} />
+              {/* Help & Support Routes */}
+              <Route path="/help-center" element={<HelpCenter />} />
+              <Route path="/customer-service" element={<CustomerService />} />
 
-          </Routes>
+              {/* New Routes */}
+              {/* <Route path="/production" element={<ProductionPage />} /> */}
+              {/* <Route path="/rnd" element={<RnDPage />} /> */}
+
+            </Routes>
+            <Footer />
+          </div>
         </BrowserRouter>
 
         {/* <div>

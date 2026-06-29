@@ -1,9 +1,9 @@
 
-import { FiSearch, FiShoppingCart, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
-import { FaUserCircle } from "react-icons/fa";
+import { FiChevronDown } from "react-icons/fi";
+// import { FaUserCircle } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useCart } from "./UseCart";
+// import { Link } from "react-router-dom";
+// import { useCart } from "./UseCart";
 
 
 
@@ -204,10 +204,10 @@ function PillDropdown<T extends DropdownOption>({ options, selected, onSelect, k
 // MAIN NAVBAR
 // ─────────────────────────────────────────────────────────────────────────────
 const ContactNav = () => {
-  const [mobileMenu, setMobileMenu] = useState(false);
+
   const [currency, setCurrency] = useState(CURRENCIES[0]);
   const [language, setLanguage] = useState(LANGUAGES[0]);
-  const { cartCount } = useCart();
+ 
 
   // Apply dir + lang to document when language changes
   useEffect(() => {
@@ -261,139 +261,7 @@ const ContactNav = () => {
           </div>
         </div>
 
-        {/* ── Main Navbar ─────────────────────────────────────────────────── */}
-        <div className="px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
-          <div className="flex items-center justify-between gap-4">
-
-            {/* Mobile menu toggle */}
-            <button
-              onClick={() => setMobileMenu(!mobileMenu)}
-              className="lg:hidden text-2xl text-black"
-            >
-              {mobileMenu ? <FiX /> : <FiMenu />}
-            </button>
-
-            {/* Left Nav */}
-            <div className="hidden lg:flex items-center gap-8 text-[15px] text-[#2c2c2c]">
-              <Link to="/">
-                <button className="bg-[#0f6c8d] text-white px-5 py-2 rounded-full font-medium">
-                  {t.home}
-                </button>
-              </Link>
-              <button className="hover:text-[#0f6c8d] transition-all">
-                <a href="/help-center">
-                  {t.helpCenter}
-                </a>
-              </button>
-              <button className="hover:text-[#0f6c8d] transition-all">
-                <a href="/customer-service">
-                  {t.customerService}
-                </a>
-              </button>
-            </div>
-
-            {/* Logo */}
-            <div className="flex-1 lg:flex-none text-center">
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-wide text-black">
-                Q - Pharma
-              </h1>
-            </div>
-
-            {/* Right Side */}
-            <div className="flex items-center gap-3 sm:gap-5">
-
-              {/* Desktop Search */}
-              <div className="hidden md:flex items-center bg-[#FFFAF5] rounded-full px-5 py-3 w-[220px] lg:w-[340px]">
-                <input
-                  type="text"
-                  placeholder={t.search}
-                  className="bg-transparent outline-none w-full text-sm"
-                />
-                <FiSearch className="text-xl text-black cursor-pointer" />
-              </div>
-
-              {/* Mobile Search */}
-              <button className="md:hidden text-2xl text-black">
-                <FiSearch />
-              </button>
-
-              <Link to="/payment" className="relative cursor-pointer">
-                <FiShoppingCart className="text-2xl" />
-
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-              <Link to="/profile">
-                <button className="text-[34px] text-black hover:text-[#0f6c8d] transition-all">
-                  <FaUserCircle />
-                </button>
-              </Link>
-            </div>
-          </div>
-
-          {/* ── Mobile Menu ───────────────────────────────────────────────── */}
-          {mobileMenu && (
-            <div className="lg:hidden mt-6 border-t border-gray-100 pt-5">
-
-              {/* Mobile Search */}
-              <div className="flex md:hidden items-center bg-[#f8f3ee] rounded-full px-5 py-3 mb-5">
-                <input
-                  type="text"
-                  placeholder={t.search}
-                  className="bg-transparent outline-none w-full text-sm"
-                />
-                <FiSearch className="text-xl text-black" />
-              </div>
-
-              {/* Links */}
-              <div className="flex flex-col gap-4 text-[15px] text-[#2c2c2c]">
-                <Link to="/">
-                  <button className="bg-[#0f6c8d] text-white px-5 py-3 rounded-full font-medium w-full sm:w-fit">
-                    {t.home}
-                  </button>
-                </Link>
-                <button className="text-left hover:text-[#0f6c8d] transition-all">
-                  {t.helpCenter}
-                </button>
-                <button className="text-left hover:text-[#0f6c8d] transition-all">
-                  {t.customerService}
-                </button>
-                <button className="text-left hover:text-[#0f6c8d] transition-all">
-                  {t.orderTracking}
-                </button>
-
-                {/* Mobile Currency & Language dropdowns */}
-                <div className="flex items-center gap-4 pt-2">
-                  <PillDropdown
-                    options={CURRENCIES}
-                    selected={currency}
-                    onSelect={setCurrency}
-                    keyField="code"
-                    labelField="label"
-                  />
-                  <PillDropdown
-                    options={LANGUAGES}
-                    selected={language}
-                    onSelect={setLanguage}
-                    keyField="code"
-                    labelField="label"
-                  />
-                </div>
-
-                {/* Hotline */}
-                <div className="pt-4 border-t border-gray-100 mt-3">
-                  <div className="bg-[#eef1f6] text-[#2c2c2c] text-sm px-4 py-2 rounded-md inline-block mb-3">
-                    {t.hotline}
-                  </div>
-                  <p className="font-semibold text-sm text-black">(025) 3886 25 16</p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+       
       </div>
     </header>
   );

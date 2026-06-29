@@ -381,3 +381,223 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+// import { useRef } from "react";
+
+// const Footer = () => {
+//   const containerRef = useRef<HTMLDivElement>(null);
+
+
+//   const shopLinks = [
+//     { name: "Herbal Products", url: "/herbal" },
+//     { name: "Nuetra Products", url: "/nutraceutical" },
+//     { name: "Organic Products", url: "/organic" },
+//     { name: "Offers and Deals", url: "/" },
+//   ];
+
+//   const companyLinks = [
+//     { name: "About Us ", url: "/aboutus" },
+//     { name: "Research", url: "/research" },
+//     { name: "Production", url: "/production" },
+//     { name: "Blogs", url: "/blog" }
+//   ];
+
+//   const careLinks = [
+//     { name: "My Account", url: "/user-profile" },
+//     { name: "Track Order", url: "/track-order" },
+//     { name: "Cookie Policy", url: "/cookies" }
+//   ];
+
+//   const features = [
+//     { title: "Free Shipping", desc: "Lorem ipsum dolor sit" },
+//     { title: "Easy Returns", desc: "Lorem ipsum dolor sit" },
+//     { title: "Secure Payments", desc: "Lorem ipsum dolor sit" },
+//     { title: "24/7 Support", desc: "Lorem ipsum dolor sit" },
+//   ];
+
+
+
+
+//   const featuress = [
+//     { title: "100 % Natural", desc: "Pure ingredients" },
+//     { title: "100 % Natural", desc: "Pure ingredients" },
+//     { title: "100 % Natural", desc: "Pure ingredients" },
+//     { title: "100 % Natural", desc: "Pure ingredients" },
+//   ];
+
+//   return (
+//     <>
+//       <div className="w-full bg-white py-6 px-4 sm:px-6 md:px-12">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="w-full bg-[#F7F8F2] rounded-[24px] py-10 md:py-14 px-6 md:px-10 border border-[#e2e8f0]/50 shadow-sm">
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6 md:gap-x-12">
+//               {featuress.map((item, idx) => (
+//                 <div
+//                   key={idx}
+//                   className="flex flex-row items-center gap-4 justify-start sm:justify-center lg:justify-start"
+//                 >
+//                   <div className="w-12 h-12 flex items-center justify-center shrink-0">
+//                     <img
+//                       src="/Global/LeafIcon.png"
+//                       alt="Leaf icon"
+//                       className="w-full h-full object-contain"
+//                     />
+//                   </div>
+//                   <div className="flex flex-col space-y-1">
+//                     <span className="text-[15px] font-bold text-[#557c56] tracking-wide leading-tight">
+//                       {item.title}
+//                     </span>
+//                     <span className="text-[13px] text-[#222222] font-medium leading-snug">
+//                       {item.desc}
+//                     </span>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       <footer
+//         ref={containerRef}
+//         className="relative group w-full bg-[#143224] text-white overflow-hidden rounded-t-[32px] font-sans pt-12 md:pt-20 pb-8 px-4 sm:px-8 md:px-12"
+//       >
+//         <img
+//           src="/Clippath.svg"
+//           alt="clippath"
+//           className="absolute inset-0 w-full h-full object-cover object-right-bottom pointer-events-none opacity-80 mix-blend-screen transition-transform duration-1000 ease-out group-hover:scale-110"
+//         />
+
+//         <div className="relative z-10 max-w-7xl mx-auto">
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 md:gap-14 lg:gap-8 xl:gap-20 mb-16 px-4 md:px-0">
+//             {/* 1. Brand Column */}
+//             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+//               <div className="w-16 h-16 flex items-center justify-center shrink-0 mb-4">
+//                 <img
+//                   src="/Global/LeafIcon.png"
+//                   alt="Leaf icon"
+//                   className="w-full h-full object-contain opacity-90"
+//                 />
+//               </div>
+//               <h2 className="text-[34px] font-bold text-white tracking-wide mb-2 leading-none">
+//                 Zephyr
+//               </h2>
+//               <p className="text-[11px] text-white/60 tracking-wider mb-6 font-light uppercase">
+//                 Organic • Nuetra • Pharma
+//               </p>
+//               <p className="text-[15px] text-white/80 leading-[1.6] max-w-[280px]">
+//                 Expertly crafted health solutions combining nature's wisdom with pharmaceutical excellence.
+//               </p>
+//             </div>
+
+//             {/* 2. Shop Links */}
+//             <div className="lg:pl-8 flex flex-col items-center lg:items-start text-center lg:text-left">
+//               <h3 className="text-[24px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+//                 Shop
+//               </h3>
+//               <ul className="space-y-[15px]">
+//                 {shopLinks.map((link) => (
+//                   <li key={link.name}>
+//                     <a
+//                       href={link.url}
+//                       className="text-[14px] md:text-[15px] text-white hover:text-[#9ad485] transition-colors font-light"
+//                     >
+//                       {link.name}
+//                     </a>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+
+//             {/* 3. Company Links */}
+//             <div className="lg:pl-4 flex flex-col items-center lg:items-start text-center lg:text-left">
+//               <h3 className="text-[24px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+//                 Company
+//               </h3>
+//               <ul className="space-y-[15px]">
+//                 {companyLinks.map((link) => (
+//                   <li key={link.name}>
+//                     <a href={link.url} className="text-[14px] md:text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+//                       {link.name}
+//                     </a>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+
+//             {/* 4. Care Links */}
+//             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+//               <h3 className="text-[24px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+//                 Care
+//               </h3>
+//               <ul className="space-y-[15px]">
+//                 {careLinks.map((link) => (
+//                   <li key={link.name}>
+//                     <a href={link.url} className="text-[14px] md:text-[15px] text-white hover:text-[#9ad485] transition-colors font-light">
+//                       {link.name}
+//                     </a>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+//           </div>
+
+//           <div className="border border-white/20 rounded-[24px] py-8 px-6 sm:px-10 bg-white/5 backdrop-blur-sm mb-12">
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 divide-y sm:divide-y-0 sm:divide-x lg:divide-x-0 divide-white/10">
+//               {features.map((f, idx) => (
+//                 <div key={f.title} className={`flex items-center gap-4 ${idx !== 0 ? 'pt-6 sm:pt-0 sm:pl-6 lg:pl-4' : ''}`}>
+//                   <div className="w-12 h-12 shrink-0">
+//                     <img
+//                       src="/Global/LeafIcon.png"
+//                       alt="Leaf icon"
+//                       className="w-full h-full object-contain"
+//                     />
+//                   </div>
+//                   <div>
+//                     <h4 className="text-[14px] md:text-[15px] font-bold text-white leading-tight">{f.title}</h4>
+//                     <p className="text-[12px] md:text-[13px] text-white/70 mt-1">{f.desc}</p>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+
+//           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pt-6 border-t border-white/10">
+//             <p className="text-[13px] text-white/50 font-light order-3 lg:order-1">
+//               © 2026 Zephyr. All rights reserved.
+//             </p>
+//             <div className="flex items-center gap-6 order-1 lg:order-2">
+//               <a href="/privacy" className="text-[13px] text-white/60 hover:text-white transition-colors">Privacy Policy</a>
+//               <a href="/terms" className="text-[13px] text-white/60 hover:text-white transition-colors">Terms & Conditions</a>
+//             </div>
+//             <div className="flex items-center gap-3 order-2 lg:order-3">
+//               {[
+//                 { label: 'VISA', color: '#1a1f71', font: 'italic font-black text-[10px]' },
+//                 { isMastercard: true },
+//                 { label: 'UPI', color: '#000', font: 'font-bold text-[10px]' },
+//                 { label: 'paytm', color: '#00b9f5', font: 'font-bold text-[10px]' },
+//                 { label: 'G Pay', color: '#5f6368', font: 'font-medium text-[10px]', hasG: true }
+//               ].map((p, i) => (
+//                 <div key={i} className="bg-white rounded px-2.5 py-1 h-7 flex items-center justify-center min-w-[42px] shadow-sm">
+//                   {p.isMastercard ? (
+//                     <div className="flex">
+//                       <div className="w-3 h-3 bg-[#eb001b] rounded-full"></div>
+//                       <div className="w-3 h-3 bg-[#f79e1b] rounded-full -ml-1.5"></div>
+//                     </div>
+//                   ) : (
+//                     <span className={`${p.font}`} style={{ color: p.color }}>
+//                       {p.hasG ? <><span className="text-[#ea4335] font-bold">G</span> Pay</> : p.label}
+//                     </span>
+//                   )}
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </footer>
+//     </>
+//   );
+// };
+
+// export default Footer;
