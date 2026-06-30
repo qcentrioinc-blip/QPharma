@@ -1,5 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+
 import { FiChevronDown } from "react-icons/fi";
+// import { FaUserCircle } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
+// import { Link } from "react-router-dom";
+// import { useCart } from "./UseCart";
 
 
 

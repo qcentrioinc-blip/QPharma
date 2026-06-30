@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Global/UseCart";
- 
+
 
 
 
@@ -36,18 +36,18 @@ interface CartItem {
 }
 export default function HeroSection() {
   const navigate = useNavigate();
- 
+
   const [selectedPack, setSelectedPack] = useState("30");
   const [activeTab, setActiveTab] = useState<"description" | "reviews">("description");
   const [selectedThumb, setSelectedThumb] = useState(0);
- 
+
   // Cart items with qty state
   const [cartItems, setCartItems] = useState<CartItem[]>([
     { id: 1, qty: 1 },
     { id: 2, qty: 1 },
     { id: 3, qty: 1 },
   ]);
- 
+
   const updateQty = (id: number, delta: number) => {
     setCartItems((prev) =>
       prev
@@ -55,29 +55,29 @@ export default function HeroSection() {
         .filter((item) => item.qty > 0)
     );
   };
- 
+
   const removeItem = (id: number) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
- 
+
   const [reviews, setReviews] = useState<Review[]>([
     { id: 1, name: "John Doe", rating: 5, comment: "Amazing quality product. Highly recommended." },
   ]);
- 
+
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
- 
+
   const handleAddReview = () => {
     if (!name || !comment || rating === 0) return;
     setReviews((prev) => [{ id: Date.now(), name, rating, comment }, ...prev]);
     setName(""); setComment(""); setRating(0);
   };
- 
+
   const itemPrice = 500;
   const itemOldPrice = 750;
- 
-const { addToCart } = useCart();
+
+  const { addToCart } = useCart();
   return (
     <>
       {/* ───────── PRODUCT DETAIL HERO ───────── */}
@@ -116,11 +116,10 @@ const { addToCart } = useCart();
                   <button
                     key={i}
                     onClick={() => setSelectedThumb(i)}
-                    className={`aspect-square bg-[#f8f8f8] rounded-xl flex items-center justify-center transition border-2 ${
-                      selectedThumb === i
+                    className={`aspect-square bg-[#f8f8f8] rounded-xl flex items-center justify-center transition border-2 ${selectedThumb === i
                         ? "border-[#74a82a]"
                         : "border-transparent hover:border-gray-300"
-                    }`}
+                      }`}
                   >
                     <img
                       src={img}
@@ -210,17 +209,16 @@ const { addToCart } = useCart();
                     key={pack}
 
                     onClick={() => setSelectedPack(pack)}
-                    className={`min-w-[100px] h-[42px] rounded-full border text-[14px] font-medium transition ${
-                      selectedPack === pack
+                    className={`min-w-[100px] h-[42px] rounded-full border text-[14px] font-medium transition ${selectedPack === pack
                         ? "border-[#74a82a] bg-[#74a82a] text-white"
                         : "border-gray-300 bg-white text-black hover:border-[#74a82a]"
-                    }`}
+                      }`}
                   >
                     {pack} Tabs
                   </button>
                 ))}
 
-                <button  onClick={addToCart} className="flex h-[44px]  px-10 items-center justify-center rounded-lg bg-[#74a82a] hover:bg-[#5f9021] active:scale-[0.98] text-white font-semibold text-[15px] transition">
+                <button onClick={addToCart} className="flex h-[44px]  px-10 items-center justify-center rounded-lg bg-[#74a82a] hover:bg-[#5f9021] active:scale-[0.98] text-white font-semibold text-[15px] transition">
                   Add to Cart
                 </button>
               </div>
@@ -236,15 +234,14 @@ const { addToCart } = useCart();
             </div>
           </div>
 
-            <div className="mt-16">
+          <div className="mt-16">
             <div className="flex items-center gap-8 border-b border-gray-200 pb-3">
               {(["description", "reviews"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`text-sm font-semibold uppercase tracking-wide transition relative pb-3 ${
-                    activeTab === tab ? "text-black" : "text-gray-400 hover:text-gray-600"
-                  }`}
+                  className={`text-sm font-semibold uppercase tracking-wide transition relative pb-3 ${activeTab === tab ? "text-black" : "text-gray-400 hover:text-gray-600"
+                    }`}
                 >
                   {tab === "reviews" ? `Reviews (${reviews.length})` : "Description"}
                   {activeTab === tab && (
@@ -253,7 +250,7 @@ const { addToCart } = useCart();
                 </button>
               ))}
             </div>
- 
+
             {/* Description Tab */}
             {activeTab === "description" && (
               <div className="mt-8">
@@ -267,11 +264,11 @@ const { addToCart } = useCart();
                   Quick Connect, start a show on your Smart TV and, with the touch of a button,
                   take it with you by moving it to your Galaxy Tab S2.
                 </p>
- 
+
                 {/* ── Manufacturer Info Banner ── */}
                 <div className="mt-10 w-full rounded-2xl   overflow-hidden">
                   <div className="grid grid-cols-1 md:grid-cols-3 min-h-[350px]">
- 
+
                     {/* LEFT: feature list */}
                     <div className="flex flex-col justify-center gap-6 px-6 py-8   border-gray-200">
                       {[
@@ -288,7 +285,7 @@ const { addToCart } = useCart();
                         </div>
                       ))}
                     </div>
- 
+
                     {/* CENTER: product image */}
                     <div className="flex items-center justify-center ">
                       <img
@@ -297,7 +294,7 @@ const { addToCart } = useCart();
                         className="w-full "
                       />
                     </div>
- 
+
                     {/* RIGHT: stat + feature */}
                     <div className="flex flex-col  space-y-8 justify-center gap-6 px-6 py-8   border-gray-200">
                       {/* Stat box */}
@@ -305,7 +302,7 @@ const { addToCart } = useCart();
                         <p className="text-[48px] font-semibold text-[#0A8180] leading-none">120k+</p>
                         <p className="text-[18px] text-gray-600 mt-1">Healthy Customers</p>
                       </div>
- 
+
                       {/* Single feature row */}
                       <div className="flex  items-center gap-10">
                         <div className="w-16 h-16 rounded-full bg-gray-200 shrink-0" />
@@ -319,7 +316,7 @@ const { addToCart } = useCart();
                     </div>
                   </div>
                 </div>
- 
+
                 {/* Samsung description */}
                 <div className="mt-8">
                   <h4 className="text-[16px] font-bold text-black">Semsong Galaxy Tab S2, 8-Inch, White</h4>
@@ -336,7 +333,7 @@ const { addToCart } = useCart();
                 </div>
               </div>
             )}
- 
+
             {/* Reviews Tab */}
             {activeTab === "reviews" && (
               <div className="mt-8">
@@ -387,11 +384,11 @@ const { addToCart } = useCart();
           </div>
         </div>
       </section>
- 
+
       {/* ───────────────── SHOPPING CART SECTION ───────────────── */}
       <section className="w-full bg-[#f5f5f5] pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- 
+
           <div className="border-t border-gray-300 pt-6">
             <button
               onClick={() => navigate(-1)}
@@ -401,23 +398,23 @@ const { addToCart } = useCart();
               Shopping Continue
             </button>
           </div>
- 
+
           <div className="mt-5">
             <div className="w-full h-5 rounded-full bg-[#b9dfb6] flex items-center px-5 text-[11px] font-semibold text-[#4f7e42]">
               $ 90 saved on this order
             </div>
             <div className="w-full h-11 rounded-2xl bg-white mt-3 shadow-sm border border-gray-100" />
           </div>
- 
+
           <div className="mt-7">
             <h2 className="text-xl font-bold text-black">Shopping cart</h2>
             <p className="text-gray-500 text-sm mt-1">
               You have {cartItems.length} item{cartItems.length !== 1 ? "s" : ""} in your cart
             </p>
           </div>
- 
+
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_290px] gap-5 mt-5">
- 
+
             {/* Cart Items */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 space-y-4">
               {cartItems.length === 0 && (
@@ -439,9 +436,9 @@ const { addToCart } = useCart();
                       </p>
                     </div>
                   </div>
- 
+
                   <div className="flex items-center gap-4 justify-between sm:justify-end shrink-0">
- 
+
                     {/* Qty stepper — functional */}
                     <div className="flex items-center border border-gray-300 rounded-full overflow-hidden h-[38px] w-[108px]">
                       <button
@@ -458,7 +455,7 @@ const { addToCart } = useCart();
                         +
                       </button>
                     </div>
- 
+
                     {/* Price */}
                     <div className="text-right min-w-[80px]">
                       <p className="text-[22px] leading-none font-extrabold text-black">
@@ -468,7 +465,7 @@ const { addToCart } = useCart();
                         ${itemOldPrice * item.qty}
                       </p>
                     </div>
- 
+
                     {/* Delete */}
                     <button
                       onClick={() => removeItem(item.id)}
@@ -482,7 +479,7 @@ const { addToCart } = useCart();
                 </div>
               ))}
             </div>
- 
+
             {/* Bill Details */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 h-fit">
               <h3 className="text-base font-bold text-black mb-4">Bill Details</h3>
@@ -515,12 +512,15 @@ const { addToCart } = useCart();
                   <span className="font-semibold text-black">$0.00</span>
                 </div>
               </div>
-              <button className="w-full h-[48px] rounded-xl bg-[#5f8d3b] hover:bg-[#4f7731] active:scale-[0.98] transition text-white font-bold mt-6">
+              <button
+                onClick={() => navigate('/payment')}
+                className="w-full h-[48px] rounded-xl bg-[#5f8d3b] hover:bg-[#4f7731] active:scale-[0.98] transition text-white font-bold mt-6"
+              >
                 Check Out
               </button>
             </div>
           </div>
- 
+
           <button className="mt-4 border border-gray-300 bg-white rounded-xl px-5 h-[38px] text-sm font-medium hover:bg-gray-50 transition">
             + Add more items
           </button>

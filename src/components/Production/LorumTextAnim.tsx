@@ -1,5 +1,4 @@
 
-
 const LorumTextAnim = () => {
   // Vertically stacked rows matching the layout from top to bottom
   // Array matching layout from top to bottom
@@ -13,21 +12,21 @@ const mobileRows = [...desktopRows].reverse();
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2  items-center">
         
         {/* LEFT CONTENT SECTION */}
-        <div className="flex flex-col justify-center order-2 lg:order-1 max-w-lg w-full">
-          <h1 className="text-5xl sm:text-[120px]  font-medium tracking-normal leading-[0.9] mb-4">
+        <div className="flex flex-col justify-center order-2 lg:order-1 max-w-lg w-full text-center lg:text-left mx-auto lg:mx-0">
+          <h1 className="text-5xl sm:text-7xl md:text-[90px] xl:text-[120px] font-medium tracking-tight leading-[0.9] mb-6">
             LOREM <br /> IPSUM
           </h1>
-          
+
           {/* Solid Divider Line */}
-          <div className="max-w-sm h-2 bg-black mb-10" />
-          
-          <p className="text-xs sm:text-[18px] text-gray-800 font-normal leading-relaxed  text-justify">
-          Lorem ipsum dolor sit amet consectetur. Erat arcu pretium maecenas elementum bibendum habitasse consectetur. Egestas in quam lacinia egestas. Sed sed scelerisque sit adipiscing purus ac.
+          <div className="w-24 md:w-32 lg:w-48 h-1.5 md:h-2 bg-black mb-8 md:mb-12 mx-auto lg:mx-0" />
+
+          <p className="text-sm sm:text-base md:text-lg xl:text-xl text-gray-800 font-normal leading-relaxed text-center lg:text-justify max-w-md mx-auto lg:mx-0">
+            Lorem ipsum dolor sit amet consectetur. Erat arcu pretium maecenas elementum bibendum habitasse consectetur. Egestas in quam lacinia egestas. Sed sed scelerisque sit adipiscing purus ac.
           </p>
         </div>
 
         {/* RIGHT ARTISTIC SECTION (WITH CORRECT CELL ROTATION) */}
-     <div className="flex justify-center lg:justify-end order-1 lg:order-2 select-none w-full">
+        <div className="flex justify-center lg:justify-end order-1 lg:order-2 select-none w-full mb-10 lg:mb-0">
           {/* Vertical Grid Container */}
          <div className="flex flex-col">
   {(window.innerWidth < 640 ? mobileRows : desktopRows).map(
