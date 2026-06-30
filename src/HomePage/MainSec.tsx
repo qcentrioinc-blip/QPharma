@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const products = [
   {
     id: 1,
-    title: "HERBAL MEDICINES ",
+    title: "HERBAL MEDICINE ",
     description:
       "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
     color: "#3FB369",
@@ -13,7 +13,7 @@ const products = [
   },
   {
     id: 2,
-    title: "NUTRACEUTICALS",
+    title: "NUTRACEUTICAL",
     description:
       "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality.",
     color: "#247D7D",
@@ -21,7 +21,7 @@ const products = [
   },
   {
     id: 3,
-    title: "ORGANIC MEDICINES",
+    title: "ORGANIC MEDICINE",
     description:
       "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
     color: "#F99526",
