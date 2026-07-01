@@ -1,3 +1,6 @@
+
+// import DeliveryImage from '/Global/Delivery.png'
+
 import {
   Ambulance,
   ArrowRight,

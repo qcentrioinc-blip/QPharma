@@ -13,7 +13,7 @@ const products = [
   },
   {
     id: 2,
-    title: "NUTRACEUTICALS",
+    title: "NUTRACEUTICAL",
     description:
       "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality.",
     color: "#247D7D",

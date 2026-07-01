@@ -148,7 +148,8 @@ export default function Product({ searchQuery, onSearchChange }: ProductProps) {
           </button>
 
           {/* Cart button with badge */}
-          <button
+          <Link
+            to="/payment"
             aria-label="Shopping bag"
             className="relative flex h-[36px] w-[36px] items-center justify-center rounded-full text-black transition-all duration-200 hover:bg-[#d8e0e5]"
           >
@@ -158,7 +159,7 @@ export default function Product({ searchQuery, onSearchChange }: ProductProps) {
                 {totalItems > 99 ? "99+" : totalItems}
               </span>
             )}
-          </button>
+          </Link>
         </div>
       </div>
 
