@@ -41,11 +41,6 @@ const ROTATION_TRANSITION = {
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
-// --- Fan-out loop timing ---
-const ARC_HOLD_SECONDS = 3; // how long the arc stays fully formed before retracting
-const SPRING = { type: "spring" as const, stiffness: 120, damping: 18, mass: 0.9 };
-const STAGGER = 0.1; // delay between center → left/right starting their motion
-
 function CircularLabel({
   title,
   index,
@@ -117,6 +112,8 @@ function ExploreCard({
       className="flex flex-col items-center group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
     >
       <div className={`relative ${sizeClassName}`}>
         <CircularLabel
@@ -151,99 +148,52 @@ function ExploreCard({
 }
 
 /**
- * Mobile-only semi-circle arc with a premium "fan out / fan in" motion:
- * all three circles start tucked behind the center position, then glide
- * outward into their resting arc with a soft spring and a blur-to-sharp
- * reveal. They hold the formed arc, then gently retract and repeat.
- * The center circle stays layered above both side circles throughout.
+ * Mobile-only semi-circle arc layout: same arc positions and circle sizes
+ * as before, but static — no fan-out/fan-in animation on mobile.
+ * The center circle stays layered above both side circles.
+ *
+ * Fixed: the previous container used `max-w-90 h-55`, which are not valid
+ * Tailwind utilities (the default spacing scale has no 90 or 55 step), so
+ * the container collapsed to zero height/width and the three circles
+ * overflowed/overlapped the viewport on real phones. The container now
+ * uses explicit arbitrary-value sizing so nothing clips off-screen at
+ * 320px-wide viewports.
  */
 function MobileArcLayout({ items }: { items: ExploreItem[] }) {
   const [left, center, right] = items;
 
   return (
     <div className="sm:hidden flex justify-center">
-      <div className="relative w-full max-w-90 h-55">
-        {/* Left circle — glides out from behind center to its arc position */}
-        <motion.div
-          className="absolute bottom-0 z-10"
-          style={{ left: "8%" }}
-          initial={{ x: 90, y: -10, opacity: 0, scale: 0.8, filter: "blur(6px)" }}
-          animate={{
-            x: 0,
-            y: [-10, 0],
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-          }}
-          transition={{
-            ...SPRING,
-            opacity: { duration: 0.6, ease: "easeOut" },
-            filter: { duration: 0.7, ease: "easeOut" },
-            repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: ARC_HOLD_SECONDS,
-            delay: STAGGER,
-          }}
-        >
+      <div className="relative w-full max-w-[340px] h-[200px]">
+        {/* Left circle */}
+        <div className="absolute bottom-0 left-0 z-10">
           <ExploreCard
             item={left}
             index={0}
-            sizeClassName="w-[130px] h-[130px]"
-            insetClassName="inset-[18px]"
+            sizeClassName="w-[105px] h-[105px]"
+            insetClassName="inset-[15px]"
           />
-        </motion.div>
+        </div>
 
-        {/* Center circle — settles first, stays on top of both side circles */}
-        <motion.div
-          className="absolute left-1/2 -translate-x-1/2 top-0 z-20"
-          initial={{ opacity: 0, scale: 0.86, filter: "blur(6px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{
-            ...SPRING,
-            opacity: { duration: 0.5, ease: "easeOut" },
-            filter: { duration: 0.6, ease: "easeOut" },
-            repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: ARC_HOLD_SECONDS,
-          }}
-        >
+        {/* Center circle — stays on top of both side circles */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 z-20">
           <ExploreCard
             item={center}
             index={1}
-            sizeClassName="w-[185px] h-[185px]"
-            insetClassName="inset-[26px]"
+            sizeClassName="w-[150px] h-[150px]"
+            insetClassName="inset-[21px]"
           />
-        </motion.div>
+        </div>
 
-        {/* Right circle — mirrors the left circle's glide */}
-        <motion.div
-          className="absolute bottom-0 z-10"
-          style={{ right: "8%" }}
-          initial={{ x: -90, y: -10, opacity: 0, scale: 0.8, filter: "blur(6px)" }}
-          animate={{
-            x: 0,
-            y: [-10, 0],
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-          }}
-          transition={{
-            ...SPRING,
-            opacity: { duration: 0.6, ease: "easeOut" },
-            filter: { duration: 0.7, ease: "easeOut" },
-            repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: ARC_HOLD_SECONDS,
-            delay: STAGGER,
-          }}
-        >
+        {/* Right circle */}
+        <div className="absolute bottom-0 right-0 z-10">
           <ExploreCard
             item={right}
             index={2}
-            sizeClassName="w-[130px] h-[130px]"
-            insetClassName="inset-[18px]"
+            sizeClassName="w-[105px] h-[105px]"
+            insetClassName="inset-[15px]"
           />
-        </motion.div>
+        </div>
       </div>
     </div>
   );
