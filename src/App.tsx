@@ -103,8 +103,8 @@ function App() {
               {/* <Route path="/checkout/:orderId" element={<CheckoutPage />} /> */}
 
               {/* Track Order Route */}
-              {/* <Route path="/track-order" element={<TrackOrder />} />
-              <Route path="/track-order/:orderId" element={<TrackOrder />} /> */}
+              {/* <Route path="/track-order" element={<TrackOrder />} /> */}
+              {/* <Route path="/track-order/:orderId" element={<TrackOrder />} /> */}
 
               <Route path="/:category" element={<Organic />} />
 
@@ -117,7 +117,8 @@ function App() {
               {/* <Route path="/rnd" element={<RnDPage />} /> */}
 
             </Routes>
-            <NewFooter />
+            <NewFooter/>
+            {/* <Footer /> */}
           </div>
         </BrowserRouter>
 

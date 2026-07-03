@@ -33,7 +33,7 @@ export const landingConfigs = {
     },
 
     features: [
-      "Ancient Herbal Formulas",
+      "Ancient Herbal",
       "Plant Based",
       "Safe & Effective",
       "Trusted Remedies",

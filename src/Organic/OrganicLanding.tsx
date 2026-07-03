@@ -9,10 +9,10 @@ export default function OrganicLanding({ variant }: Props) {
   const config = landingConfigs[variant];
 
   return (
-    <section className="w-full  bg-white py-4 sm:py-6">
+    <section className="w-full  bg-white py-4 sm:py-6 mt-8 xl:mt-14">
       <div className="mx-auto   w-full px-4 sm:px-6">
         <div
-          className="relative absolute pt-28   xl:pt-24 overflow-hidden rounded-[22px] shadow-[0_8px_28px_rgba(121,145,66,0.08)]"
+          className="relative absolute    overflow-hidden rounded-[22px] shadow-[0_8px_28px_rgba(121,145,66,0.08)]"
           style={{
             backgroundColor: config.colors.sectionBg,
           }}
@@ -33,7 +33,7 @@ export default function OrganicLanding({ variant }: Props) {
 
           <div className="relative z-10 flex min-h-[310px] flex-col justify-between px-6 py-7 sm:px-8 md:px-10 lg:px-14">
             {/* Heading */}
-            <div className="max-w-[48%]">
+            <div className="max-w-[48%] text-center ">
               <h2 className="text-[28px] sm:text-[42px] md:text-[52px] lg:text-[64px] leading-none">
                 {config.title}
               </h2>
@@ -49,7 +49,7 @@ export default function OrganicLanding({ variant }: Props) {
             </div>
 
             {/* Features */}
-            <div className="mt-6 grid max-w-[46%] grid-cols-2 sm:grid-cols-4 gap-5">
+            <div className="mt-6 grid  justify-between  items-center max-w-[45%] grid-cols-2 sm:grid-cols-4 gap-5">
               {config.features.map((item, index) => (
                 <div
                   key={index}

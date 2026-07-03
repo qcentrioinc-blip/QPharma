@@ -3,17 +3,17 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, Search, ShoppingCart, User, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-
+ 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-
+ 
 interface NavLinkItem {
   name: string;
   path: string;
   hasDropdown?: boolean;
 }
-
+ 
 interface ProductLink {
   name: string;
   path: string;
@@ -22,7 +22,6 @@ interface ProductLink {
 // ---------------------------------------------------------------------------
 // Static config
 // ---------------------------------------------------------------------------
-
 const NAV_LINKS: NavLinkItem[] = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/productpage', hasDropdown: true },
@@ -30,13 +29,13 @@ const NAV_LINKS: NavLinkItem[] = [
   { name: 'Production', path: '/production' },
   { name: 'Get In Touch', path: '/contact' },
 ];
-
+ 
 const PRODUCT_LINKS: ProductLink[] = [
   { name: 'Herbal', path: '/herbal' },
   { name: 'Nutraceutical', path: '/nutraceutical' },
   { name: 'Organic', path: '/organic' },
 ];
-
+ 
 // Distance (px) from cursor to item center at which the dock effect has no influence
 const DOCK_MAX_DISTANCE = 140;
 // Peak scale applied to the item directly under the cursor
@@ -46,11 +45,11 @@ const DOCK_MAX_LIFT = -3;
 // Delay (ms) before closing the dropdown after the pointer leaves, to avoid flicker
 // when crossing the small gap between the trigger and the panel.
 const DROPDOWN_CLOSE_DELAY = 150;
-
+ 
 // ---------------------------------------------------------------------------
 // Dock-style nav item (macOS application-bar hover feel)
 // ---------------------------------------------------------------------------
-
+ 
 interface DockNavItemProps {
   link: NavLinkItem;
   isActive: boolean;
@@ -59,7 +58,7 @@ interface DockNavItemProps {
   onCloseDropdown?: () => void;
   isDropdownOpen?: boolean;
 }
-
+ 
 const DockNavItem = ({
   link,
   isActive,
@@ -69,14 +68,14 @@ const DockNavItem = ({
   isDropdownOpen,
 }: DockNavItemProps) => {
   const itemRef = useRef<HTMLDivElement>(null);
-
+ 
   const distance = useTransform(mouseX, (value) => {
     const bounds = itemRef.current?.getBoundingClientRect();
     if (!bounds) return DOCK_MAX_DISTANCE;
     const center = bounds.left + bounds.width / 2;
     return value - center;
   });
-
+ 
   const scaleRaw = useTransform(
     distance,
     [-DOCK_MAX_DISTANCE, 0, DOCK_MAX_DISTANCE],
@@ -87,10 +86,10 @@ const DockNavItem = ({
     [-DOCK_MAX_DISTANCE, 0, DOCK_MAX_DISTANCE],
     [0, DOCK_MAX_LIFT, 0]
   );
-
+ 
   const scale = useSpring(scaleRaw, { mass: 0.1, stiffness: 200, damping: 14 });
   const y = useSpring(liftRaw, { mass: 0.1, stiffness: 200, damping: 14 });
-
+ 
   return (
     <div
       ref={itemRef}
@@ -126,7 +125,7 @@ const DockNavItem = ({
           )}
         </Link>
       </motion.div>
-
+ 
       {link.hasDropdown && (
         <AnimatePresence>
           {isDropdownOpen && (
@@ -159,20 +158,20 @@ const DockNavItem = ({
     </div>
   );
 };
-
+ 
 // ---------------------------------------------------------------------------
 // Mobile menu
 // ---------------------------------------------------------------------------
-
+ 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   activePath: string;
 }
-
+ 
 const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
   const [productsExpanded, setProductsExpanded] = useState(false);
-
+ 
   return (
     <AnimatePresence>
       {isOpen && (
@@ -193,10 +192,10 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
               />
               <Search className="w-[18px] h-[18px] text-[#5F6368]" />
             </div>
-
+ 
             {NAV_LINKS.map((link) => {
               const isActive = activePath === link.path;
-
+ 
               if (link.hasDropdown) {
                 return (
                   <div key={link.name}>
@@ -240,7 +239,7 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
                   </div>
                 );
               }
-
+ 
               return (
                 <Link
                   key={link.name}
@@ -254,7 +253,7 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
                 </Link>
               );
             })}
-
+ 
             <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
               <Link
                 to="/payment"
@@ -279,65 +278,65 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
     </AnimatePresence>
   );
 };
-
+ 
 // ---------------------------------------------------------------------------
 // Navbar
 // ---------------------------------------------------------------------------
-
+ 
 const Navbar = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { items } = useCart();
   const location = useLocation();
-
+ 
   const pillRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+ 
   // Motion value driving the dock hover effect; parked far offscreen so items
   // sit at rest scale until the pointer actually enters the pill.
   const mouseX = useMotionValue(Infinity);
-
+ 
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
-
+ 
   const clearCloseTimeout = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
     }
   };
-
+ 
   const openProductsDropdown = () => {
     clearCloseTimeout();
     setIsProductsOpen(true);
   };
-
+ 
   const scheduleCloseProductsDropdown = () => {
     clearCloseTimeout();
     closeTimeoutRef.current = setTimeout(() => {
       setIsProductsOpen(false);
     }, DROPDOWN_CLOSE_DELAY);
   };
-
+ 
   // Close dropdown + mobile menu on route change
   useEffect(() => {
     setIsProductsOpen(false);
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
-
+ 
   // Close the products dropdown on outside click and on Escape
   useEffect(() => {
     if (!isProductsOpen) return;
-
+ 
     const handleClickOutside = (event: MouseEvent) => {
       if (pillRef.current && !pillRef.current.contains(event.target as Node)) {
         setIsProductsOpen(false);
       }
     };
-
+ 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setIsProductsOpen(false);
     };
-
+ 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
     return () => {
@@ -345,9 +344,9 @@ const Navbar = () => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isProductsOpen]);
-
+ 
   useEffect(() => clearCloseTimeout, []);
-
+ 
   return (
     <nav className="w-full bg-transparent backdrop-blur-md fixed top-0 z-[100] px-4 md:px-8 py-2">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
@@ -370,7 +369,7 @@ const Navbar = () => {
             />
           ))}
         </div>
-
+ 
         {/* Mobile menu trigger */}
         <button
           type="button"
@@ -381,7 +380,7 @@ const Navbar = () => {
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
+ 
         {/* Center - Zephyr Logo */}
         <div className="flex-shrink-0 flex justify-center xl:absolute xl:left-1/2 xl:-translate-x-1/2">
           <Link to="/">
@@ -392,7 +391,7 @@ const Navbar = () => {
             />
           </Link>
         </div>
-
+ 
         {/* Right - Actions (desktop) */}
         <div className="hidden sm:flex items-center gap-2 md:gap-4">
           <div className="flex items-center bg-[#F1F3F4] rounded-full px-4 py-2.5 w-[140px] lg:w-[180px] xl:w-[280px] group focus-within:bg-[#E8EAED] transition-all duration-300">
@@ -403,7 +402,7 @@ const Navbar = () => {
             />
             <Search className="w-[18px] h-[18px] text-[#5F6368] group-hover:text-black transition-colors" />
           </div>
-
+ 
           <div className="flex items-center gap-2">
             <Link
               to="/payment"
@@ -417,7 +416,7 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-
+ 
             <Link
               to="/login"
               className="p-3 text-black hover:bg-[#F1F3F4] rounded-full transition-all"
@@ -427,7 +426,7 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-
+ 
         {/* Right - Actions (compact, below sm: cart icon only, rest lives in mobile menu) */}
         <div className="flex sm:hidden items-center">
           <Link
@@ -444,7 +443,7 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-
+ 
       {/* Mobile dropdown panel */}
       <div className="max-w-[1440px] mx-auto">
         <MobileMenu
@@ -456,5 +455,6 @@ const Navbar = () => {
     </nav>
   );
 };
-
+ 
 export default Navbar;
+ 

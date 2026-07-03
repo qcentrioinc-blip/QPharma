@@ -10,8 +10,9 @@ import {
   Star,
   ChevronLeft,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../../Global/UseCart";
+import { products } from "../../datas/product";
 
 
 
@@ -35,6 +36,7 @@ interface CartItem {
   qty: number;
 }
 export default function HeroSection() {
+
   const navigate = useNavigate();
 
   const [selectedPack, setSelectedPack] = useState("30");
@@ -48,6 +50,19 @@ export default function HeroSection() {
     { id: 3, qty: 1 },
   ]);
 
+const { slug } = useParams();
+
+const product = products.find((p) => p.slug === slug);
+if (!product) {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <h1 className="text-3xl font-bold">Product Not Found</h1>
+    </div>
+  );
+}
+
+
+  
   const updateQty = (id: number, delta: number) => {
     setCartItems((prev) =>
       prev
@@ -104,8 +119,10 @@ export default function HeroSection() {
                 style={{ minHeight: 380 }}>
                 <img
                   key={selectedThumb}
-                  src={productImages[selectedThumb]}
-                  alt="Product"
+            
+    src={product.image}
+    alt={product.title}
+
                   className="w-[220px] sm:w-[260px] lg:w-full object-cover py-8 transition-opacity duration-200"
                 />
               </div>
@@ -143,10 +160,7 @@ export default function HeroSection() {
               <div className="flex items-start justify-between gap-4">
 
                 {/* Title */}
-                <h1 className="text-[20px] sm:text-[24px] xl:text-[32px]  font-semibold text-black ">
-                  Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit.
-                </h1>
+              <h1>{product.title}</h1>
 
                 {/* Price + Share/Heart stacked */}
                 <div className="flex flex-col items-end gap-3 shrink-0">
@@ -163,7 +177,7 @@ export default function HeroSection() {
 
                   {/* Price */}
                   <h2 className="text-[26px] sm:text-[30px] font-extrabold text-black tracking-tight">
-                    $22.95
+                   ${product.price}
                   </h2>
                 </div>
               </div>
@@ -187,7 +201,7 @@ export default function HeroSection() {
               {/* Country */}
               <div className="mt-5">
                 <p className="text-[15px] font-bold text-black">
-                  Country of Origin: USA
+                Country of Origin: {product.country}
                 </p>
               </div>
 
@@ -195,9 +209,7 @@ export default function HeroSection() {
               <div className="mt-4">
                 <p className="text-black text-[14px] leading-[1.8]">
                   <span className="font-bold">Description:</span>{" "}
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet,
-                  consectetur adipisicing elit. Sed do eiusmod tempor incididunt ut{" "}
+                  Description: {product.longDescription}
                   <span className="text-[#74a82a] underline cursor-pointer">more</span>
                 </p>
               </div>
