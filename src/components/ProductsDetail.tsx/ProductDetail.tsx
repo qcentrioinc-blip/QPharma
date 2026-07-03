@@ -1,17 +1,17 @@
-import ContactNav from "../../Global/ContactNav"
+// import ContactNav from "../../Global/ContactNav"
 import Herosection from "./Herosection"
-import Payment from "./Payment"
+// import Payment from "./Payment"
 import ProductHighlights from "./ProductHighlights"
 import RecentBought from "./RecentBought"
 
 const ProductDetail = () => {
   return (
     <div> 
-      <ContactNav/>
+      {/* <ContactNav/> */}
         <Herosection/>  
         <RecentBought/>
         <ProductHighlights/>
-        <Payment/>  
+        {/* <Payment/>   */}
     </div>
   )
 }

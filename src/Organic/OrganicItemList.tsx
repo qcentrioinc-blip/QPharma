@@ -1,4 +1,5 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { products } from '../datas/product';
 
 interface ColorConfig {
   category: 'herbal' | 'organic' | 'nutraceuticals';
@@ -44,22 +45,17 @@ const getColorConfig = (pathname: string): ColorConfig => {
 };
 
 export default function OrganicItemList() {
+  const navigate = useNavigate();
   const location = useLocation();
   const colors = getColorConfig(location.pathname);
 
-  const items = Array.from({ length: 9 }, (_, index) => ({
-    id: index + 1,
-    title: 'Lorum Ipsum',
-    description: 'Lorum Ipsum Lorum ipsum Lorum Ipsum Lorum.',
-    badge: 'Organic',
-    bulk: 'Bulk Pack',
-    moq: 'MOQ: 10000 units',
-    extra: 'Lorum Ipsum',
-    image: '/Global/Tablet.png',
-  }));
+const items = products;
 
   const ProductCard = ({ item }: { item: (typeof items)[0] }) => (
-    <article className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white px-[10px] pb-[10px] pt-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+   <article
+  onClick={() => navigate(`/product/${item.slug}`)}
+  className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white px-[10px] pb-[10px] pt-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer hover:shadow-lg transition"
+>
       <button
         type="button"
         aria-label="Wishlist"
