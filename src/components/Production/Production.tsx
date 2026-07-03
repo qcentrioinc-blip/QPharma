@@ -4,6 +4,7 @@ import Explore from "../../HomePage/Explore"
 import HeroSection from "./HeroSection"
 import LorumTextAnim from "./LorumTextAnim"
 import ManufacturingHighlight from "./ManufacturingHighlight"
+import { TextParallaxContentExample } from "./TextParallaxContentExample"
 
 
 const Production = () => {
@@ -12,8 +13,9 @@ const Production = () => {
         
       <HeroSection/>
       {/* <Gallery/> */}
-      <ManufacturingHighlight/>
+      <TextParallaxContentExample/>
       <LorumTextAnim/>
+            <ManufacturingHighlight/>
       <Explore/>
       
     </div>

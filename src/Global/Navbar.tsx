@@ -18,11 +18,10 @@ interface ProductLink {
   name: string;
   path: string;
 }
- 
+
 // ---------------------------------------------------------------------------
 // Static config
 // ---------------------------------------------------------------------------
- 
 const NAV_LINKS: NavLinkItem[] = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/productpage', hasDropdown: true },

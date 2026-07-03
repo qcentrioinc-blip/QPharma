@@ -35,7 +35,7 @@ const cards: FeatureCard[] = [
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="w-full bg-[#f4f4f4] px-4 py-8 sm:px-6 lg:px-8">
+    <section className="w-full  px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {cards.map((card) => {
@@ -44,7 +44,7 @@ const FeaturesSection: React.FC = () => {
             return (
               <article
                 key={card.title}
-                className="group flex min-h-[220px] flex-col rounded-2xl bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="group flex min-h-[220px] flex-col rounded-2xl bg-white border border-[#6d6d6d] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="flex items-start justify-between">
                   <h3 className="whitespace-pre-line text-lg font-extrabold uppercase leading-tight tracking-tight text-[#111111] lg:text-xl">

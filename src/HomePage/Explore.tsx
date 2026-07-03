@@ -76,12 +76,9 @@ function CircularLabel({
         />
       </defs>
 
-      {/* Outer border circle */}
       <circle cx="150" cy="150" r="145" fill="none" stroke={borderColor} strokeWidth="1" />
-      {/* Inner border circle */}
       <circle cx="150" cy="150" r="108" fill="none" stroke={borderColor} strokeWidth="1" />
 
-      {/* Repeating rotating label */}
       <text fill={textColor} fontSize="13" letterSpacing="4.2" fontWeight="400">
         <textPath href={`#${pathId}`} startOffset="0%">
           {`${title} • `.repeat(20)}
@@ -115,6 +112,8 @@ function ExploreCard({
       className="flex flex-col items-center group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
     >
       <div className={`relative ${sizeClassName}`}>
         <CircularLabel
@@ -132,7 +131,6 @@ function ExploreCard({
             className="w-full h-full object-cover transition-transform duration-500"
           />
 
-          {/* Hover overlay — bottom to top reveal */}
           <div
             className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)]`}
           >
@@ -150,43 +148,50 @@ function ExploreCard({
 }
 
 /**
- * Mobile-only semi-circle arc: center item sits forward and larger,
- * the two side items sit smaller and lower, mirroring the homepage
- * CTA arc layout.
+ * Mobile-only semi-circle arc layout: same arc positions and circle sizes
+ * as before, but static — no fan-out/fan-in animation on mobile.
+ * The center circle stays layered above both side circles.
+ *
+ * Fixed: the previous container used `max-w-90 h-55`, which are not valid
+ * Tailwind utilities (the default spacing scale has no 90 or 55 step), so
+ * the container collapsed to zero height/width and the three circles
+ * overflowed/overlapped the viewport on real phones. The container now
+ * uses explicit arbitrary-value sizing so nothing clips off-screen at
+ * 320px-wide viewports.
  */
 function MobileArcLayout({ items }: { items: ExploreItem[] }) {
   const [left, center, right] = items;
 
   return (
     <div className="sm:hidden flex justify-center">
-      <div className="relative w-full max-w-[360px] h-[230px]">
+      <div className="relative w-full max-w-[340px] h-[200px]">
         {/* Left circle */}
-        <div className="absolute left-0 bottom-0">
+        <div className="absolute bottom-0 left-0 z-10">
           <ExploreCard
             item={left}
             index={0}
-            sizeClassName="w-[140px] h-[140px]"
-            insetClassName="inset-[20px]"
+            sizeClassName="w-[105px] h-[105px]"
+            insetClassName="inset-[15px]"
           />
         </div>
 
-        {/* Center circle */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 z-10">
+        {/* Center circle — stays on top of both side circles */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 z-20">
           <ExploreCard
             item={center}
             index={1}
-            sizeClassName="w-[190px] h-[190px]"
-            insetClassName="inset-[27px]"
+            sizeClassName="w-[150px] h-[150px]"
+            insetClassName="inset-[21px]"
           />
         </div>
 
         {/* Right circle */}
-        <div className="absolute right-0 bottom-0">
+        <div className="absolute bottom-0 right-0 z-10">
           <ExploreCard
             item={right}
             index={2}
-            sizeClassName="w-[140px] h-[140px]"
-            insetClassName="inset-[20px]"
+            sizeClassName="w-[105px] h-[105px]"
+            insetClassName="inset-[15px]"
           />
         </div>
       </div>

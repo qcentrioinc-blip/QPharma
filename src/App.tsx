@@ -13,7 +13,7 @@ import BlogDetailPage from './pages/Blog/BlogDetailPage'
 import Terms from './Global/Terms/Terms'
 import ProductDetail from './components/ProductsDetail.tsx/ProductDetail'
 
-import PaymentGate from './Global/Payment/PaymentGate'
+// import PaymentGate from './Global/Payment/PaymentGate'
 // import PharmaProduct from './Products/PharmaProduct'
 // import ProductPage from './ProductPage/ProductPage'
 
@@ -75,7 +75,7 @@ function App() {
               {/* user profile */}';'
               <Route path="/user-profile" element={<UserProfile />} />
               {/* Payments */}
-              <Route path="/payment" element={<PaymentGate />} />
+              {/* <Route path="/payment" element={<PaymentGate />} /> */}
 
               {/* Blog Routes */}
               <Route path="/blog" element={<BlogPage />} />

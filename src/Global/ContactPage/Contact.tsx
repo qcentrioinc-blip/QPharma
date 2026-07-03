@@ -1,4 +1,4 @@
-import ContactNav from "../ContactNav"
+// import ContactNav from "../ContactNav"
 
 import Content from "./Content"
  
@@ -6,7 +6,7 @@ import Content from "./Content"
 const Contact = () => {
   return (
     <div>
-        <ContactNav/>
+        {/* <ContactNav/> */}
         <Content/>
    
     </div>

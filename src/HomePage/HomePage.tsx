@@ -19,6 +19,8 @@ import JointPain from './JointPain';
 // import NewFooter from '../Global/NewFooter';
 import ShowreelSection from './ShowreelSection';
 import FeaturesSection from './FeaturesSection';
+// import { EtCtaSection } from './EtCtaSection';
+import AnimatedSec from './AnimatedSec';
 
 const HomePage = () => {
     return (
@@ -30,6 +32,7 @@ const HomePage = () => {
                 {/* <Zephyr /> */}
                 <MainSec/>
                 <JointPain />
+                {/* <EtCtaSection/> */}
                 {/* <AboutSection /> */}
               
                 <Explore />
@@ -40,6 +43,7 @@ const HomePage = () => {
                <CTA />
                <Delivery />
                 <FAQ />
+                <AnimatedSec />
                 <RelatedArticles />
             </main> 
          
