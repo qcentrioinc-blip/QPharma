@@ -13,14 +13,14 @@ import BlogDetailPage from './pages/Blog/BlogDetailPage'
 import Terms from './Global/Terms/Terms'
 import ProductDetail from './components/ProductsDetail.tsx/ProductDetail'
 
-import PaymentGate from './Global/Payment/PaymentGate'
+// import PaymentGate from './Global/Payment/PaymentGate'
 // import PharmaProduct from './Products/PharmaProduct'
-import ProductPage from './ProductPage/ProductPage'
+// import ProductPage from './ProductPage/ProductPage'
 
 
 
-import CheckoutPage from './ProductPage/CheckoutPage'
-import TrackOrder from './ProductPage/TrackOrder'
+// import CheckoutPage from './ProductPage/CheckoutPage'
+// import TrackOrder from './ProductPage/TrackOrder'
 
 import HelpCenter from './Global/HelpCenter/HelpCenter'
 import CustomerService from './Global/CustomerService/CustomerService'
@@ -34,8 +34,9 @@ import Production from './components/Production/Production'
 import Contact from './Global/ContactPage/Contact'
 import UserProfile from './components/UserProfile/UserProfile'
 import CookiePolicy from './Global/CookiePolicy/CookiePolicy'
-import Footer from './Global/Footer'
+// import Footer from './Global/Footer'
 import Navbar from './Global/Navbar'
+import NewFooter from './Global/NewFooter'
 
 function App() {
   return (
@@ -74,7 +75,7 @@ function App() {
               {/* user profile */}';'
               <Route path="/user-profile" element={<UserProfile />} />
               {/* Payments */}
-              <Route path="/payment" element={<PaymentGate />} />
+              {/* <Route path="/payment" element={<PaymentGate />} /> */}
 
               {/* Blog Routes */}
               <Route path="/blog" element={<BlogPage />} />
@@ -85,7 +86,7 @@ function App() {
 
               <Route path="/aboutus" element={<AboutUS />} />
               {/* Product Page Route */}
-              <Route path="/productpage" element={<ProductPage />} />
+              {/* <Route path="/productpage" element={<ProductPage />} /> */}
 
 
               {/* conditional rendeing  */}
@@ -99,11 +100,11 @@ function App() {
         /> */}
 
               {/* Checkout Route */}
-              <Route path="/checkout/:orderId" element={<CheckoutPage />} />
+              {/* <Route path="/checkout/:orderId" element={<CheckoutPage />} /> */}
 
               {/* Track Order Route */}
-              <Route path="/track-order" element={<TrackOrder />} />
-              <Route path="/track-order/:orderId" element={<TrackOrder />} />
+              {/* <Route path="/track-order" element={<TrackOrder />} />
+              <Route path="/track-order/:orderId" element={<TrackOrder />} /> */}
 
               <Route path="/:category" element={<Organic />} />
 
@@ -116,7 +117,7 @@ function App() {
               {/* <Route path="/rnd" element={<RnDPage />} /> */}
 
             </Routes>
-            <Footer />
+            <NewFooter />
           </div>
         </BrowserRouter>
 
