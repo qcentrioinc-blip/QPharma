@@ -30,24 +30,24 @@ const UserProfile = () => {
 
             {/* Menu */}
             <div className="mt-6 space-y-3">
-              <button className="w-full flex items-center justify-between bg-[#547A3D] text-white px-4 py-6 rounded-lg text-sm font-medium hover:bg-[#456632] transition">
+              <button className="group flex w-full items-center justify-between rounded-lg bg-[#547A3D] px-4 py-6 text-sm font-medium text-white transition-all duration-300 hover:bg-[#456632] hover:shadow-lg">
                 <span>Account Info</span>
-               <FiArrowRight className="text-lg" />
+               <FiArrowRight className="shrink-0 text-lg transition-transform duration-300 group-hover:translate-x-1.5" />
               </button>
 
-              <button className="w-full flex items-center justify-between bg-white border border-gray-200 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition">
+              <button className="group flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:shadow-sm">
                 <span>My Order</span>
-               <FiArrowRight className="text-lg" />
+               <FiArrowRight className="shrink-0 text-lg transition-transform duration-300 group-hover:translate-x-1.5" />
               </button>
 
-              <button className="w-full flex items-center justify-between bg-white border border-gray-200 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition">
+              <button className="group flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:shadow-sm">
                 <span>My Address</span>
-               <FiArrowRight className="text-lg" />
+               <FiArrowRight className="shrink-0 text-lg transition-transform duration-300 group-hover:translate-x-1.5" />
               </button>
 
-              <button className="w-full flex items-center justify-between bg-white border border-gray-200 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition">
+              <button className="group flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:shadow-sm">
                 <span>Change Password</span>
-               <FiArrowRight className="text-lg" />
+               <FiArrowRight className="shrink-0 text-lg transition-transform duration-300 group-hover:translate-x-1.5" />
               </button>
             </div>
           </div>
@@ -120,7 +120,7 @@ const UserProfile = () => {
               <div>
                 <button
                   type="submit"
-                  className="bg-[#547A3D] hover:bg-[#456632] text-white px-10 py-3 rounded-md font-medium transition"
+                  className="rounded-full bg-[#547A3D] px-10 py-3 font-medium text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:bg-[#456632] hover:shadow-lg"
                 >
                   SAVE
                 </button>

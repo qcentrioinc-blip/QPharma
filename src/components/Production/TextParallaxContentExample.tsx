@@ -146,8 +146,8 @@ const ExampleContent = () => (
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
         reiciendis blanditiis aliquam aut fugit sint.
       </p>
-      <button className="w-full rounded bg-neutral-900 px-9 py-4 text-xl text-white transition-colors hover:bg-neutral-700 md:w-fit">
-        Learn more <FiArrowUpRight className="inline" />
+      <button className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-9 py-4 text-xl text-white shadow-sm transition-all duration-300 hover:gap-3 hover:bg-neutral-700 hover:shadow-lg md:w-fit">
+        Learn more <FiArrowUpRight className="shrink-0 transition-transform duration-300 group-hover:translate-x-1.5" />
       </button>
     </div>
   </div>

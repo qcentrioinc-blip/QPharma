@@ -34,11 +34,11 @@ const Delivery = () => {
               
               </div>
 
-              <button className="group mt-4 w-fit bg-white text-black rounded-full px-5 py-2 text-sm lg:text-base font-medium flex items-center gap-2 transition-all duration-300 hover:gap-3 hover:shadow-lg">
+              <button className="group mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg lg:text-base">
                 Shop Now
                 <ArrowRight
                   size={16}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-1.5"
                 />
               </button>
             </div>

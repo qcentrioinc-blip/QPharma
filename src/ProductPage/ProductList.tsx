@@ -294,18 +294,16 @@ export default function ProductList({ searchQuery }: ProductListProps) {
                     {product.title}
                   </h3>
 
-                  {/* Price */}
-                  <div className="mb-4">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-[18px] font-bold leading-none text-[#2a2a2a]">
-                        {product.price}
-                      </span>
-                      <span className="text-[12px] leading-none text-[#999999] line-through">
-                        {product.mrp}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-[12px] font-medium leading-none text-[#4a8c2a]">
-                      {product.save}
+                  {/* Wholesale / Bulk info */}
+                  <div className="mb-4 rounded-xl border border-[#eef2e7] bg-[#f8fbf3] px-3 py-2.5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#5b9740]">
+                      Wholesale / B2B
+                    </p>
+                    <p className="mt-1 text-[12px] font-medium text-[#4a4a4a]">
+                      MOQ on request
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-[#6b6b6b]">
+                      For large pharmacies & distributors
                     </p>
                   </div>
 
@@ -322,17 +320,17 @@ export default function ProductList({ searchQuery }: ProductListProps) {
                     {justAdded ? (
                       <>
                         <CheckIcon />
-                        Added!
+                        Added to request list
                       </>
                     ) : alreadyInCart ? (
                       <>
                         <CartPlusIcon />
-                        Add More
+                        Added to quote
                       </>
                     ) : (
                       <>
                         <CartPlusIcon />
-                        Add To Cart
+                        Request bulk order
                       </>
                     )}
                   </button>

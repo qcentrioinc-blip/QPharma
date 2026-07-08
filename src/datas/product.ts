@@ -54,7 +54,7 @@ export const products: Product[] = [
     image: "/Global/Bottle.png",
     price: 18.99,
     oldPrice: 24.99,
-    country: "India",
+    country: "USA",
     manufacturer: "Ayur Organics",
     longDescription:
       "Ashwagandha helps reduce stress, supports healthy sleep and improves overall energy levels.",

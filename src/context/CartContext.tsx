@@ -12,14 +12,27 @@ export interface CartItem {
     image?: string;
 }
 
+export type CartView = "cart" | "wishlist";
+
 interface CartContextType {
     items: CartItem[];
+    wishlistItems: CartItem[];
     addToCart: (product: Omit<CartItem, "quantity">) => void;
     removeFromCart: (id: number, category: string) => void;
     updateQuantity: (id: number, category: string, quantity: number) => void;
     clearCart: () => void;
+    addToWishlist: (product: Omit<CartItem, "quantity">) => void;
+    removeFromWishlist: (id: number, category: string) => void;
+    toggleWishlistItem: (product: Omit<CartItem, "quantity">) => void;
+    isInWishlist: (id: number, category: string) => boolean;
     totalItems: number;
     totalPrice: number;
+    wishlistCount: number;
+    isCartOpen: boolean;
+    cartView: CartView;
+    openCart: (view?: CartView) => void;
+    closeCart: () => void;
+    setCartView: (view: CartView) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -28,20 +41,40 @@ const parsePrice = (priceStr: string): number => {
     return parseFloat(priceStr.replace(/[₹,]/g, "")) || 0;
 };
 
-export function CartProvider({ children }: { children: ReactNode }) {
-    const [items, setItems] = useState<CartItem[]>(() => {
-        try {
-            const stored = localStorage.getItem("qpharma-cart");
-            return stored ? JSON.parse(stored) : [];
-        } catch {
-            return [];
-        }
-    });
+const readStoredItems = <T,>(key: string, fallback: T): T => {
+    if (typeof window === "undefined") return fallback;
+    try {
+        const stored = window.localStorage.getItem(key);
+        return stored ? JSON.parse(stored) : fallback;
+    } catch {
+        return fallback;
+    }
+};
 
+export function CartProvider({ children }: { children: ReactNode }) {
+    const [items, setItems] = useState<CartItem[]>(() => readStoredItems("qpharma-cart", []));
+    const [wishlistItems, setWishlistItems] = useState<CartItem[]>(() => readStoredItems("qpharma-wishlist", []));
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartView, setCartView] = useState<CartView>("cart");
 
     useEffect(() => {
-        localStorage.setItem("qpharma-cart", JSON.stringify(items));
+        if (typeof window !== "undefined") {
+            window.localStorage.setItem("qpharma-cart", JSON.stringify(items));
+        }
     }, [items]);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.localStorage.setItem("qpharma-wishlist", JSON.stringify(wishlistItems));
+        }
+    }, [wishlistItems]);
+
+    const openCart = (view: CartView = "cart") => {
+        setCartView(view);
+        setIsCartOpen(true);
+    };
+
+    const closeCart = () => setIsCartOpen(false);
 
     const addToCart = (product: Omit<CartItem, "quantity">) => {
         setItems((prev) => {
@@ -57,6 +90,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             }
             return [...prev, { ...product, quantity: 1 }];
         });
+        openCart("cart");
     };
 
     const removeFromCart = (id: number, category: string) => {
@@ -81,22 +115,61 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const clearCart = () => setItems([]);
 
+    const addToWishlist = (product: Omit<CartItem, "quantity">) => {
+        setWishlistItems((prev) => {
+            if (prev.some((item) => item.id === product.id && item.category === product.category)) {
+                return prev;
+            }
+            return [...prev, { ...product, quantity: 1 }];
+        });
+        openCart("wishlist");
+    };
+
+    const removeFromWishlist = (id: number, category: string) => {
+        setWishlistItems((prev) =>
+            prev.filter((item) => !(item.id === id && item.category === category))
+        );
+    };
+
+    const toggleWishlistItem = (product: Omit<CartItem, "quantity">) => {
+        if (isInWishlist(product.id, product.category)) {
+            removeFromWishlist(product.id, product.category);
+            return;
+        }
+        addToWishlist(product);
+    };
+
+    const isInWishlist = (id: number, category: string) =>
+        wishlistItems.some((item) => item.id === id && item.category === category);
+
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = items.reduce(
         (sum, item) => sum + parsePrice(item.price) * item.quantity,
         0
     );
+    const wishlistCount = wishlistItems.length;
 
     return (
         <CartContext.Provider
             value={{
                 items,
+                wishlistItems,
                 addToCart,
                 removeFromCart,
                 updateQuantity,
                 clearCart,
+                addToWishlist,
+                removeFromWishlist,
+                toggleWishlistItem,
+                isInWishlist,
                 totalItems,
                 totalPrice,
+                wishlistCount,
+                isCartOpen,
+                cartView,
+                openCart,
+                closeCart,
+                setCartView,
             }}
         >
             {children}

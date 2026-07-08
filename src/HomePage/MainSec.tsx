@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const products = [
@@ -10,6 +10,7 @@ const products = [
       "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
     color: "#3FB369",
     image: "/Homepage/HerbalBottle.png",
+    buttonText: "Explore Solutions",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const products = [
       "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality.",
     color: "#247D7D",
     image: "/Homepage/NutraBottle.png",
+    buttonText: "Explore Solutions",
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const products = [
       "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
     color: "#F99526",
     image: "/Homepage/OrganicBottle.png",
+    buttonText: "Explore Solutions",
   },
 ];
 
@@ -247,23 +250,44 @@ const MainSec: React.FC = () => {
           </AnimatePresence>
 
           <AnimatePresence mode="wait" initial={false}>
-            <motion.button
+            <motion.div
               key={`btn-${product.id}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.2 }}
-              className="group mt-6 flex items-center gap-3 rounded-full bg-white px-8 py-4 transition-all duration-300 hover:scale-105"
+              className="mt-6"
             >
-              <span className="font-semibold italic text-black">
-                Explore Solutions
-              </span>
-
-              <ArrowUpRight
-                size={18}
-                className="text-black transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-              />
-            </motion.button>
+              <motion.button
+                type="button"
+                aria-label={product.buttonText}
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                className="inline-flex w-fit items-center rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-sm lg:text-base"
+              >
+                <motion.span
+                  variants={{
+                    rest: { gap: "8px" },
+                    hover: { gap: "12px" },
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="flex items-center"
+                >
+                  {product.buttonText}
+                  <motion.span
+                    variants={{
+                      rest: { x: 0 },
+                      hover: { x: 6 },
+                    }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="flex shrink-0"
+                  >
+                    <ArrowRight size={16} />
+                  </motion.span>
+                </motion.span>
+              </motion.button>
+            </motion.div>
           </AnimatePresence>
         </div>
 
