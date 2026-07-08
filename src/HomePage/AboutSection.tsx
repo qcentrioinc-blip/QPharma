@@ -127,10 +127,10 @@ const AboutSection = () => {
                                     <div className="mt-6">
                                         <Link
                                             to={item.link}
-                                            className="inline-flex items-center gap-2 text-white border-2 border-white/40 px-8 py-3 rounded-full backdrop-blur-md hover:bg-white/20 hover:border-white transition-all font-medium"
+                                            className="group inline-flex items-center gap-2 rounded-full border-2 border-white/40 px-8 py-3 font-medium text-white backdrop-blur-md transition-all duration-300 hover:gap-3 hover:border-white hover:bg-white/20"
                                         >
                                             Explore More
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                            <svg className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" />
                                             </svg>
                                         </Link>

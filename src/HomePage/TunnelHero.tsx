@@ -185,8 +185,8 @@ const TunnelHero: React.FC<TunnelHeroProps> = ({
         /* Bright blue glow panel, behind the glass panel */
         .tunnel-hero__panel--blue {
           background:
-            radial-gradient(circle at 20% 80%, rgba(110, 150, 255, 0.95) 0%, rgba(40, 70, 220, 0.55) 28%, rgba(5, 10, 40, 0.25) 55%, rgba(0,0,0,0) 72%),
-            linear-gradient(135deg, #0a1340 0%, #1c3fbf 55%, #060c2c 100%);
+            radial-gradient(circle at 20% 80%, rgba(124, 255, 182, 0.95) 0%, rgba(41, 170, 92, 0.7) 28%, rgba(11, 67, 38, 0.35) 55%, rgba(0,0,0,0) 72%),
+            linear-gradient(135deg, #082117 0%, #1f7a45 55%, #0b2417 100%);
         }
 
         /* Translucent frosted glass panel, layered in front */
@@ -258,11 +258,11 @@ const TunnelHero: React.FC<TunnelHeroProps> = ({
 
         .tunnel-hero__btn--solid {
           background: #ffffff;
-          color: #0a0a0a;
+          color: #0f1f17;
         }
         .tunnel-hero__btn--solid:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+          box-shadow: 0 8px 24px rgba(124, 255, 182, 0.24);
         }
 
         .tunnel-hero__btn--outline {
@@ -271,7 +271,7 @@ const TunnelHero: React.FC<TunnelHeroProps> = ({
           border-color: rgba(255, 255, 255, 0.8);
         }
         .tunnel-hero__btn--outline:hover {
-          background: rgba(255, 255, 255, 0.12);
+          background: rgba(124, 255, 182, 0.14);
           transform: translateY(-2px);
         }
 

@@ -37,6 +37,7 @@ import CookiePolicy from './Global/CookiePolicy/CookiePolicy'
 // import Footer from './Global/Footer'
 import Navbar from './Global/Navbar'
 import NewFooter from './Global/NewFooter'
+import Breadcrumbs from './components/Breadcrumbs'
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
 
           <div className="relative">
             <Navbar />
+            <Breadcrumbs />
             <Routes>
 
               <Route path="/" element={<HomePage />} />

@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Heart,
   Share2,
   Check,
   Plus,
   Truck,
-  Star,
   ChevronLeft,
+  Star,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCart } from "../../Global/UseCart";
+import { useCart } from "../../context/CartContext";
 import { products } from "../../datas/product";
 
 
@@ -31,24 +31,13 @@ interface Review {
   rating: number;
   comment: string;
 }
-interface CartItem {
-  id: number;
-  qty: number;
-}
 export default function HeroSection() {
 
   const navigate = useNavigate();
 
-  const [selectedPack, setSelectedPack] = useState("30");
   const [activeTab, setActiveTab] = useState<"description" | "reviews">("description");
   const [selectedThumb, setSelectedThumb] = useState(0);
-
-  // Cart items with qty state
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: 1, qty: 1 },
-    { id: 2, qty: 1 },
-    { id: 3, qty: 1 },
-  ]);
+  const [addedMessage, setAddedMessage] = useState(false);
 
 const { slug } = useParams();
 
@@ -61,19 +50,6 @@ if (!product) {
   );
 }
 
-
-  
-  const updateQty = (id: number, delta: number) => {
-    setCartItems((prev) =>
-      prev
-        .map((item) => item.id === id ? { ...item, qty: item.qty + delta } : item)
-        .filter((item) => item.qty > 0)
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
 
   const [reviews, setReviews] = useState<Review[]>([
     { id: 1, name: "John Doe", rating: 5, comment: "Amazing quality product. Highly recommended." },
@@ -89,10 +65,55 @@ if (!product) {
     setName(""); setComment(""); setRating(0);
   };
 
-  const itemPrice = 500;
-  const itemOldPrice = 750;
+  const { addToCart, toggleWishlistItem, isInWishlist, openCart } = useCart();
 
-  const { addToCart } = useCart();
+  useEffect(() => {
+    if (!addedMessage) return;
+    const timer = window.setTimeout(() => setAddedMessage(false), 1400);
+    return () => window.clearTimeout(timer);
+  }, [addedMessage]);
+
+  const productPayload = {
+    id: product.id,
+    title: product.title,
+    subtitle: product.description,
+    price: `₹${product.price.toFixed(2)}`,
+    mrp: `₹${product.oldPrice.toFixed(2)}`,
+    save: `₹${(product.oldPrice - product.price).toFixed(2)}`,
+    category: product.badge,
+    image: product.image,
+  };
+
+  const isFavorite = isInWishlist(product.id, product.badge);
+
+  const handleAddToCart = () => {
+    addToCart(productPayload);
+    setAddedMessage(true);
+  };
+
+  const handleToggleWishlist = () => {
+    toggleWishlistItem(productPayload);
+    if (!isFavorite) {
+      openCart("wishlist");
+    }
+  };
+
+  const handleShare = async () => {
+    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: product.title,
+          text: product.description,
+          url: shareUrl,
+        });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+      }
+    } catch {
+      // ignore share errors
+    }
+  };
   return (
     <>
       {/* ───────── PRODUCT DETAIL HERO ───────── */}
@@ -156,45 +177,65 @@ if (!product) {
                 Lorem ipsum dolor
               </p>
 
-              {/* Title + Price + Share/Heart row */}
+              {/* Title + Share/Heart row */}
               <div className="flex items-start justify-between gap-4">
 
-                {/* Title */}
-              <h1>{product.title}</h1>
+                <div className="space-y-3">
+                  <h1 className="text-3xl font-semibold text-black">{product.title}</h1>
+                  <div className="rounded-2xl border border-[#e8efe0] bg-[#f8fbf3] p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#5b9740]">
+                      Wholesale ordering
+                    </p>
+                    <p className="mt-1 text-sm text-[#4b4b4b]">
+                      MOQ and pricing are confirmed after your bulk order request for pharmacies and distributors.
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-[#2f5f1d]">MOQ on request</span>
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-[#2f5f1d]">Bulk packing available</span>
+                    </div>
+                  </div>
+                </div>
 
-                {/* Price + Share/Heart stacked */}
                 <div className="flex flex-col items-end gap-3 shrink-0">
 
                   {/* Share + Heart pill */}
                   <div className="flex items-center border border-gray-300 rounded-full overflow-hidden bg-white">
-                    <button className="w-9 h-9 flex items-center justify-center hover:bg-gray-50 transition border-r border-gray-200">
+                    <button
+                      type="button"
+                      onClick={handleShare}
+                      className="w-9 h-9 flex items-center justify-center hover:bg-gray-50 transition border-r border-gray-200"
+                      aria-label="Share product"
+                    >
                       <Share2 size={15} className="text-gray-500" />
                     </button>
-                    <button className="w-9 h-9 flex items-center justify-center hover:bg-gray-50 transition">
-                      <Heart size={15} className="text-gray-500" />
+                    <button
+                      type="button"
+                      onClick={handleToggleWishlist}
+                      className="w-9 h-9 flex items-center justify-center hover:bg-gray-50 transition"
+                      aria-label="Add to wishlist"
+                      aria-pressed={isFavorite}
+                    >
+                      <Heart size={15} className={isFavorite ? "fill-[#74a82a] text-[#74a82a]" : "text-gray-500"} />
                     </button>
                   </div>
 
-                  {/* Price */}
-                  <h2 className="text-[26px] sm:text-[30px] font-extrabold text-black tracking-tight">
-                   ${product.price}
-                  </h2>
+                 
                 </div>
               </div>
 
-              {/* Feature list */}
+              {/* Wholesale benefits */}
               <div className="mt-5 space-y-2.5">
                 <div className="flex items-center gap-3 text-gray-600 text-[18px]">
-                  <div className="w-8 h-8 rounded-sm bg-gray-800 text-white flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-sm bg-[#5b9740] text-white flex items-center justify-center shrink-0">
                     <Check size={11} />
                   </div>
-                  <p>Lorem ipsum dolor sit amet,</p>
+                  <p>Dedicated bulk-order support for pharmacies</p>
                 </div>
                 <div className="flex items-center gap-3 text-gray-600 text-[18px]">
-                  <div className="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-[#5b9740] text-white flex items-center justify-center shrink-0">
                     <Plus size={11} />
                   </div>
-                  <p>Lorem ipsum dolor sit amet,</p>
+                  <p>Secure supply chain and fast dispatch planning</p>
                 </div>
               </div>
 
@@ -209,38 +250,30 @@ if (!product) {
               <div className="mt-4">
                 <p className="text-black text-[14px] leading-[1.8]">
                   <span className="font-bold">Description:</span>{" "}
-                  Description: {product.longDescription}
-                  <span className="text-[#74a82a] underline cursor-pointer">more</span>
+                  {product.longDescription}
+                </p>
+                <p className="mt-2 text-sm text-[#5b9740]">
+                  Pricing is shared only after your bulk quantity request is reviewed.
                 </p>
               </div>
 
               {/* Pack selector + Add to Cart */}
               <div className="mt-7 flex flex-wrap items-center gap-3">
-                {["30", "60"].map((pack) => (
-                  <button
-                    key={pack}
+               
 
-                    onClick={() => setSelectedPack(pack)}
-                    className={`min-w-[100px] h-[42px] rounded-full border text-[14px] font-medium transition ${selectedPack === pack
-                        ? "border-[#74a82a] bg-[#74a82a] text-white"
-                        : "border-gray-300 bg-white text-black hover:border-[#74a82a]"
-                      }`}
-                  >
-                    {pack} Tabs
-                  </button>
-                ))}
-
-                <button onClick={addToCart} className="flex h-[44px]  px-10 items-center justify-center rounded-lg bg-[#74a82a] hover:bg-[#5f9021] active:scale-[0.98] text-white font-semibold text-[15px] transition">
-                  Add to Cart
+                <button
+                  onClick={handleAddToCart}
+                  className="flex h-[44px] px-10 items-center justify-center rounded-lg bg-[#74a82a] hover:bg-[#5f9021] active:scale-[0.98] text-white font-semibold text-[15px] transition"
+                >
+                  {addedMessage ? "Added to request list" : "Request bulk order"}
                 </button>
               </div>
 
-              {/* Shipping */}
-              <div className="mt-24 flex items-start  gap-4">
-                <Truck size={80} className="text-[#5f8f52] shrink-0 mt-0.5" />
-                <p className="text-[26px] leading-[1.6] text-black">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Sed do
+              {/* Wholesale note */}
+              <div className="mt-24 flex items-start gap-4 rounded-2xl border border-[#e8efe0] bg-[#f8fbf3] p-5">
+                <Truck size={60} className="text-[#5f8f52] shrink-0 mt-0.5" />
+                <p className="text-[18px] leading-[1.6] text-black">
+                  For large pharmacy and distributor orders, our team will share MOQ, packing options, and dispatch timelines after your request.
                 </p>
               </div>
             </div>
@@ -397,147 +430,7 @@ if (!product) {
         </div>
       </section>
 
-      {/* ───────────────── SHOPPING CART SECTION ───────────────── */}
-      <section className="w-full bg-[#f5f5f5] pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          <div className="border-t border-gray-300 pt-6">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-black font-medium text-sm hover:text-[#74a82a] transition"
-            >
-              <ChevronLeft size={16} />
-              Shopping Continue
-            </button>
-          </div>
-
-          <div className="mt-5">
-            <div className="w-full h-5 rounded-full bg-[#b9dfb6] flex items-center px-5 text-[11px] font-semibold text-[#4f7e42]">
-              $ 90 saved on this order
-            </div>
-            <div className="w-full h-11 rounded-2xl bg-white mt-3 shadow-sm border border-gray-100" />
-          </div>
-
-          <div className="mt-7">
-            <h2 className="text-xl font-bold text-black">Shopping cart</h2>
-            <p className="text-gray-500 text-sm mt-1">
-              You have {cartItems.length} item{cartItems.length !== 1 ? "s" : ""} in your cart
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_290px] gap-5 mt-5">
-
-            {/* Cart Items */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 space-y-4">
-              {cartItems.length === 0 && (
-                <p className="text-center text-gray-400 py-10 text-sm">Your cart is empty.</p>
-              )}
-              {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="border border-gray-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4"
-                >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <div className="w-[64px] h-[64px] rounded-xl border border-gray-200 flex items-center justify-center bg-[#fafafa] shrink-0">
-                      <img src="/Global/Bottle.png" alt="product" className="w-[38px] object-contain -rotate-12" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="text-base font-semibold text-black truncate">Lorum Ipsum</h3>
-                      <p className="text-gray-400 text-xs leading-5 mt-0.5 line-clamp-2">
-                        Lorum Ipsum Lorum Ipsum Lorum Ipsum Lorum Ipsum Lorum Ipsum
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 justify-between sm:justify-end shrink-0">
-
-                    {/* Qty stepper — functional */}
-                    <div className="flex items-center border border-gray-300 rounded-full overflow-hidden h-[38px] w-[108px]">
-                      <button
-                        onClick={() => updateQty(item.id, -1)}
-                        className="w-9 h-full flex items-center justify-center text-base font-bold hover:bg-gray-100 active:bg-gray-200 transition"
-                      >
-                        −
-                      </button>
-                      <div className="flex-1 text-center text-sm font-semibold">{item.qty}</div>
-                      <button
-                        onClick={() => updateQty(item.id, +1)}
-                        className="w-9 h-full flex items-center justify-center text-base font-bold hover:bg-gray-100 active:bg-gray-200 transition"
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    {/* Price */}
-                    <div className="text-right min-w-[80px]">
-                      <p className="text-[22px] leading-none font-extrabold text-black">
-                        ${itemPrice * item.qty}
-                      </p>
-                      <p className="text-gray-400 line-through text-base mt-0.5">
-                        ${itemOldPrice * item.qty}
-                      </p>
-                    </div>
-
-                    {/* Delete */}
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="shrink-0 hover:text-red-500 transition"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 7h12M9 7V4h6v3m-7 4v6m4-6v6m4-6v6M5 7l1 13h12l1-13" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Bill Details */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 h-fit">
-              <h3 className="text-base font-bold text-black mb-4">Bill Details</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Item Total</span>
-                  <div className="flex items-center gap-2">
-                    <span className="line-through text-gray-400">
-                      ${cartItems.reduce((sum, i) => sum + itemOldPrice * i.qty, 0)}
-                    </span>
-                    <span className="font-bold text-black">
-                      ${cartItems.reduce((sum, i) => sum + itemPrice * i.qty, 0)}
-                    </span>
-                  </div>
-                </div>
-                {["Delivery", "Tax", "Discount"].map((label, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <span className="text-gray-500">{label}</span>
-                    <span className="font-semibold text-black">$1.99</span>
-                  </div>
-                ))}
-                <div className="border-t border-gray-200 pt-3 flex items-center justify-between">
-                  <span className="text-base font-semibold text-black">Total Price</span>
-                  <span className="text-base font-extrabold text-black">
-                    ${(cartItems.reduce((sum, i) => sum + itemPrice * i.qty, 0) + 5.97).toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Q - Pharma points</span>
-                  <span className="font-semibold text-black">$0.00</span>
-                </div>
-              </div>
-              <button
-                onClick={() => navigate('/payment')}
-                className="w-full h-[48px] rounded-xl bg-[#5f8d3b] hover:bg-[#4f7731] active:scale-[0.98] transition text-white font-bold mt-6"
-              >
-                Check Out
-              </button>
-            </div>
-          </div>
-
-          <button className="mt-4 border border-gray-300 bg-white rounded-xl px-5 h-[38px] text-sm font-medium hover:bg-gray-50 transition">
-            + Add more items
-          </button>
-        </div>
-      </section>
+      
     </>
   );
 }

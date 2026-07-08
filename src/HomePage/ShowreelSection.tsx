@@ -42,12 +42,12 @@ const ShowreelSection: React.FC = () => {
                         <div className="mt-6">
     <button
         type="button"
-        className="group w-fit rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition-all duration-300 hover:gap-3 hover:shadow-lg lg:text-base flex items-center gap-2"
+        className="group inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg lg:text-base"
     >
         {content.buttonText}
         <ArrowRight
             size={16}
-            className="transition-transform duration-300 group-hover:translate-x-1"
+            className="shrink-0 transition-transform duration-300 group-hover:translate-x-1.5"
         />
     </button>
 </div>
