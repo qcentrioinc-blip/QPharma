@@ -9,8 +9,8 @@ import { TextParallaxContentExample } from "./TextParallaxContentExample"
 
 const Production = () => {
   return (
-    <div className="px-4">
-        
+    <div className="page-shell w-full">
+      
       <HeroSection/>
       {/* <Gallery/> */}
       <TextParallaxContentExample/>

@@ -9,14 +9,14 @@ const routeLabels: Record<string, string> = {
   '/customer-service': 'Customer Service',
   '/help-center': 'Help Center',
   '/herbal': 'Herbal',
-  '/login': 'Login',
+  // '/login': 'Login',
   '/nutraceutical': 'Nutraceutical',
   '/organic': 'Organic',
   '/privacy': 'Privacy',
   '/production': 'Production',
   '/productpage': 'Products',
   '/research': 'Research',
-  '/signup': 'Sign Up',
+  // '/signup': 'Sign Up',
   '/terms': 'Terms',
   '/user-profile': 'User Profile',
 };
@@ -41,10 +41,16 @@ const getLabelForPath = (path: string, segments: string[]) => {
   return formatSegment(segments[segments.length - 1]);
 };
 
+const hiddenRoutes = ['/login', '/signup'];
+
 const Breadcrumbs = () => {
   const location = useLocation();
 
-  if (location.pathname === '/') {
+  // Hide on Home, Login and Signup pages
+  if (
+    location.pathname === '/' ||
+    hiddenRoutes.includes(location.pathname)
+  ) {
     return null;
   }
 

@@ -1,5 +1,4 @@
 import Footer from "../Global/Footer";
-import Navbar from "../Global/Navbar";
 import AboutSection from "../HomePage/AboutSection";
 import Duration from "./Duration";
 import Experience from "./Experience";
@@ -12,7 +11,6 @@ import TwoCards from "./TwoCards";
 const AboutUS = () => {
     return (
         <div>
-            <Navbar />
             <AboutSection/>
             <Experience />
             <TwoCards />

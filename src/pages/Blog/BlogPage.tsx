@@ -19,8 +19,8 @@ export default function BlogPage() {
   const visible = filtered.slice(0, visibleCount);
 
   return (
-    <>
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#f9fafb", minHeight: "100vh" }}>
+      <div className="page-shell mx-auto w-full">
       {/* Header */}
       <div
         style={{
@@ -309,6 +309,6 @@ export default function BlogPage() {
       </div>
     </div>
     <Footer/>
-    </>
+    </div>
   );
 }

@@ -21,9 +21,7 @@ const Organic = () => {
       : "organic";
 
   return (
-    <>
-     
-
+    <div className="w-full">
       <OrganicLanding variant={variant} />
 
       <OrganicItemList />
@@ -33,7 +31,7 @@ const Organic = () => {
   <TwoCard/>
 
    
-    </>
+    </div>
   );
 };
 

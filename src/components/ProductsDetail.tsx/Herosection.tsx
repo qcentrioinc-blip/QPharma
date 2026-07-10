@@ -6,8 +6,8 @@ import {
   Share2,
   Check,
   Plus,
-  Truck,
   ChevronLeft,
+  ChevronRight,
   Star,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,12 +17,12 @@ import { products } from "../../datas/product";
 
 
 
-// All 4 thumbnail images — replace with your actual image paths
+// Product gallery images for the premium image viewer
 const productImages = [
   "/Global/Bottle.png",
-  "/Global/Bottle.png",
-  "/Global/Bottle.png",
-  "/Global/Bottle.png",
+  "/Global/Probiotic.png",
+  "/Global/Tablet.png",
+  "/Global/TwoCardImage.png",
 ];
 
 interface Review {
@@ -85,6 +85,7 @@ if (!product) {
   };
 
   const isFavorite = isInWishlist(product.id, product.badge);
+  const selectedImage = productImages[selectedThumb] ?? product.image;
 
   const handleAddToCart = () => {
     addToCart(productPayload);
@@ -114,11 +115,20 @@ if (!product) {
       // ignore share errors
     }
   };
+
+  const showPreviousImage = () => {
+    setSelectedThumb((current) => (current - 1 + productImages.length) % productImages.length);
+  };
+
+  const showNextImage = () => {
+    setSelectedThumb((current) => (current + 1) % productImages.length);
+  };
+
   return (
     <>
       {/* ───────── PRODUCT DETAIL HERO ───────── */}
       <section className="w-full bg-white py-8 lg:py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="page-shell">
 
           {/* Back button */}
           <button
@@ -133,36 +143,52 @@ if (!product) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-14 items-start">
 
             {/* ── LEFT: Main Image + Thumbnails ── */}
-            <div className="flex flex-col items-center">
-
+            <div className="flex w-full flex-col items-center">
               {/* Main Image */}
-              <div className="w-full max-w-[480px] bg-white rounded-2xl flex items-center justify-center overflow-hidden"
-                style={{ minHeight: 380 }}>
-                <img
-                  key={selectedThumb}
-            
-    src={product.image}
-    alt={product.title}
+              <div className="relative w-full">
+               
+                <div className="relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-[22px] bg-white/80 backdrop-blur-sm sm:min-h-[420px]">
+                  <img
+                    key={selectedThumb}
+                    src={selectedImage}
+                    alt={product.title}
+                    className="w-full max-w-[260px] object-contain px-4 py-8 transition-all duration-300 ease-out sm:max-w-[320px] lg:max-w-[360px]"
+                  />
 
-                  className="w-[220px] sm:w-[260px] lg:w-full object-cover py-8 transition-opacity duration-200"
-                />
+                  <button
+                    type="button"
+                    onClick={showPreviousImage}
+                    className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white/90 text-gray-700 shadow-md transition hover:-translate-y-1/2 hover:scale-105 hover:bg-white"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={showNextImage}
+                    className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white/90 text-gray-700 shadow-md transition hover:-translate-y-1/2 hover:scale-105 hover:bg-white"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
               </div>
 
               {/* Thumbnails — 4 column grid, click to swap */}
-              <div className="grid grid-cols-4 gap-3 mt-4 w-full max-w-[480px]">
+              <div className="mt-4 grid w-full max-w-[560px] grid-cols-2 gap-3 sm:grid-cols-4">
                 {productImages.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedThumb(i)}
-                    className={`aspect-square bg-[#f8f8f8] rounded-xl flex items-center justify-center transition border-2 ${selectedThumb === i
-                        ? "border-[#74a82a]"
+                    className={`flex aspect-square items-center justify-center rounded-2xl border-2 bg-[#f8f8f8] p-3 transition ${selectedThumb === i
+                        ? "border-[#74a82a] shadow-[0_10px_24px_rgba(116,168,42,0.16)]"
                         : "border-transparent hover:border-gray-300"
                       }`}
                   >
                     <img
                       src={img}
                       alt={`thumb-${i}`}
-                      className="w-[60%] object-contain"
+                      className="h-full w-full object-contain"
                     />
                   </button>
                 ))}
@@ -269,13 +295,7 @@ if (!product) {
                 </button>
               </div>
 
-              {/* Wholesale note */}
-              <div className="mt-24 flex items-start gap-4 rounded-2xl border border-[#e8efe0] bg-[#f8fbf3] p-5">
-                <Truck size={60} className="text-[#5f8f52] shrink-0 mt-0.5" />
-                <p className="text-[18px] leading-[1.6] text-black">
-                  For large pharmacy and distributor orders, our team will share MOQ, packing options, and dispatch timelines after your request.
-                </p>
-              </div>
+              
             </div>
           </div>
 

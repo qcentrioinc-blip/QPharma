@@ -5,7 +5,7 @@ import Content from "./Content"
 
 const Contact = () => {
   return (
-    <div>
+    <div className="page-shell w-full">
         {/* <ContactNav/> */}
         <Content/>
    

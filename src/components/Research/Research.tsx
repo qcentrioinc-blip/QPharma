@@ -9,7 +9,7 @@ import Timeline from "./Timeline"
 
 const Research = () => {
   return (
-    <div>
+    <div className="page-shell w-full">
      
         <HeroSection/>
         <Stats/>
