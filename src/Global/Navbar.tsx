@@ -26,7 +26,7 @@ interface ProductLink {
 
 const NAV_LINKS: NavLinkItem[] = [
   { name: 'Home', path: '/' },
-  { name: 'Products', path: '/productpage', hasDropdown: true },
+  { name: 'Products', path: '', hasDropdown: true },
   { name: 'R & D', path: '/research' },
   { name: 'Production', path: '/production' },
   { name: 'Get In Touch', path: '/contact' },

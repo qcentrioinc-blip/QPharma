@@ -4,7 +4,7 @@ import Content from "./Content";
 
 const Privacy = () => {
   return (
-    <div>
+    <div className="page-shell w-full">
   
       <Content />
       

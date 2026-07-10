@@ -5,7 +5,7 @@ import Content from "./Content"
 
 const Terms = () => {
   return (
-    <div>
+    <div className="page-shell w-full">
         <Content/>
      
     </div>
