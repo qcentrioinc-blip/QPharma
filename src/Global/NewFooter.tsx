@@ -218,17 +218,17 @@ const NewFooter = () => {
     };
   }, []);
 
-  const featuress = [
-    { title: "100 % Natural", desc: "Pure ingredients" },
-    { title: "100 % Natural", desc: "Pure ingredients" },
-    { title: "100 % Natural", desc: "Pure ingredients" },
-    { title: "100 % Natural", desc: "Pure ingredients" },
-  ];
+  // const featuress = [
+  //   { title: "100 % Natural", desc: "Pure ingredients" },
+  //   { title: "100 % Natural", desc: "Pure ingredients" },
+  //   { title: "100 % Natural", desc: "Pure ingredients" },
+  //   { title: "100 % Natural", desc: "Pure ingredients" },
+  // ];
 
   return (
   <>
     {/* ── Top Features Strip (Cleaned & Centered) ── */}
-    <div className="w-full bg-white py-6">
+    {/* <div className="w-full bg-white py-6">
       <div className="max-w-7xl mx-auto px-4">
         <div className="w-full bg-[#F7F8F2] rounded-3xl py-14 border border-[#e2e8f0]/50 shadow-sm">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 place-items-center">
@@ -237,7 +237,6 @@ const NewFooter = () => {
                 key={idx}
                 className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left max-w-[240px]"
               >
-                {/* Fixed container sizing for the leaf image */}
                 <div className="flex items-center justify-center shrink-0 bg-transparent w-12 h-12">
                   <img
                     src="/Global/LeafIcon.png"
@@ -259,7 +258,7 @@ const NewFooter = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
 
     {/* ── Footer ── */}
     <footer
@@ -290,16 +289,16 @@ const NewFooter = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8 xl:gap-20 mb-16">
           {/* 1. Brand Column */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <div className="flex items-center justify-center shrink-0 bg-transparent mb-2 w-32">
+            <div className="flex items-center justify-center shrink-0 bg-transparent mb-2 w-44">
               <img
                 src="/Global/Logo.png"
                 alt="Logo"
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-[11px] text-white/60 tracking-wider mb-6 font-light">
+            {/* <p className="text-[11px] text-white/60 tracking-wider mb-6 font-light">
               Organic. Nuetra. Pharma
-            </p>
+            </p> */}
             <p className="text-[15px] text-white/80 leading-[1.6] max-w-[280px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna.

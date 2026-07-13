@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface ExploreItem {
   title: string;
@@ -9,15 +10,17 @@ interface ExploreItem {
   color: string;
   borderColor: string;
   textColor: string;
+  link: string;
 }
 
 const ITEMS: ExploreItem[] = [
   {
-    title: "Organic",
+    title: "Herbal",
     image: "/Homepage/Organic.png",
     color: "bg-[#C38046]",
     borderColor: "#C38046",
     textColor: "#C38046",
+    link: "/herbal"
   },
   {
     title: "Nutraceutical",
@@ -25,13 +28,15 @@ const ITEMS: ExploreItem[] = [
     color: "bg-[#4AA3A7]",
     borderColor: "#4AA3A7",
     textColor: "#4AA3A7",
+    link: "/nutraceutical"
   },
   {
-    title: "Herbal",
+    title: "Organic",
     image: "/Homepage/Herbal.png",
     color: "bg-[#547A3D]",
     borderColor: "#547A3D",
     textColor: "#547A3D",
+    link: "/organic"
   },
 ];
 
@@ -108,13 +113,15 @@ function ExploreCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div
-      className="flex flex-col items-center group cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setIsHovered(false)}
-    >
+  <Link
+    to={item.link}
+    className="flex flex-col items-center group cursor-pointer"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    onTouchStart={() => setIsHovered(true)}
+    onTouchEnd={() => setIsHovered(false)}
+  >
+
       <div className={`relative ${sizeClassName}`}>
         <CircularLabel
           title={item.title}
@@ -143,7 +150,7 @@ function ExploreCard({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -168,11 +175,11 @@ function MobileArcLayout({ items }: { items: ExploreItem[] }) {
         {/* Left circle */}
         <div className="absolute bottom-0 left-0 z-10">
           <ExploreCard
-            item={left}
-            index={0}
-            sizeClassName="w-[105px] h-[105px]"
-            insetClassName="inset-[15px]"
-          />
+  item={left}
+  index={0}
+  sizeClassName="w-[105px] h-[105px]"
+  insetClassName="inset-[15px]"
+/>
         </div>
 
         {/* Center circle — stays on top of both side circles */}

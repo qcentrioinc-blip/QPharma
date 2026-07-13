@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   Heart,
   Share2,
-  Check,
+
   Plus,
   ChevronLeft,
   ChevronRight,
@@ -127,7 +127,7 @@ if (!product) {
   return (
     <>
       {/* ───────── PRODUCT DETAIL HERO ───────── */}
-      <section className="w-full bg-white py-8 lg:py-12">
+      <section className="w-full bg-white py-8 lg:py-12 mx-auto max-w-7xl">
         <div className="page-shell">
 
           {/* Back button */}
@@ -207,11 +207,11 @@ if (!product) {
               <div className="flex items-start justify-between gap-4">
 
                 <div className="space-y-3">
-                  <h1 className="text-3xl font-semibold text-black">{product.title}</h1>
-                  <div className="rounded-2xl border border-[#e8efe0] bg-[#f8fbf3] p-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#5b9740]">
-                      Wholesale ordering
-                    </p>
+                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-[#1B1B1B]">{product.title}</h1>
+                  <div className="rounded-3xl border border-[#E4ECD9] bg-[#F8FBF5] p-5">
+                  <p className="text-lg leading-8 font-semibold uppercase tracking-[0.25em] text-[#5b9740]">
+  Wholesale ordering
+</p>
                     <p className="mt-1 text-sm text-[#4b4b4b]">
                       MOQ and pricing are confirmed after your bulk order request for pharmacies and distributors.
                     </p>
@@ -250,13 +250,8 @@ if (!product) {
               </div>
 
               {/* Wholesale benefits */}
-              <div className="mt-5 space-y-2.5">
-                <div className="flex items-center gap-3 text-gray-600 text-[18px]">
-                  <div className="w-8 h-8 rounded-sm bg-[#5b9740] text-white flex items-center justify-center shrink-0">
-                    <Check size={11} />
-                  </div>
-                  <p>Dedicated bulk-order support for pharmacies</p>
-                </div>
+              <div className="space-y-5 mt-5">
+                
                 <div className="flex items-center gap-3 text-gray-600 text-[18px]">
                   <div className="w-8 h-8 rounded-full bg-[#5b9740] text-white flex items-center justify-center shrink-0">
                     <Plus size={11} />
@@ -320,7 +315,7 @@ if (!product) {
             {activeTab === "description" && (
               <div className="mt-8">
                 <h3 className="text-[20px] font-bold text-black">From the manufacturer</h3>
-                <p className="mt-4 text-gray-500 leading-[1.9] text-[14px] max-w-5xl">
+                <p className="mt-4 text-gray-500 leading-[1.9] text-[14px] max-w-7xl">
                   Dive into the blockbuster movies you can't wait to see. Switch between your
                   favorite apps quickly and easily. The new and improved octa-core processor
                   gives you the power and speed you need to see more and do more. Expand your
@@ -385,7 +380,7 @@ if (!product) {
                 {/* Samsung description */}
                 <div className="mt-8">
                   <h4 className="text-[16px] font-bold text-black">Semsong Galaxy Tab S2, 8-Inch, White</h4>
-                  <p className="mt-2 text-gray-500 text-[13px] leading-[1.8] max-w-5xl">
+                  <p className="mt-2 text-gray-500 text-[13px] leading-[1.8] max-w-7xl">
                     The Samsung Galaxy Tab S2 offers dual cameras: a rear-facing 8-megapixel camera
                     with Auto Focus and a 2.1-megapixel camera on the front. Take high-quality pictures
                     and video or video chat with friends, family, and colleagues. Customize your Galaxy

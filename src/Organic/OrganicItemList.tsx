@@ -1,5 +1,6 @@
 import { useLocation,useNavigate } from 'react-router-dom';
 import { products } from '../datas/product';
+import { ArrowRight } from 'lucide-react';
 
 interface ColorConfig {
   category: 'herbal' | 'organic' | 'nutraceuticals';
@@ -54,14 +55,14 @@ const items = products;
   const ProductCard = ({ item }: { item: (typeof items)[0] }) => (
    <article
   onClick={() => navigate(`/product/${item.slug}`)}
-  className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white px-[10px] pb-[10px] pt-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer hover:shadow-lg transition"
+  className="relative overflow-hidden rounded-[14px] border border-[#9f9f9f] bg-white p-3 shadow-[0_2px_8px_rgba(0,0,0,0.06)] cursor-pointer hover:shadow-xl transition"
 >
       <button
         type="button"
         aria-label="Wishlist"
         className="absolute right-[12px] top-[12px] z-10 flex h-[20px] w-[20px] items-center justify-center text-black transition-transform hover:scale-110"
       >
-        <svg
+        {/* <svg
           viewBox="0 0 24 24"
           className="h-[18px] w-[18px]"
           fill="none"
@@ -71,57 +72,84 @@ const items = products;
           strokeLinejoin="round"
         >
           <path d="M12 21s-7-4.6-7-10.4A4.4 4.4 0 0 1 12 7.3a4.4 4.4 0 0 1 7 3.3C19 16.4 12 21 12 21Z" />
-        </svg>
+        </svg> */}
       </button>
 
-      <div className="flex h-52 items-center justify-center overflow-hidden rounded-[4px] bg-[#f8f8f5]">
-        <img
+<div className="h-[180px] sm:h-[200px] lg:h-[220px] overflow-hidden rounded-xl bg-[#FAFAFA] flex items-center justify-center">
+          <img
           src={item.image}
           alt={item.title}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain transition-transform duration-500 hover:scale-105"
         />
       </div>
+      <div className='xl:px-5 xl:py-3'>
 
+    
       <div className="pt-[8px]">
         <span
-          className="inline-flex h-[18px] items-center rounded-[4px] px-[10px] text-[10px] font-medium leading-none text-white transition-colors hover:opacity-90"
+          className="inline-flex items-center rounded-md px-3 py-1 text-xs font-semibold text-white"
           style={{ backgroundColor: colors.badge }}
         >
           {item.badge}
         </span>
 
-        <h3 className="mt-[8px] text-[18px] font-normal leading-[1.08] tracking-[-0.03em] text-[#242424]">
-          {item.title}
+<h3 className="mt-3 text-[22px] font-semibold leading-tight text-[#1D1D1F] line-clamp-2">
+            {item.title}
         </h3>
 
-        <p className="mt-[4px] max-w-[165px] text-[12px] leading-[1.22] text-[#3e3e3e]">
-          {item.description}
+<p className="mt-2 text-[15px] leading-6 text-[#666] line-clamp-2">
+            {item.description}
         </p>
 
         <div className="mt-[8px]">
-          <p className="text-[12px] font-semibold leading-none text-[#191919]">
-            {item.bulk}
-          </p>
+{/* <p className="text-[16px] font-semibold text-[#111]">
+              {item.bulk}
+          </p> */}
 
-          <div className="mt-[4px] flex items-center justify-between gap-3 text-[10px] leading-none text-[#8b8b8b]">
-            <span>{item.moq}</span>
+{/* <div className="mt-2 flex items-center justify-between text-[13px] text-[#7A7A7A]">
+              <span>{item.moq}</span>
             <span>{item.extra}</span>
-          </div>
+          </div> */}
+
+          <p className="text-[16px] font-semibold text-[#111]">
+              View <span className=' xl:px-25'> </span> <ArrowRight className="inline-block h-4 w-4 ml-1" />
+          </p>
         </div>
       </div>
+        </div>
     </article>
   );
 
   return (
     <section className="w-full bg-white py-6 md:py-8">
       <div className="mx-auto w-full px-4 md:px-6 max-w-[1440px]">
-        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 lg:gap-x-6 xl:gap-x-[42px] lg:gap-y-10 xl:gap-y-[46px]">
-          {items.slice(0, 4).map((item) => (
+        <div
+  className="
+    relative
+    grid
+    grid-cols-2
+    sm:grid-cols-3
+    lg:grid-cols-4
+    xl:grid-cols-4
+    gap-4
+    md:gap-6
+  "
+>
+
+          
+
+          {items.slice(0, 6).map((item) => (
             <ProductCard key={item.id} item={item} />
           ))}
 
-          {/* Enquiries Sidebar - Colors change based on category */}
-          <aside
+         
+          {items.slice(3).map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
+
+
+           {/* Enquiries Sidebar - Colors change based on category */}
+          {/* <aside
             className="rounded-[20px] px-3 xl:px-[22px] pb-[18px] pt-[16px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             style={{ backgroundColor: colors.enquiresBgColor }}
           >
@@ -163,7 +191,6 @@ const items = products;
             </ul>
 
             <div className="mt-[16px] space-y-[10px]">
-              {/* Connect Us Button - Color changes based on category */}
               <button
                 type="button"
                 className="flex h-[42px] w-full items-center justify-center rounded-[10px] text-[14px] xl:text-[16px] font-semibold text-white shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)] transition-all hover:opacity-90 whitespace-nowrap px-2"
@@ -172,7 +199,6 @@ const items = products;
                 Connect Us
               </button>
 
-              {/* Download Catalog Button - Border color changes based on category */}
               <button
                 type="button"
                 className="flex h-[42px] w-full items-center justify-center rounded-[10px] border-2 bg-transparent text-[14px] xl:text-[16px] font-semibold transition-all hover:opacity-90 whitespace-nowrap px-2"
@@ -184,13 +210,8 @@ const items = products;
                 Download Catalog
               </button>
             </div>
-          </aside>
+          </aside> */}
 
-
-
-          {items.slice(4).map((item) => (
-            <ProductCard key={item.id} item={item} />
-          ))}
         </div>
       </div>
     </section>
