@@ -1,14 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
 
-:root {
-  --font-title: 'Cormorant Garamond', serif;
-  --font-body: 'Poppins', sans-serif;
-}
+
 
 
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Manrope", sans-serif;
   overflow-x: hidden;
 }
 
+
+.para {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+
+p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}

@@ -137,7 +137,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                                   </button>
                                 </div>
 
-                                <div className="rounded-full bg-[#f8fbf3] px-3 py-1 text-xs font-semibold text-[#2f5f1d]">Quote on request</div>
+                                <div className="rounded-full bg-[#f8fbf3] px-3 py-1 text-xs font-semibold text-[#2f5f1d]"> 1000 units </div>
                               </div>
                             </div>
                           </div>
@@ -154,7 +154,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <button type="button" onClick={clearCart} className="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100">Clear cart</button>
-                      <button type="button" onClick={onClose} className="flex-1 rounded-full bg-[#5E8D49] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4f793d]">Continue browsing</button>
+                      <button type="button" onClick={onClose} className="flex-1 rounded-full bg-[#5E8D49] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4f793d]">Request Quote</button>
                     </div>
                   </div>
                 </>

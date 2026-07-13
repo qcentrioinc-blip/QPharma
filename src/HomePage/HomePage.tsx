@@ -12,7 +12,7 @@ import Explore from './Explore';
 import FAQ from './FAQ';
 
 import CTA from './CTA';
-import Delivery from './Delivery';
+// import Delivery from './Delivery';
 import MainSec from './MainSec';
 import JointPain from './JointPain';
 // import Para from './Para';
@@ -20,7 +20,8 @@ import JointPain from './JointPain';
 import ShowreelSection from './ShowreelSection';
 import FeaturesSection from './FeaturesSection';
 // import { EtCtaSection } from './EtCtaSection';
-import AnimatedSec from './AnimatedSec';
+// import AnimatedSec from './AnimatedSec';
+import Table from './Table';
 
 const HomePage = () => {
     return (
@@ -41,9 +42,10 @@ const HomePage = () => {
                   {/* <Para/>  */}
                 {/* <Production /> */}
                <CTA />
-               <Delivery />
+               {/* <Delivery /> */}
                 <FAQ />
-                <AnimatedSec />
+                <Table/>
+                {/* <AnimatedSec /> */}
                 <RelatedArticles />
             </main> 
          

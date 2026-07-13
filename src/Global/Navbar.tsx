@@ -453,7 +453,7 @@ const Navbar = () => {
   }, [openCart]);
 
   return (
-    <motion.nav
+  <motion.nav
       initial={false}
       animate={{
         backgroundColor: scrolled ? '#ffffff' : '#ffffff',
@@ -493,9 +493,8 @@ const Navbar = () => {
             <motion.img
               src="/Global/Logo.png"
               alt="Zephyr Logo"
-              whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.25, ease: EASE_PREMIUM }}
-              className="h-10 sm:h-12 md:h-16 w-auto object-contain"
+              className="h-10 sm:h-12 md:h-15 w-auto object-contain"
             />
           </Link>
         </div>

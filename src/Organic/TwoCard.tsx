@@ -1,25 +1,91 @@
+import { useLocation, useNavigate } from "react-router-dom";
+
+
 export default function TwoCard() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const dummyImage =
     "/Global/TwoCardImage.png";
 
-  const cards = [
+  const categoryCards = {
+  herbal: [
     {
       id: 1,
       title: "Lorem ipsum:",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      cta: "Explore Nuetraciticals",
+      cta: "Explore Nutraceutical",
       ctaColor: "#4CA6B3",
+      link: "/Nutraceutical",
     },
     {
       id: 2,
       title: "Lorem ipsum:",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cta: "Explore Organic",
+      ctaColor: "#547A3D",
+      link: "/organic",
+    },
+  ],
+
+  organic: [
+    {
+      id: 1,
+      title: "Lorem ipsum:",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       cta: "Explore Herbal",
       ctaColor: "#C98A6B",
+      link: "/herbal",
     },
-  ];
+    {
+      id: 2,
+      title: "Lorem ipsum:",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cta: "Explore Nutraceutical",
+      ctaColor: "#4CA6B3",
+      link: "/Nutraceutical",
+    },
+  ],
+
+  nutraceutical: [
+    {
+      id: 1,
+      title: "Lorem ipsum:",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cta: "Explore Organic",
+      ctaColor: "#547A3D",
+      link: "/organic",
+    },
+    {
+      id: 2,
+      title: "Lorem ipsum:",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      cta: "Explore Herbal",
+      ctaColor: "#C98A6B",
+      link: "/herbal",
+    },
+  ],
+};
+
+let currentCategory: keyof typeof categoryCards = "organic";
+
+  if (location.pathname.includes("/herbal")) {
+    currentCategory = "herbal";
+  } else if (location.pathname.includes("/organic")) {
+    currentCategory = "organic";
+  } else if (location.pathname.includes("/nutraceutical")) {
+    currentCategory = "nutraceutical";
+  }
+
+  const cards = categoryCards[currentCategory];
+
 
   return (
     <section className="w-full bg-white py-8 md:py-12">
@@ -37,6 +103,7 @@ export default function TwoCard() {
                 </p>
 
                 <button
+  onClick={() => navigate(card.link)}
                   type="button"
                   className="mt-6 inline-flex w-fit items-center gap-2 text-[24px] font-semibold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-80 md:text-[25px]"
                   style={{ color: card.ctaColor }}

@@ -1,7 +1,7 @@
 // import ContactNav from "../../Global/ContactNav"
 import Herosection from "./Herosection"
 // import Payment from "./Payment"
-import ProductHighlights from "./ProductHighlights"
+// import ProductHighlights from "./ProductHighlights"
 
 const ProductDetail = () => {
   return (
@@ -9,7 +9,7 @@ const ProductDetail = () => {
       {/* <ContactNav/> */}
         <Herosection/>  
         {/* <RecentBought/> */}
-        <ProductHighlights/>
+        {/* <ProductHighlights/> */}
         {/* <Payment/>   */}
     </div>
   )
