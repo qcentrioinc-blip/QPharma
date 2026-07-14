@@ -78,7 +78,7 @@ export const P = ({ children, className = "" }: TypographyProps) => {
   return (
     <p
       className={`
-        text-[14px] md:text-[16px] dark:text-white lg:text-[16px] xl:text-[18px]
+        text-[14px] md:text-[16px] lg:text-[16px] xl:text-[18px]
         font-para
         leading-[140%]
         text-[#141414]

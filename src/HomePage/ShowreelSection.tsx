@@ -36,7 +36,7 @@ const ShowreelSection: React.FC = () => {
                             {content.title}
                         </H3>
 
-                        <P className="mt-4 text-sm leading-7 text-[#6f7482] sm:text-base">
+                        <P className="mt-4 leading-7 sm:text-base">
                             {content.description}
                         </P>
 
