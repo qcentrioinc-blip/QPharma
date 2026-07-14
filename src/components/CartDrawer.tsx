@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useEffect } from "react";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -19,6 +20,24 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     cartView,
     setCartView,
   } = useCart();
+
+  useEffect(() => {
+  if (isOpen) {
+    const scrollBarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollBarWidth}px`;
+  } else {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  };
+}, [isOpen]);
 
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -42,7 +61,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             transition={{ type: 'spring', stiffness: 280, damping: 32 }}
             className="fixed right-0 top-0 z-[121] flex h-full w-full max-w-full flex-col bg-white shadow-2xl sm:max-w-[430px]"
           >
-            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-4 sm:px-6">
+            <div className="flex items-center justify-between font-manrope border-b border-gray-200 px-4 py-4 sm:px-6">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gray-500">
                   {cartView === 'wishlist' ? 'Wishlist' : 'Bulk order request'}
@@ -64,7 +83,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               </button>
             </div>
 
-            <div className="flex border-b border-gray-200 px-4 sm:px-6">
+            <div className="flex border-b border-gray-200 font-manrope  px-4 sm:px-6">
               <button
                 type="button"
                 onClick={() => setCartView('cart')}
@@ -83,7 +102,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
             {cartView === 'cart' ? (
               items.length === 0 ? (
-                <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+                <div className="flex flex-1 flex-col items-center font-manrope justify-center px-6 text-center">
                   <div className="mb-4 rounded-full bg-gray-100 p-4">
                     <ShoppingBag className="h-7 w-7 text-gray-600" />
                   </div>
@@ -101,7 +120,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
               ) : (
                 <>
-                  <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6">
+                  <div className="flex-1 overflow-y-auto px-4 py-4 font-manrope sm:px-6">
                     <ul className="space-y-4">
                       {items.map((item) => (
                         <li key={`${item.category}-${item.id}`} className="rounded-2xl border border-gray-200 p-3">
@@ -146,7 +165,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     </ul>
                   </div>
 
-                  <div className="border-t border-gray-200 bg-white p-4 sm:p-6">
+                  <div className="border-t border-gray-200 bg-white font-manrope p-4 sm:p-6">
                     <div className="mb-4 rounded-2xl border border-[#eef2e7] bg-[#f8fbf3] p-3 text-sm text-[#4b4b4b]">
                       <p className="font-semibold text-[#2f5f1d]">Pricing is shared on request</p>
                       <p className="mt-1 text-xs text-[#6b6b6b]">We will prepare a quote for your pharmacy after reviewing your order volume.</p>
@@ -168,7 +187,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 <p className="mt-2 max-w-xs text-sm leading-6 text-gray-500">Tap the heart on any product to save it here for later.</p>
               </div>
             ) : (
-              <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6">
+              <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 font-manrope">
                 <ul className="space-y-4">
                   {wishlistItems.map((item) => (
                     <li key={`wish-${item.category}-${item.id}`} className="rounded-2xl border border-gray-200 p-3">

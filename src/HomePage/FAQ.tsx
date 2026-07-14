@@ -1,5 +1,6 @@
 import { useState } from "react";
 import QuestionMark from "/Global/Question.svg";
+import { H2, H3, P } from "../Global/Typography/Typo";
 
 const faqs = [
   {
@@ -44,9 +45,9 @@ const FAQ = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         {/* Title */}
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900 tracking-tight">
+          <H2 className="">
             Frequently Asked Questions
-          </h2>
+          </H2>
         </div>
 
         {/* Content */}
@@ -130,7 +131,10 @@ const FAQ = () => {
                     )}
                   </div>
 
-                  <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-800 leading-relaxed">
+                  <span className="text-[14px] md:text-[16px] dark:text-white lg:text-[16px] xl:text-[18px]
+        font-para
+        leading-[140%]
+        text-[#141414] ">
                     {item.q}
                   </span>
                 </button>
@@ -144,7 +148,10 @@ const FAQ = () => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-6 pb-5 text-sm md:text-base text-gray-500 leading-relaxed">
+                    <div className="px-6 pb-5 text-gray-600 text-[14px] md:text-[16px] dark:text-white lg:text-[16px] xl:text-[18px]
+        font-para
+        leading-[140%]
+        ">
                       {item.a}
                     </div>
                   </div>
@@ -162,20 +169,20 @@ const FAQ = () => {
               className="w-32 sm:w-40 md:w-48 lg:w-52 h-auto object-contain"
             />
 
-            <h3 className="mt-4 text-2xl md:text-3xl font-semibold text-gray-900">
+            <H3 className="mt-4 ">
               Any Questions?
-            </h3>
+            </H3>
 
-            <p className="mt-2 text-sm md:text-base text-gray-500 max-w-md">
+            <P className="mt-2  max-w-md">
               Have something specific in mind? Send us your question and our
               team will get back to you.
-            </p>
+            </P>
 
             {/* Input */}
             <div className="w-full max-w-lg mt-8">
               <label
                 htmlFor="faq-feedback"
-                className="block text-sm text-gray-500 text-left mb-2"
+                className="block text-sm text-gray-500 text-left mb-2 font-para"
               >
                 Let us know
               </label>
@@ -208,7 +215,7 @@ const FAQ = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={!feedback.trim()}
-                  className="px-5 py-4 bg-black text-white text-sm md:text-base hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  className="px-5 py-4 bg-black text-white text-sm md:text-base hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed font-para"
                 >
                   Send
                 </button>

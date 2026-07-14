@@ -1,4 +1,5 @@
 import React from 'react';
+import { H1, H3, P } from '../../Global/Typography/Typo';
 
 interface ProjectCard {
   id: number;
@@ -35,12 +36,12 @@ const HeroSection: React.FC = () => {
       {/* Top Content Area - Heading and Description */}
       <div className="w-full px-4  xl:pt-24 sm:px-6 xl:px-8 pt-28   pb-0">
         <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16 lg:mb-20">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+          <H1 className="mb-4 sm:mb-6 ">
             Find the project you love
-          </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          </H1>
+          <P className="max-w-2xl mx-auto">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus in libero risus semper habitant arcu eugest. Et integer facilisis arcu etiam.Lorem ipsum dolor sit amet.consectetur
-          </p>
+          </P>
         </div>
       </div>
 
@@ -67,12 +68,12 @@ const HeroSection: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 {projects.map((project) => (
                   <div key={project.id} className="flex flex-col">
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                    <H3 className=" mb-2 sm:mb-3">
                       {project.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed border-t border-gray-200 pt-3 sm:pt-4">
+                    </H3>
+                    <P className="border-t border-gray-400 pt-3 sm:pt-4">
                       {project.description}
-                    </p>
+                    </P>
                   </div>
                 ))}
               </div>

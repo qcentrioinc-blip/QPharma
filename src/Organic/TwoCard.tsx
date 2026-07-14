@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { P } from "../Global/Typography/Typo";
 
 
 export default function TwoCard() {
@@ -97,10 +98,10 @@ let currentCategory: keyof typeof categoryCards = "organic";
               className="relative flex min-h-[194px] overflow-hidden rounded-[20px] border border-[#b9b9b9] bg-white shadow-[0_4px_14px_rgba(0,0,0,0.08)]"
             >
               <div className="flex w-full flex-col  justify-between px-7 py-7  xl:pr-[225px]">
-                <p className="max-w-[560px] text-[18px] leading-[1.55] tracking-[-0.02em] text-[#222222] md:text-[20px]">
+                <P className="max-w-[560px]">
                   <span className="font-semibold">{card.title}</span>{" "}
                   <span className="font-normal">{card.description}</span>
-                </p>
+                </P>
 
                 <button
   onClick={() => navigate(card.link)}
@@ -126,7 +127,7 @@ let currentCategory: keyof typeof categoryCards = "organic";
               </div>
 
               <div
-                className="absolute  xl:flex hidden right-4 top-1/2 h-[138px] w-[190px] -translate-y-1/2 overflow-hidden  "
+                className="absolute  xl:flex hidden right-4 top-1/2 h-[138px] w-[290px] -translate-y-1/2 overflow-hidden  "
                 
               >
                 <img

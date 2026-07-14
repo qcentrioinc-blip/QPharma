@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import { H3, P } from "../Global/Typography/Typo";
 
 type CardContent = {
     title: string;
@@ -8,9 +9,9 @@ type CardContent = {
 };
 
 const content: CardContent = {
-    title: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT",
+    title: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD TEMPOR",
     description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     buttonText: "OUR SHOWREEL",
 };
 
@@ -31,18 +32,20 @@ const ShowreelSection: React.FC = () => {
 
                     {/* Content Card */}
                     <div className="flex min-h-[250px] flex-col justify-center bg-[#eef1f9] px-6 py-8 sm:px-8 md:min-h-[400px] md:px-10 lg:px-12">
-                        <h2 className="text-lg font-extrabold uppercase leading-relaxed text-[#111111] sm:text-xl lg:text-2xl">
+                        <H3 className="">
                             {content.title}
-                        </h2>
+                        </H3>
 
-                        <p className="mt-4 text-sm leading-7 text-[#6f7482] sm:text-base">
+                        <P className="mt-4 text-sm leading-7 text-[#6f7482] sm:text-base">
                             {content.description}
-                        </p>
+                        </P>
 
                         <div className="mt-6">
     <button
         type="button"
-        className="group inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg lg:text-base"
+        className="group inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-black shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg text-[14px] md:text-[16px] lg:text-[16px] xl:text-[18px]
+        font-para
+        leading-[140%]"
     >
         {content.buttonText}
         <ArrowRight

@@ -1,3 +1,4 @@
+import { H1, P } from "../Global/Typography/Typo";
 import { landingConfigs }  from "./data/landingconfig";
 import type { LandingVariant } from "./data/landingconfig";
 
@@ -34,18 +35,19 @@ export default function OrganicLanding({ variant }: Props) {
           <div className="relative z-10 flex min-h-[310px] flex-col justify-between px-6 py-7 sm:px-8 md:px-10 lg:px-14">
             {/* Heading */}
             <div className="max-w-[48%] text-center ">
-              <h2 className="text-[28px] sm:text-[42px] md:text-[52px] lg:text-[64px] leading-none">
+              <H1 className="
+              ">
                 {config.title}
-              </h2>
+              </H1>
 
-              <p
-                className="mt-3 text-[16px] sm:text-[22px] md:text-[28px]"
+              <P
+                className="mt-3 "
                 style={{
                   color: config.colors.subtitle,
                 }}
               >
                 {config.subtitle}
-              </p>
+              </P>
             </div>
 
             {/* Features */}
@@ -68,9 +70,9 @@ export default function OrganicLanding({ variant }: Props) {
                     />
                   </div>
 
-                  <p className="mt-3 text-[12px]">
+                  <P className="mt-3">
                     {item}
-                  </p>
+                  </P>
                 </div>
               ))}
             </div>

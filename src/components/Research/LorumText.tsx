@@ -35,7 +35,7 @@ const LorumText = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full min-h-[60vh] md:min-h-screen flex flex-col justify-center overflow-hidden py-10 font-sans"
+      className="relative w-full min-h-[60vh] md:min-h-screen flex flex-col justify-center overflow-hidden font-sans"
     >
       <div className="w-full flex flex-col gap-2 md:gap-4 max-w-[1920px] mx-auto">
         

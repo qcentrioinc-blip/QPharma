@@ -1,6 +1,7 @@
 import { useLocation,useNavigate } from 'react-router-dom';
 import { products } from '../datas/product';
 import { ArrowRight } from 'lucide-react';
+import { H4, P } from '../Global/Typography/Typo';
 
 interface ColorConfig {
   category: 'herbal' | 'organic' | 'nutraceuticals';
@@ -87,19 +88,21 @@ const items = products;
     
       <div className="pt-[8px]">
         <span
-          className="inline-flex items-center rounded-md px-3 py-1 text-xs font-semibold text-white"
+          className="inline-flex items-center rounded-md px-3 py-1 text-[8px] md:text-[10px] lg:text-[12px]
+        font-para
+        leading-[120%] text-white"
           style={{ backgroundColor: colors.badge }}
         >
           {item.badge}
         </span>
 
-<h3 className="mt-3 text-[22px] font-semibold leading-tight text-[#1D1D1F] line-clamp-2">
+<H4 className="mt-3 text-[#1D1D1F] line-clamp-2">
             {item.title}
-        </h3>
+        </H4>
 
-<p className="mt-2 text-[15px] leading-6 text-[#666] line-clamp-2">
+<P className="mt-2 line-clamp-2">
             {item.description}
-        </p>
+        </P>
 
         <div className="mt-[8px]">
 {/* <p className="text-[16px] font-semibold text-[#111]">
@@ -111,9 +114,9 @@ const items = products;
             <span>{item.extra}</span>
           </div> */}
 
-          <p className="text-[16px] font-semibold text-[#111]">
+          <P className="">
               View <span className=' xl:px-25'> </span> <ArrowRight className="inline-block h-4 w-4 ml-1" />
-          </p>
+          </P>
         </div>
       </div>
         </div>

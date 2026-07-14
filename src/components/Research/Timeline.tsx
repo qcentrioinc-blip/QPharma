@@ -1,4 +1,5 @@
 import React from 'react';
+import { H2, P } from '../../Global/Typography/Typo';
 
 interface TimelineEntry {
   year: string;
@@ -85,13 +86,14 @@ const Timeline: React.FC = () => {
 
         {/* Content Section */}
         <div className="mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-            from a retail store to the global chain of stores
-          </h2>
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-full">
+          <H2 className=" mb-4 sm:mb-6">
+            From a retail store to the global chain of stores
+          </H2>
+          <P className=" max-w-full">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua.
-          </p>
+          </P>
         </div>
 
         {/* Timeline Data / Text Grid Section */}
@@ -99,21 +101,21 @@ const Timeline: React.FC = () => {
           {timelineData.map((item, index) => (
             <div key={index} className="flex items-start">
               <div className="flex-shrink-0 flex items-center">
-                <span className="text-xl sm:text-2xl font-semibold text-gray-900">
+                <span className="text-xl sm:text-2xl font-semibold text-black">
                   {item.year}
                 </span>
-                <span className="text-xl sm:text-2xl font-bold text-gray-900 ml-1 sm:ml-2 mr-3 sm:mr-4">
+                <span className="text-xl sm:text-2xl font-bold text-black ml-1 sm:ml-2 mr-3 sm:mr-4">
                   :
                 </span>
               </div>
               <div className="flex-1 pt-1">
-                <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+                <P className="">
                   {item.description}
-                </p>
+                </P>
                 {item.fullDescription && (
-                  <p className="text-sm sm:text-base text-gray-500 leading-relaxed mt-1">
+                  <P className=" mt-1">
                     {item.fullDescription}
-                  </p>
+                  </  P>
                 )}
               </div>
             </div>

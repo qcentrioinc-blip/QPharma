@@ -1,6 +1,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
+import { H1, H3, H4, P } from "../../Global/Typography/Typo";
 
 export const TextParallaxContentExample = () => {
   return (
@@ -122,30 +123,31 @@ const OverlayCopy = ({ subheading, heading }: OverlayCopyProps) => {
       ref={targetRef}
       className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
     >
-      <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
+      <H4 className="mb-2 text-center text-white md:mb-4 ">
         {subheading}
-      </p>
-      <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
+      </H4>
+      <H1 className="text-center">{heading}</H1>
     </motion.div>
   );
 };
 
 const ExampleContent = () => (
   <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
-    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+    <H3 className="col-span-1 md:col-span-4">
       Additional content explaining the above card here
-    </h2>
+    </H3>
     <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
+      <P className="mb-4 ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
         blanditiis soluta eius quam modi aliquam quaerat odit deleniti minima
-        maiores voluptate est ut saepe accusantium maxime doloremque nulla
-        consectetur possimus.
-      </p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">
+        voluptatibus, cumque, doloribus, accusamus voluptates. Quisquam
+        voluptatibus, cumque, doloribus, accusamus voluptates. Quisquamvoluptatibus, cumque, doloribus, accusamus voluptates. Quisquam
+        
+      </P>
+      <P className="mb-8 ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
         reiciendis blanditiis aliquam aut fugit sint.
-      </p>
+      </P>
       <button className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-9 py-4 text-xl text-white shadow-sm transition-all duration-300 hover:gap-3 hover:bg-neutral-700 hover:shadow-lg md:w-fit">
         Learn more <FiArrowUpRight className="shrink-0 transition-transform duration-300 group-hover:translate-x-1.5" />
       </button>

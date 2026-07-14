@@ -36,7 +36,7 @@ export const landingConfigs = {
       "Ancient Herbal",
       "Plant Based",
       "Safe & Effective",
-      "Trusted Remedies",
+      "Trusted ",
     ],
   },
 

@@ -1,33 +1,34 @@
 import { useRef } from "react";
 import relatedArticleImg from "./assets/related_article.png";
+import { H2, H4, P } from "../Global/Typography/Typo";
 
 const RelatedArticles = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const articles = [
     {
-      title: "THE ULTIMATE GUIDE TO FULL-BODY WORKOUTS",
+      title: "THE ULTIMATE GUIDE TO FULL-BODY",
       description:
         "Discover exercises that target every muscle group, helping you build strength and endurance. Perfect for beginners and seasoned athletes.",
       author: "By Alex Carter",
       image: relatedArticleImg,
     },
     {
-      title: "THE ULTIMATE GUIDE TO FULL-BODY WORKOUTS",
+      title: "THE ULTIMATE GUIDE TO FULL-BODY",
       description:
         "Discover exercises that target every muscle group, helping you build strength and endurance. Perfect for beginners and seasoned athletes.",
       author: "By Alex Carter",
       image: relatedArticleImg,
     },
     {
-      title: "THE ULTIMATE GUIDE TO FULL-BODY WORKOUTS",
+      title: "THE ULTIMATE GUIDE TO FULL-BODY",
       description:
         "Discover exercises that target every muscle group, helping you build strength and endurance. Perfect for beginners and seasoned athletes.",
       author: "By Alex Carter",
       image: relatedArticleImg,
     },
     {
-      title: "THE ULTIMATE GUIDE TO FULL-BODY WORKOUTS",
+      title: "THE ULTIMATE GUIDE TO FULL-BODY",
       description:
         "Discover exercises that target every muscle group, helping you build strength and endurance. Perfect for beginners and seasoned athletes.",
       author: "By Alex Carter",
@@ -50,10 +51,10 @@ const RelatedArticles = () => {
     <section className="w-full bg-white py-10 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-10 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-light text-[#2D2D5E]">
+        <div className="flex items-center justify-between mb-8">
+          <H2 className="">
             Related Articles
-          </h2>
+          </H2>
 
           {/* Mobile / Tablet Arrows */}
           <div className="flex lg:hidden items-center gap-3">
@@ -90,15 +91,15 @@ const RelatedArticles = () => {
                 />
               </div>
 
-              <h3 className="text-lg xl:text-xl font-extrabold text-[#1a1a1a] leading-tight uppercase mb-3">
+              <H4 className="mb-3">
                 {article.title}
-              </h3>
+              </H4>
 
-              <p className="text-[#666666] text-sm leading-relaxed line-clamp-3 mb-4">
+              <P className="mb-4">
                 {article.description}
-              </p>
+              </P>
 
-              <span className="text-sm text-[#888888] font-medium">
+              <span className="text-sm text-[#888888] font-para">
                 {article.author}
               </span>
             </article>
@@ -142,15 +143,15 @@ const RelatedArticles = () => {
                 />
               </div>
 
-              <h3 className="text-lg font-extrabold text-[#1a1a1a] leading-tight uppercase mb-3">
+              <H4 className=" mb-3">
                 {article.title}
-              </h3>
+              </H4>
 
-              <p className="text-sm text-[#666666] leading-relaxed line-clamp-3 mb-3">
+              <P className=" mb-3">
                 {article.description}
-              </p>
+              </P>
 
-              <span className="text-sm text-[#888888] font-medium">
+              <span className="text-sm text-[#888888] font-para">
                 {article.author}
               </span>
             </article>

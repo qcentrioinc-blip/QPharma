@@ -2,6 +2,7 @@
 
 import heroImg from "/Production/ProductionsHeroRight.png";
 import labImg from "/Production/ProductionsHeroLeft.png";
+import { H1, H3, P } from "../../Global/Typography/Typo";
 
 const HeroSection = () => {
   return (
@@ -10,15 +11,17 @@ const HeroSection = () => {
 
     {/* Heading */}
     <div className="max-w-full">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-gray-800 leading-tight">
+      <H1 className="">
         Lorum Ipsum
-      </h1>
+      </H1>
 
-      <p className="mt-6  lg:mb-4 xl:mb-0 text-base md:text-lg leading-8  max-w-full  lg:max-w-2xl xl:max-w-lg">
+      <P className="mt-6  lg:mb-4 xl:mb-0 max-w-full  lg:max-w-2xl xl:max-w-lg">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Faucibus in libero risus semper habitant arcu eget.
+        Et integer facilisi eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Faucibus in libero risus semper habitant arcu eget.
         Et integer facilisi eget.
-      </p>
+      </P>
     </div>
 
     {/* Layout Area */}
@@ -83,27 +86,27 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 py-4 px-10 sm:grid-cols-3 gap-10">
 
           <div>
-            <h3 className="text-3xl font-semibold">5.8</h3>
+            <H3 className="">5.8</H3>
             <div className="w-10 h-[3px] bg-gray-800 my-4" />
-            <p className="text-sm md:text-base text-gray-700 leading-7">
+            <P className="">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            </P>
           </div>
 
           <div>
-            <h3 className="text-3xl font-semibold">99+</h3>
+            <H3 className="">99+</H3>
             <div className="w-10 h-[3px] bg-gray-800 my-4" />
-            <p className="text-sm md:text-base text-gray-700 leading-7">
+            <P className="">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            </P>
           </div>
 
           <div>
-            <h3 className="text-3xl font-semibold">110K</h3>
+            <H3 className="">110K</H3>
             <div className="w-10 h-[3px] bg-gray-800 my-4" />
-            <p className="text-sm md:text-base text-gray-700 leading-7">
+            <P className="">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            </P>
           </div>
 
         </div>

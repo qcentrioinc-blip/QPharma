@@ -18,6 +18,7 @@ import {
   useTransform,
   useSpring,
 } from "framer-motion";
+import { P } from "../../Global/Typography/Typo";
 
 const ManufacturingHighlight = () => {
   const cards = [
@@ -208,20 +209,28 @@ const ManufacturingHighlight = () => {
             <div className="max-w-5xl mx-auto text-center">
               <motion.h2
                 variants={fadeUp}
-                className="text-white font-light text-2xl sm:text-4xl md:text-5xl lg:text-6xl"
+                className="text-white text-[32px] md:text-[48px] lg:text-[56px]
+        font-manrope
+        leading-[120%]"
               >
                 Lorum Ipsum Dolor
               </motion.h2>
 
               <motion.p
                 variants={fadeUp}
-                className="mt-4 sm:mt-6 text-white/90 text-sm sm:text-base md:text-lg leading-7 sm:leading-8"
+                className="mt-4 sm:mt-6 text-white/90  text-[14px] md:text-[16px]  lg:text-[16px] xl:text-[18px]
+        font-para
+        leading-[140%]"
               >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Cursus imperdiet sed id elementum. Quam vel aliquam sit
                 vulputate. Faucibus. Lorem ipsum dolor sit amet, consectetur
                 adipiscing elit. Cursus imperdiet sed id elementum. Quam vel
                 aliquam sit vulputate. Faucibus. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Cursus imperdiet sed id
+                elementum.  Faucibus. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Cursus imperdiet sed id
+                elementum.  Faucibus. Lorem ipsum dolor sit amet,
                 consectetur adipiscing elit. Cursus imperdiet sed id
                 elementum.
               </motion.p>
@@ -258,9 +267,9 @@ const ManufacturingHighlight = () => {
                       className="text-white flex-shrink-0 hidden sm:block"
                     />
 
-                    <p className="text-white py-2 sm:py-4 font-semibold text-sm sm:text-base md:text-xl leading-relaxed">
+                    <P className="text-white py-2 sm:py-4 ">
                       {item.title}
-                    </p>
+                    </P>
                   </motion.div>
                 );
               })}
