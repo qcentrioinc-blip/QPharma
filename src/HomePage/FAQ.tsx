@@ -131,7 +131,7 @@ const FAQ = () => {
                     )}
                   </div>
 
-                  <span className="text-[14px] md:text-[16px] dark:text-white lg:text-[16px] xl:text-[18px]
+                  <span className="text-[14px] md:text-[16px] lg:text-[16px] xl:text-[18px]
         font-para
         leading-[140%]
         text-[#141414] ">
@@ -148,7 +148,7 @@ const FAQ = () => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-6 pb-5 text-gray-600 text-[14px] md:text-[16px] dark:text-white lg:text-[16px] xl:text-[18px]
+                    <div className="px-6 pb-5 text-gray-600 text-[14px] md:text-[16px] lg:text-[16px] xl:text-[18px]
         font-para
         leading-[140%]
         ">
