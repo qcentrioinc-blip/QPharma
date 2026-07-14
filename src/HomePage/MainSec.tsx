@@ -7,7 +7,7 @@ const products = [
     id: 1,
     title: "HERBAL MEDICINE ",
     description:
-      "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.Natural extracts and traditional formulas for joint and muscle support",
+      "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.  Natural extracts and traditional",
     color: "#3FB369",
     image: "/Homepage/HerbalBottle.png",
     buttonText: "Explore Solutions",
@@ -16,7 +16,7 @@ const products = [
     id: 2,
     title: "NUTRACEUTICAL",
     description:
-      "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitality.",
+      "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitali.  Natural extracts and traditional",
     color: "#247D7D",
     image: "/Homepage/NutraBottle.png",
     buttonText: "Explore Solutions",
@@ -25,7 +25,7 @@ const products = [
     id: 3,
     title: "ORGANIC MEDICINE",
     description:
-      "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective care.",
+      "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective.  Natural extracts and traditional",
     color: "#F99526",
     image: "/Homepage/OrganicBottle.png",
     buttonText: "Explore Solutions",
@@ -187,7 +187,7 @@ const MainSec: React.FC = () => {
           transition={{
             duration: 1.2,
           }}
-          className="absolute h-[900px] w-[900px] rounded-full bg-white/50 blur-[220px]"
+          className="absolute h-[800px] w-[800px] rounded-full bg-white/50 blur-[220px]"
         />
       </div>
 
@@ -215,7 +215,7 @@ const MainSec: React.FC = () => {
               className="
                pt-10
               text-nowrap
-                font-bricolage
+                font-manrope
                 font-extrabold
                 leading-none
                 text-white/30
@@ -243,7 +243,9 @@ const MainSec: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.1 }}
-              className="text-md  leading-relaxed text-white md:text-md"
+              className="text-[14px] md:text-[16px] text-white lg:text-[16px] xl:text-[18px]
+        font-para
+        leading-[140%]"
             >
               {product.description}
             </motion.p>

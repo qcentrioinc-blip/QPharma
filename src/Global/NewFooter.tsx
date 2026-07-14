@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { H3, P } from "./Typography/Typo";
 
 const NewFooter = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -296,20 +297,20 @@ const NewFooter = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            {/* <p className="text-[11px] text-white/60 tracking-wider mb-6 font-light">
+            {/* <p className="text-[11px] text-white/60 tracking-wider mb-6 font-para">
               Organic. Nuetra. Pharma
             </p> */}
-            <p className="text-[15px] text-white/80 leading-[1.6] max-w-[280px]">
+            <P className="max-w-[280px] text-white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna.
-            </p>
+            </P>
           </div>
 
           {/* 2. Shop Links */}
           <div className="text-center sm:text-left lg:pl-8">
-            <h3 className="text-[26px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+            <H3 className="pb-1 text-[#9ad485] mb-6 inline-block border-b border-[#9ad485]">
               shop
-            </h3>
+            </H3>
             <ul className="space-y-[18px]">
               {shopLinks.map((link) => (
                 <li key={link.name}>
@@ -326,9 +327,9 @@ const NewFooter = () => {
 
           {/* 3. Company Links */}
           <div className="text-center sm:text-left lg:pl-4">
-            <h3 className="text-[26px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+            <H3 className=" pb-1 text-[#9ad485] mb-6 inline-block border-b border-[#9ad485]">
               Company
-            </h3>
+            </H3>
             <ul className="space-y-[18px]">
               {companyLinks.map((link) => (
                 <li key={link.name}>
@@ -345,9 +346,9 @@ const NewFooter = () => {
 
           {/* 4. Care Links */}
           <div className="text-center sm:text-left">
-            <h3 className="text-[26px] font-medium text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
+            <H3 className=" text-[#9ad485] mb-6 inline-block border-b border-[#9ad485] pb-1">
               Care
-            </h3>
+            </H3>
             <ul className="space-y-[18px]">
               {careLinks.map((link) => (
                 <li key={link.name}>
@@ -379,10 +380,10 @@ const NewFooter = () => {
                   />
                 </div>
                 <div>
-                  <h4 className="text-[15px] font-bold text-white leading-tight">
+                  <P className=" text-white leading-tight">
                     {f.title}
-                  </h4>
-                  <p className="text-[13px] text-white/70 mt-1">{f.desc}</p>
+                  </P>
+                  {/* <P className=" text-white/70 mt-1">{f.desc}</P> */}
                 </div>
               </div>
             ))}
@@ -391,21 +392,21 @@ const NewFooter = () => {
 
         {/* Bottom Legal & Payment Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
-          <p className="text-[13px] text-white/70 font-light tracking-wide order-2 md:order-1">
+          <P className="text-white/70 font-para tracking-wide order-2 md:order-1">
             @2026 All rights reserved.
-          </p>
+          </P>
 
           <div className="flex items-center gap-4 order-1 md:order-2">
             <a
               href="/privacy"
-              className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide"
+              className="text-[13px] text-white/70 hover:text-white transition-colors font-para tracking-wide"
             >
               Privacy Policy
             </a>
             <span className="text-white/40 text-[13px]">|</span>
             <a
               href="terms"
-              className="text-[13px] text-white/70 hover:text-white transition-colors font-light tracking-wide"
+              className="text-[13px] text-white/70 hover:text-white transition-colors font-para tracking-wide"
             >
               Terms and Conditions
             </a>

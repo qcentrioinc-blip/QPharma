@@ -1,37 +1,39 @@
+import { H1, H2, H4, P, P2 } from "../Global/Typography/Typo";
+
 export default function Table() {
   const dummyImage =
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80";
 
   return (
-    <section className="w-full bg-white py-8 md:py-12">
+    <section className="w-full bg-white py-8">
   <div className="mx-auto w-full max-w-7xl px-4 md:px-8 lg:px-10">
         <div className="mb-8 md:mb-10">
           {/* <span className="inline-flex h-[48px] items-center rounded-[10px] bg-[#718A4B] px-5 text-[18px] font-normal text-white shadow-sm">
             Lorum Ipsum
           </span> */}
 
-          <h2 className="mt-7 text-[44px] font-normal leading-[0.96] tracking-[-0.04em] text-[#000000] md:text-[64px] lg:text-[68px]">
+          <H2 className="mt-7 text-[#000000]">
             Lorum Ipsum Dolor sit
-          </h2>
+          </H2>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:gap-10 lg:grid-cols-[1.02fr_1.02fr_1fr]">
           {/* Left Card */}
           <div className="relative flex min-h-[300px] lg:min-h-[550px] flex-col justify-between rounded-[14px] bg-[#eef1f9] px-4 py-10 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)] md:px-9">
-            <p className="max-w-full p-0 text-[23px] font-normal leading-[1.28] tracking-[-0.02em] md:p-4">
+            <H4 className="max-w-full md:p-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-            </p>
+            </H4>
 
             <div className="flex items-end justify-between gap-4 pt-10">
               <div>
-                <p className="text-[26px] leading-none tracking-[-0.02em] text-[#163925]">
+                <P className="">
                   Lorum Ipsum
-                </p>
-                <p className="mt-2 text-[16px] leading-none text-[#7A8F71]">
+                </P>
+                <P className="mt-2 ">
                   Lorum Ipsum Lorum Ipsum
-                </p>
+                </P>
               </div>
 
               <div className="flex items-center gap-2">
@@ -41,8 +43,8 @@ export default function Table() {
                 </div>
 
                 <div className="text-[10px] font-semibold uppercase leading-[1.05] tracking-[0.08em] text-[#5A6078]">
-                  <div>Lorum Ipsum</div>
-                  <div>Zephyr</div>
+                  {/* <P2>Lorum Ipsum</P2> */}
+                  <P2>Zephyr</P2>
                 </div>
               </div>
             </div>
@@ -60,23 +62,23 @@ export default function Table() {
           {/* Right Cards */}
           <div className="flex min-h-[550px] flex-col gap-4">
             <div className="rounded-[14px] bg-[#eef1f9] px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
-              <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#000000]">
+              <H1 className=" text-[#000000]">
                 5 minutes
-              </h3>
+              </H1>
 
-              <p className="mt-4 max-w-full text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#080808] xl:max-w-[290px]">
+              <P className="mt-4 max-w-full  xl:max-w-[290px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
+              </P>
             </div>
 
             <div className="rounded-[14px] bg-[#eef1f9] px-9 py-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
-              <h3 className="text-[60px] font-normal leading-[0.95] tracking-[-0.05em] text-[#000000]">
+              <H1 className="text-[#000000]">
                 50%
-              </h3>
+              </H1>
 
-              <p className="mt-4 max-w-full text-[21px] font-normal leading-[1.36] tracking-[-0.02em] text-[#183828] xl:max-w-[290px]">
+              <P className="mt-4 max-w-full xl:max-w-[290px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
+              </P>
             </div>
 
             <button

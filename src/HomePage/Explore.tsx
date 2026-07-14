@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { H3, P } from "../Global/Typography/Typo";
 
 interface ExploreItem {
   title: string;
@@ -141,12 +142,12 @@ function ExploreCard({
           <div
             className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6 transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)]`}
           >
-            <h3 className="text-white text-base sm:text-lg md:text-xl font-semibold mb-1.5 sm:mb-2 md:mb-3">
+            <H3 className="text-white mb-1.5 sm:mb-2 md:mb-3">
               {item.title}
-            </h3>
-            <p className="text-white text-xs sm:text-sm leading-relaxed">
+            </H3>
+            <P className="text-white">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
+            </P>
           </div>
         </div>
       </div>

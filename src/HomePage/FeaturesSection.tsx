@@ -5,6 +5,7 @@ import {
   BadgeDollarSign,
   type LucideIcon,
 } from "lucide-react";
+import { H4, P } from "../Global/Typography/Typo";
 
 type FeatureCard = {
   title: string;
@@ -47,9 +48,9 @@ const FeaturesSection: React.FC = () => {
                 className="group flex min-h-[220px] flex-col rounded-2xl bg-white border border-[#6d6d6d] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="flex items-start justify-between">
-                  <h3 className="whitespace-pre-line text-lg font-extrabold uppercase leading-tight tracking-tight text-[#111111] lg:text-xl">
+                  <H4 className="whitespace-pre-line text-lg font-extrabold uppercase leading-tight tracking-tight text-[#111111] lg:text-xl">
                     {card.title}
-                  </h3>
+                  </H4>
 
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gray-100 transition-colors duration-300 group-hover:bg-gray-200">
                     <Icon
@@ -60,9 +61,9 @@ const FeaturesSection: React.FC = () => {
                   </div>
                 </div>
 
-                <p className="mt-8 text-sm leading-7 text-gray-600 lg:text-base">
+                <P className="mt-8">
                   {card.description}
-                </p>
+                </P>
               </article>
             );
           })}

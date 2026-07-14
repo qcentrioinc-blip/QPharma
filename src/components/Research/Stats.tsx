@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { H2, H3, P } from '../../Global/Typography/Typo';
 
 interface StatCard {
   number: string;
@@ -18,12 +19,12 @@ const Stats: React.FC = () => {
     {
       number: '178K+',
       description:
-        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero Lorem ipsum dolor amet.',
+        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero ',
     },
     {
       number: '362',
       description:
-        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero Lorem ipsum dolor amet.',
+        'Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero ',
     },
   ];
 
@@ -147,25 +148,25 @@ const Stats: React.FC = () => {
                   key={index}
                   className="bg-blue-100 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300"
                 >
-                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                  <H3 className="mb-2">
                     {stat.number}
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  </H3>
+                  <P className="">
                     {stat.description}
-                  </p>
+                  </P>
                 </div>
               ))}
             </div>
 
             {/* Content Section */}
             <div className="  bg-[#F4F4F4] rounded-3xl   p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300">
-              <h4 className="text-xl sm:text-2xl font-bold text-gray-900">
+              <H2 className="">
                 Title
-              </h4>
+              </H2>
               <div className="flex flex-col  sm:flex-row gap-6 items-center">
-                <p className="text-sm sm:text-[18px] text-gray-700 leading-relaxed flex-1">
-                 Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero.Lorem ipsum dolor amet. Lorem ipsum dolor amet, consectetur adipiscing elit.
-                </p>
+                <P className="flex-1">
+                 Lorem ipsum dolor amet, consectetur adipiscing elit. Faucibus in libero. Lorem ipsum dolor amet, consectetur adipiscing elit. Lorem ipsum dolor amet. Lorem ipsum dolor amet.
+                </P>
                 <div className="w-full sm:w-40 lg:w-48 flex-shrink-0">
                   <img
                     src="/Research/ResearchStats.png"

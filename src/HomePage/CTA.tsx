@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { H2, P } from "../Global/Typography/Typo";
 
 const images = [
   {
@@ -128,9 +129,9 @@ function MobileCarousel() {
                   transition={{ delay: 0.25 }}
                   className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent py-5 sm:py-6"
                 >
-                  <p className="text-white text-center text-base sm:text-lg font-medium">
+                  <P className="text-white text-center">
                     {img.alt}
-                  </p>
+                  </P>
                 </motion.div>
               )}
             </motion.div>
@@ -146,22 +147,22 @@ function MobileCarousel() {
 // ---------- Main CTA section ----------
 const CTA = () => {
   return (
-    <section className="bg-white overflow-hidden py-12 md:py-16 lg:py-20">
+    <section className="bg-white overflow-hidden py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="max-w-5xl mx-auto text-center px-2 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-black">
+          <H2 className=" text-black">
             Lorem Ipsum
-          </h2>
+          </H2>
 
-          <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-4xl mx-auto">
+          <P className="mt-4 max-w-4xl mx-auto">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
             dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit
             amet consectetur adipisicing elit. Lorem ipsum dolor sit amet. Lorem
             ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor
             sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet
             consectetur adipisicing elit. Lorem ipsum dolor sit amet.
-          </p>
+          </P>
         </div>
 
         {/* Desktop Arc Layout (lg and up) — unchanged */}
@@ -218,9 +219,9 @@ const CTA = () => {
 
               {images[2].label && (
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent py-6 sm:py-8">
-                  <p className="text-white text-lg sm:text-xl text-center font-medium">
+                  <P className="text-white text-lg sm:text-xl text-center font-medium">
                     {images[2].label}
-                  </p>
+                  </P>
                 </div>
               )}
             </div>

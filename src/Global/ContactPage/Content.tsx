@@ -5,33 +5,34 @@ import {
   FaYoutube,
   FaPinterestP,
 } from "react-icons/fa";
+import { H3, P } from "../Typography/Typo";
 
 const Content = () => {
   return (
     <div className="w-full bg-[#f5f5f5]">
 
       {/* ───────────────── Breadcrumb ───────────────── */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      {/* <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="bg-white rounded-md px-5 py-4 text-sm text-gray-500 shadow-sm">
           Home <span className="mx-2">/</span> Shop{" "}
           <span className="mx-2">/</span>
           <span className="text-black font-semibold">Contact</span>
         </div>
-      </div>
+      </div> */}
 
       {/* ───────────────── Contact Section ───────────────── */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-18">
         <div className="bg-white rounded-md shadow-sm p-4 sm:p-6 lg:p-8">
 
           {/* Heading */}
           <div className="mb-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-black uppercase mb-3">
+            <H3 className=" mb-3">
               Ready To Work With Us
-            </h2>
+            </H3>
 
-            <p className="text-gray-500  mt-10 text-sm sm:text-base">
+            <P className="text-gray-500  mt-4">
               Contact us for all your questions and opinions
-            </p>
+            </P>
           </div>
 
           {/* Main Grid */}
@@ -44,7 +45,7 @@ const Content = () => {
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-manrope text-gray-700 mb-2">
                       First Name <span className="text-red-500">*</span>
                     </label>
 
@@ -55,7 +56,7 @@ const Content = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-manrope text-gray-700 mb-2">
                       Last Name <span className="text-red-500">*</span>
                     </label>
 
@@ -68,7 +69,7 @@ const Content = () => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-manrope text-gray-700 mb-2">
                     Email Address <span className="text-red-500">*</span>
                   </label>
 
@@ -80,7 +81,7 @@ const Content = () => {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-manrope text-gray-700 mb-2">
                     Phone Number{" "}
                     <span className="text-gray-400">(Optional)</span>
                   </label>
@@ -93,7 +94,7 @@ const Content = () => {
 
                 {/* Country */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-manrope text-gray-700 mb-2">
                     Country / Region{" "}
                     <span className="text-red-500">*</span>
                   </label>
@@ -108,7 +109,7 @@ const Content = () => {
 
                 {/* Subject */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-manrope text-gray-700 mb-2">
                     Subject{" "}
                     <span className="text-gray-400">(Optional)</span>
                   </label>
@@ -121,7 +122,7 @@ const Content = () => {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-manrope text-gray-700 mb-2">
                     Message
                   </label>
 
@@ -139,19 +140,19 @@ const Content = () => {
                     className="mt-1 accent-green-700"
                   />
 
-                  <p className="text-sm text-gray-500 leading-relaxed">
+                  <P className="">
                     I want to receive news and updates once in a while. By
                     submitting, I'm agreed to the{" "}
                     <span className="text-green-700 underline cursor-pointer">
                       Terms & Conditions
                     </span>
-                  </p>
+                  </P>
                 </div>
 
                 {/* Button */}
                 <button
                   type="submit"
-                  className="bg-[#5e8d49] hover:bg-[#4f793d] transition-all text-white text-sm font-semibold px-8 py-3 rounded-md"
+                  className="bg-[#5e8d49] hover:bg-[#4f793d] font-manrope transition-all text-white text-sm font-semibold px-8 py-3 rounded-md"
                 >
                   SEND MESSAGE
                 </button>
@@ -247,9 +248,9 @@ const Content = () => {
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <div className="bg-white rounded-md shadow-sm p-4 sm:p-6">
 
-          <h3 className="text-lg sm:text-xl font-bold text-black uppercase mb-5">
+          <H3 className=" mb-5">
             Find Us On Google Map
-          </h3>
+          </H3>
 
           <div className="overflow-hidden rounded-lg">
             <iframe

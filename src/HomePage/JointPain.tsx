@@ -1,3 +1,5 @@
+import { H2, P } from "../Global/Typography/Typo";
+
 const JointPain = () => {
   return (
     <section className="w-full py-6 md:py-8 lg:py-10 overflow-hidden">
@@ -38,19 +40,19 @@ const JointPain = () => {
 
           {/* Content */}
           <div className="w-full max-w-3xl text-center lg:text-left">
-            <div className="w-20 md:w-28 h-[3px] bg-gray-500 mx-auto lg:mx-0 mb-5" />
+            <div className="w-20 md:w-28 h-[3px] bg-gray-500 mx-auto lg:mx-0 mb-3" />
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-5">
+            <H2 className=" mb-5">
               Lorem Ipsum Dolor
-            </h2>
+            </H2>
 
-            <p className="text-gray-600 leading-relaxed text-sm sm:text-base lg:text-lg">
+            <P className="">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
               
-            </p>
+            </P>
           </div>
 
         </div>
