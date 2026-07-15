@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 const products = [
   {
     id: 1,
     title: "HERBAL MEDICINE ",
     description:
-      "Natural extracts and traditional formulas for joint and muscle support. Natural extracts and traditional formulas for joint and muscle support.  Natural extracts and traditional",
+      "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitali.  Natural extracts and traditional",
     color: "#3FB369",
     image: "/Homepage/HerbalBottle.png",
     buttonText: "Explore Solutions",
@@ -25,7 +25,7 @@ const products = [
     id: 3,
     title: "ORGANIC MEDICINE",
     description:
-      "Certified organic formulations focused on clean, effective care. Certified organic formulations focused on clean, effective.  Natural extracts and traditional",
+      "Science-backed supplements to support daily nutrition and vitality. Science-backed supplements to support daily nutrition and vitali.  Natural extracts and traditional",
     color: "#F99526",
     image: "/Homepage/OrganicBottle.png",
     buttonText: "Explore Solutions",
@@ -34,6 +34,51 @@ const products = [
 
 const AUTOPLAY_DELAY = 5000;
 const TRANSITION_DURATION = 900; // ms, matches the framer-motion transition below
+
+// Moved outside the component: this object never depends on props/state,
+// so recreating it on every render was pure waste. `dir` is supplied at
+// call-time via the `custom` prop on AnimatePresence/motion.div.
+const imageVariants: Variants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 300 : -300,
+    y: 60,
+    scale: 0.45,
+    rotateY: dir > 0 ? 35 : -35,
+    rotateZ: dir > 0 ? 8 : -8,
+    opacity: 0,
+    filter: "blur(8px)",
+  }),
+
+  center: {
+    x: 0,
+    y: 0,
+    scale: 1,
+    rotateY: 0,
+    rotateZ: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+
+    transition: {
+      duration: 0.9,
+      ease: [0.25, 1, 0.5, 1] as const,
+    },
+  },
+
+  exit: (dir: number) => ({
+    x: dir > 0 ? -300 : 300,
+    y: 60,
+    scale: 0.45,
+    rotateY: dir > 0 ? -35 : 35,
+    rotateZ: dir > 0 ? -8 : 8,
+    opacity: 0,
+    filter: "blur(8px)",
+
+    transition: {
+      duration: 0.9,
+      ease: [0.25, 1, 0.5, 1] as const,
+    },
+  }),
+};
 
 const MainSec: React.FC = () => {
   const [current, setCurrent] = useState(0);
@@ -47,60 +92,73 @@ const MainSec: React.FC = () => {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const unlockTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const clearAutoplay = () => {
+  const clearAutoplay = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  };
+  }, []);
 
-  const startAutoplay = () => {
+  // Central, race-condition-safe slide changer. Every navigation path
+  // (autoplay, prev/next buttons, indicator dots) goes through this.
+  const goToSlide = useCallback(
+    (resolveIndex: (current: number) => number, dir: number) => {
+      if (isAnimatingRef.current) return;
+
+      isAnimatingRef.current = true;
+      setIsAnimating(true);
+      setDirection(dir);
+      setCurrent(resolveIndex);
+
+      // Safety-net unlock: in case onAnimationComplete never fires (e.g. tab
+      // backgrounded, animation interrupted by unmount), don't leave the
+      // carousel stuck locked forever.
+      if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
+      unlockTimeoutRef.current = setTimeout(() => {
+        isAnimatingRef.current = false;
+        setIsAnimating(false);
+      }, TRANSITION_DURATION + 150);
+    },
+    []
+  );
+
+  const startAutoplay = useCallback(() => {
     clearAutoplay();
     intervalRef.current = setInterval(() => {
       goToSlide((c) => (c + 1) % products.length, 1);
     }, AUTOPLAY_DELAY);
-  };
+  }, [clearAutoplay, goToSlide]);
 
-  // Central, race-condition-safe slide changer. Every navigation path
-  // (autoplay, prev/next buttons, indicator dots) goes through this.
-  const goToSlide = (
-    resolveIndex: (current: number) => number,
-    dir: number
-  ) => {
-    if (isAnimatingRef.current) return;
-
-    isAnimatingRef.current = true;
-    setIsAnimating(true);
-    setDirection(dir);
-    setCurrent(resolveIndex);
-
-    // Safety-net unlock: in case onAnimationComplete never fires (e.g. tab
-    // backgrounded, animation interrupted by unmount), don't leave the
-    // carousel stuck locked forever.
-    if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
-    unlockTimeoutRef.current = setTimeout(() => {
-      isAnimatingRef.current = false;
-      setIsAnimating(false);
-    }, TRANSITION_DURATION + 150);
-  };
-
-  const handleAnimationComplete = () => {
+  const handleAnimationComplete = useCallback(() => {
     if (unlockTimeoutRef.current) {
       clearTimeout(unlockTimeoutRef.current);
       unlockTimeoutRef.current = null;
     }
     isAnimatingRef.current = false;
     setIsAnimating(false);
-  };
+  }, []);
 
-  const nextSlide = () => goToSlide((c) => (c + 1) % products.length, 1);
-  const prevSlide = () =>
-    goToSlide((c) => (c === 0 ? products.length - 1 : c - 1), -1);
+  const nextSlide = useCallback(
+    () => goToSlide((c) => (c + 1) % products.length, 1),
+    [goToSlide]
+  );
+  const prevSlide = useCallback(
+    () => goToSlide((c) => (c === 0 ? products.length - 1 : c - 1), -1),
+    [goToSlide]
+  );
 
-  const goToIndex = (index: number) => {
-    if (index === current) return;
-    goToSlide(() => index, index > current ? 1 : -1);
-  };
+  const goToIndex = useCallback(
+    (index: number) => {
+      // Functional-update comparison avoids needing `current` in the
+      // dependency array, so this callback stays referentially stable.
+      setCurrent((prevIndex) => {
+        if (index === prevIndex || isAnimatingRef.current) return prevIndex;
+        goToSlide(() => index, index > prevIndex ? 1 : -1);
+        return prevIndex;
+      });
+    },
+    [goToSlide]
+  );
 
   // Autoplay: starts on mount, restarts every time the user manually
   // navigates so a manual click never races against a pending tick.
@@ -115,51 +173,9 @@ const MainSec: React.FC = () => {
       clearAutoplay();
       if (unlockTimeoutRef.current) clearTimeout(unlockTimeoutRef.current);
     };
-  }, []);
+  }, [clearAutoplay]);
 
   const product = products[current];
-
-  const imageVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 300 : -300,
-      y: 60,
-      scale: 0.45,
-      rotateY: dir > 0 ? 35 : -35,
-      rotateZ: dir > 0 ? 8 : -8,
-      opacity: 0,
-      filter: "blur(8px)",
-    }),
-
-    center: {
-      x: 0,
-      y: 0,
-      scale: 1,
-      rotateY: 0,
-      rotateZ: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-
-      transition: {
-        duration: 0.9,
-        ease: [0.25, 1, 0.5, 1] as const,
-      },
-    },
-
-    exit: (dir: number) => ({
-      x: dir > 0 ? -300 : 300,
-      y: 60,
-      scale: 0.45,
-      rotateY: dir > 0 ? -35 : 35,
-      rotateZ: dir > 0 ? -8 : 8,
-      opacity: 0,
-      filter: "blur(8px)",
-
-      transition: {
-        duration: 0.9,
-        ease: [0.25, 1, 0.5, 1] as const,
-      },
-    }),
-  };
 
   return (
     <motion.section
@@ -170,7 +186,7 @@ const MainSec: React.FC = () => {
         duration: 0.8,
         ease: "easeInOut",
       }}
-      className="relative overflow-hidden  h-screen"
+      className="relative overflow-hidden h-auto xl:h-screen"
     >
       {/* Glow */}
       <div className="pointer-events-none absolute inset-0  flex items-center justify-center">
@@ -187,11 +203,11 @@ const MainSec: React.FC = () => {
           transition={{
             duration: 1.2,
           }}
-          className="absolute h-[800px] w-[800px] rounded-full bg-white/50 blur-[220px]"
+          className="absolute h-[400px] w-[400px] sm:h-[560px] sm:w-[560px] md:h-[650px] md:w-[650px] lg:h-[800px] lg:w-[800px] rounded-full bg-white/50 blur-[120px] sm:blur-[160px] md:blur-[190px] lg:blur-[220px]"
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-6 pt-12 lg:px-16 h-full">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 pt-16 sm:pt-18 md:pt-20 lg:pt-16 xl:pt-12 pb-16 sm:pb-20 lg:pb-0 lg:px-16 h-full">
         {/* Heading */}
         <div className="flex justify-center">
           <AnimatePresence mode="wait" initial={false}>
@@ -213,20 +229,28 @@ const MainSec: React.FC = () => {
                 duration: 0.7,
               }}
               className="
-               pt-10
-              text-nowrap
+                pt-4
+                sm:pt-6
+                md:pt-8
+                lg:pt-10
+                whitespace-normal
+                break-words
+                lg:whitespace-nowrap
                 font-manrope
                 font-extrabold
-                leading-none
+                leading-[1.05]
+                lg:leading-none
                 text-white/30
-                text-[52px]
-                sm:text-[70px]
-                md:text-[90px]
+                text-[34px]
+                xs:text-[38px]
+                sm:text-[52px]
+                md:text-[70px]
                 lg:text-[92px]
                 xl:text-[140px]
                 2xl:text-[150px]
                 text-center
-                px-4
+                px-2
+                sm:px-4
               "
             >
               {product.title}
@@ -235,7 +259,7 @@ const MainSec: React.FC = () => {
         </div>
 
         {/* Description */}
-        <div className="mt-8 max-w-md">
+        <div className="mt-5 sm:mt-6 md:mt-7 lg:mt-8 max-w-xl xl:max-w-md mx-auto lg:mx-0 text-center lg:text-left">
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={`desc-${product.id}`}
@@ -243,7 +267,7 @@ const MainSec: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.1 }}
-              className="text-[14px] md:text-[16px] text-white lg:text-[16px] xl:text-[18px]
+              className="text-[13px] sm:text-[14px] text-white md:text-[16px] lg:text-[16px] xl:text-[18px] px-6 sm:px-0
         font-para
         leading-[140%]"
             >
@@ -258,7 +282,7 @@ const MainSec: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: 0.2 }}
-              className="mt-6"
+              className="mt-5 lg:mt-6 flex justify-center lg:justify-start"
             >
               <motion.button
                 type="button"
@@ -266,7 +290,7 @@ const MainSec: React.FC = () => {
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
-                className="inline-flex w-fit items-center rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-sm lg:text-base"
+                className="inline-flex w-fit items-center rounded-full bg-white px-4 py-2 sm:px-5 sm:py-2 text-sm font-medium text-black shadow-sm lg:text-base"
               >
                 <motion.span
                   variants={{
@@ -293,39 +317,39 @@ const MainSec: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* Navigation */}
-        <div className="hidden lg:block">
-          <button
-            type="button"
-            onClick={prevSlide}
-            disabled={isAnimating}
-            aria-label="Previous product"
-            className={`absolute left-6 top-[80%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
-              isAnimating ? "opacity-50 pointer-events-none" : ""
-            }`}
-          >
-            <ArrowLeft className="h-5 w-5 text-white" />
-          </button>
+        {/* Navigation — now visible from the smallest breakpoint up.
+            Position/size scale down for mobile & tablet; the lg: values
+            below are identical to the original desktop-only styling. */}
+        <button
+          type="button"
+          onClick={prevSlide}
+          disabled={isAnimating}
+          aria-label="Previous product"
+          className={`absolute left-2 sm:left-4 lg:left-6 top-[68%] sm:top-[74%] lg:top-[80%] flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+            isAnimating ? "opacity-50 pointer-events-none" : ""
+          }`}
+        >
+          <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+        </button>
 
-          <button
-            type="button"
-            onClick={nextSlide}
-            disabled={isAnimating}
-            aria-label="Next product"
-            className={`absolute right-6 top-[80%] flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
-              isAnimating ? "opacity-50 pointer-events-none" : ""
-            }`}
-          >
-            <ArrowRight className="h-5 w-5 text-white" />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={nextSlide}
+          disabled={isAnimating}
+          aria-label="Next product"
+          className={`absolute right-2 sm:right-4 lg:right-6 top-[68%] sm:top-[74%] lg:top-[80%] flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+            isAnimating ? "opacity-50 pointer-events-none" : ""
+          }`}
+        >
+          <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+        </button>
 
         {/* Product Area */}
-        <div className="relative -mt-32 flex h-[380px] md:h-[420px] lg:h-[500px] justify-center">
+        <div className="relative -mt-14 sm:-mt-20 md:-mt-24 lg:-mt-32 flex h-[300px] xs:h-[330px] sm:h-[360px] md:h-[420px] lg:h-[500px] justify-center">
           {/* Fixed Orbit */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <svg
-              className="absolute h-[360px] w-[900px] translate-y-16 -rotate-6"
+              className="absolute h-[200px] w-[350px] translate-y-30 sm:h-[230px] sm:w-[560px] sm:translate-y-18 md:h-[270px] md:w-[550px] md:translate-y-44 lg:h-[300px] lg:w-[700px] lg:translate-y-20 xl:h-[360px] xl:w-[900px] xl:translate-y-16 -rotate-6"
               viewBox="0 0 1200 420"
               fill="none"
             >
@@ -350,7 +374,7 @@ const MainSec: React.FC = () => {
               which is what produced the abrupt "glitchy" snap, especially
               when a transition was interrupted mid-flight. */}
           <div
-            className="relative z-20 -translate-y-10 md:-translate-y-16 lg:-translate-y-20"
+            className="relative z-20 translate-y-20 sm:translate-y-30 md:translate-y-30 lg:-translate-y-10 xl:-translate-y-10"
             style={{ perspective: 1200 }}
           >
             <AnimatePresence mode="popLayout" custom={direction} initial={false}>
@@ -375,10 +399,10 @@ const MainSec: React.FC = () => {
                   className="
                     pointer-events-none
                     select-none
-                    w-[180px]
-                    sm:w-[220px]
-                    md:w-[320px]
-                    lg:w-[420px]
+                    w-[220px]
+                    sm:w-[300px]
+                    md:w-[340px]
+                    lg:w-[480px]
                     xl:w-[480px]
                     object-contain
                     drop-shadow-[0_50px_100px_rgba(0,0,0,0.25)]
@@ -390,8 +414,8 @@ const MainSec: React.FC = () => {
         </div>
       </div>
 
-      {/* Indicators (bottom-right) */}
-      <div className="absolute right-6 bottom-6 flex gap-3 z-30">
+      {/* Indicators (centered on mobile, bottom-right on desktop) */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-4 sm:bottom-5 lg:left-auto lg:translate-x-0 lg:right-6 lg:bottom-6 flex gap-2.5 sm:gap-3 z-30">
         {products.map((_, index) => (
           <button
             type="button"
@@ -401,7 +425,7 @@ const MainSec: React.FC = () => {
             aria-label={`Go to slide ${index + 1}`}
             className={`h-2 rounded-full transition-all duration-500 ${
               current === index
-                ? "w-10 bg-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
+                ? "w-8 sm:w-10 bg-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
                 : "w-2 bg-white/50"
             } ${isAnimating ? "pointer-events-none" : ""}`}
           />
