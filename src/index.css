@@ -154,22 +154,33 @@ h4 {
 }
 
 .nav-logo-img {
-  height: clamp(40px, 3.2vw, 56px);
+  height: clamp(64px, 5vw, 88px);
+  max-height: var(--zephyr-nav-inner-h);
   width: auto;
   object-fit: contain;
 }
 
-/* Mobile: smaller logo + shorter nav chrome */
+/* The clip has empty space around the mark. Scale the painted frame so the
+   wordmark grows, while the layout box stays inside the bar. */
+canvas.nav-logo-img {
+  transform: scale(1.55);
+  transform-origin: center center;
+}
+
+/* Mobile: smaller logo + shorter nav chrome.
+   py-0.5 is 0.125rem top + 0.125rem bottom — pad-y must be that total
+   or the breadcrumb sits below the bar and page content shows through. */
 @media (max-width: 767px) {
   :root {
-    --zephyr-nav-inner-h: clamp(40px, 10vw, 46px);
-    --zephyr-nav-pad-y: 0.5rem;
+    --zephyr-nav-inner-h: clamp(56px, 14vw, 64px);
+    --zephyr-nav-pad-y: 0.25rem;
     --zephyr-nav-gap: clamp(10px, 3vw, 16px);
     --zephyr-crumb-h: 2.75rem;
   }
 
   .nav-logo-img {
-    height: clamp(30px, 7.5vw, 38px);
+    height: clamp(52px, 14vw, 64px);
+    max-height: var(--zephyr-nav-inner-h);
   }
 }
 
@@ -321,6 +332,8 @@ h4 {
   overflow: hidden;
   display: inline-block;
   transform: none;
+  /* Keep each word (or hyphen chunk) on one line — letters must not wrap mid-word */
+  white-space: nowrap;
   /* Descender room inside the slide mask (g/G) â€” margin pulls visual line-height tighter */
   line-height: 1.22;
   padding-bottom: 0.12em;

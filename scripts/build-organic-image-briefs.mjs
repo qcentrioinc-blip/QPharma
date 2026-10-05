@@ -570,7 +570,9 @@ const products = catalog.map(([folder, formula], index) => {
 const out = {
   version: 1,
   generatedAt: new Date().toISOString(),
-  logoPath: "public/brand/zephyr-logo-organic.png",
+  logoPath: "public/brand/vitalcore-logo.svg",
+  lockupRule:
+    "Print the official Vitalcore lockup only: wordmark, leaf, and arched MADE FOR HEALTH at the SVG proportions. Do not draw a smile, swoosh, or a second logo. Keep the current bottle shape, cap, label colors, and ingredient line.",
   refs: {
     bottleA: "public/brand/ref-organic/bottle-a.png",
     bottleB: "public/brand/ref-organic/bottle-b.png",

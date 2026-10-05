@@ -70,11 +70,12 @@ html.scroll-restore-pending .zephyr-page-loader {
 
 .zephyr-page-loader__logo {
   display: block;
-  width: min(88vw, 26rem);
+  width: min(98vw, 52rem);
   height: auto;
-  max-height: clamp(4.5rem, 12vw, 7rem);
+  max-height: clamp(10rem, 30vw, 16rem);
   object-fit: contain;
-  margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
+  /* The clip is a wide frame with empty space under the word. Pull the headline into that space. */
+  margin-bottom: clamp(-4.25rem, -7vh, -2rem);
   user-select: none;
   -webkit-user-drag: none;
 }

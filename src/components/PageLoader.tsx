@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { TextRotate } from "@/components/ui/text-rotate";
+import VitalcoreLogoVideo from "@/components/VitalcoreLogoVideo";
 import "./pageLoader.css";
 
 const MIN_LOADER_MS = 1200;
@@ -138,12 +139,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       </div>
 
       <div className="zephyr-page-loader__copy">
-        <img
-          src="/brand/vitalcore-logo.svg"
-          alt="Vitalcore"
-          className="zephyr-page-loader__logo"
-          draggable={false}
-        />
+        <VitalcoreLogoVideo className="zephyr-page-loader__logo" />
         <LayoutGroup>
           <motion.p
             className="zephyr-page-loader__headline"

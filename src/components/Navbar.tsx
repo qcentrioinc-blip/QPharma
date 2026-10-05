@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import VitalcoreLogoVideo from '@/components/VitalcoreLogoVideo';
 
 interface NavLinkItem {
   name: string;
@@ -324,16 +325,43 @@ const MobileMenu = ({ isOpen, onClose, activePath, onContactIntercept }: MobileM
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ animateLogo = false }: { animateLogo?: boolean }) => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const reduceMotion = Boolean(useReducedMotion());
   const scrolled = useScrolled(SCROLL_THRESHOLD);
 
+  const navRef = useRef<HTMLElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mouseX = useMotionValue(Infinity);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    const bar = barRef.current;
+    if (!nav || !bar) return;
+
+    const syncNavHeight = () => {
+      const navTop = nav.getBoundingClientRect().top;
+      const barBottom = bar.getBoundingClientRect().bottom;
+      const padBottom = parseFloat(getComputedStyle(nav).paddingBottom) || 0;
+      const height = barBottom - navTop + padBottom;
+      if (height > 0) {
+        document.documentElement.style.setProperty('--zephyr-nav-h', `${height}px`);
+      }
+    };
+
+    syncNavHeight();
+    const observer = new ResizeObserver(syncNavHeight);
+    observer.observe(bar);
+    window.addEventListener('resize', syncNavHeight);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', syncNavHeight);
+    };
+  }, []);
 
   const clearCloseTimeout = () => {
     if (closeTimeoutRef.current) {
@@ -396,6 +424,7 @@ const Navbar = () => {
 
   return (
     <nav
+      ref={navRef}
       className={`fixed top-0 z-[100] w-full py-0.5 md:py-[clamp(0.25rem,0.3vw,0.45rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
         glassy
           ? 'zephyr-nav--glassy bg-transparent shadow-none'
@@ -407,17 +436,13 @@ const Navbar = () => {
       {/* Sibling layer (not an ancestor of the dropdown) so Safari hit-testing stays intact */}
       <span className="zephyr-nav-glass" aria-hidden />
       {/* All screens: edge-to-edge with tight side padding */}
-      <div className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
+      <div ref={barRef} className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
         <Link
           to="/"
           className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2"
           aria-label="Vitalcore home"
         >
-          <img
-            src="/brand/vitalcore-logo.svg"
-            alt="Vitalcore Logo"
-            className="nav-logo-img relative z-10"
-          />
+          <VitalcoreLogoVideo className="nav-logo-img relative z-10" play={animateLogo} />
         </Link>
 
         {/*

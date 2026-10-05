@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generatedAt": "2026-09-09T14:12:16.473Z",
-  "style": "Vitalcore v2: category bottle shapes, Vitalcore logo, Spirulina-style label hierarchy, no counts",
+  "style": "Keep the current bottle shape, cap, label colors, and ingredient line. Print only the official Vitalcore lockup: wordmark, leaf, and arched MADE FOR HEALTH at the SVG proportions. No smile, swoosh, or second logo.",
   "herbaceutical": [
     {
       "id": 1,
@@ -1826,7 +1826,8 @@
     82,
     83
   ],
-  "logo": "public/brand/vitalcore-logo-clear.png",
+  "logo": "public/brand/vitalcore-logo.svg",
+  "lockupRule": "Print the official Vitalcore lockup only: wordmark, leaf, and arched MADE FOR HEALTH at the SVG proportions. Do not draw a smile, swoosh, or a second logo. Keep the current bottle shape, cap, label colors, and ingredient line.",
   "bottleRefs": {
     "herb": "public/brand/ref-bottles/herb-faceted-jar.png",
     "nutra": "public/brand/ref-bottles/nutra-fluted-cylinder.png",
