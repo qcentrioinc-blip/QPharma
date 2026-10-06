@@ -167,6 +167,29 @@ canvas.nav-logo-img {
   transform-origin: center center;
 }
 
+/* Footer clip is a 16:9 frame with empty margin. The slot is just larger than the
+   painted mark so the wordmark and tagline stay fully visible. */
+canvas.footer-logo-img {
+  height: 6.25rem;
+  width: auto;
+  max-width: none;
+  flex: none;
+  /* The clip's empty left margin is 11.875% of the frame. Pull the mark flush with the paragraph. */
+  transform: translateX(-11.875%);
+}
+
+@media (min-width: 640px) {
+  canvas.footer-logo-img {
+    height: 6.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  canvas.footer-logo-img {
+    height: 7.4rem;
+  }
+}
+
 /* Mobile: smaller logo + shorter nav chrome.
    py-0.5 is 0.125rem top + 0.125rem bottom — pad-y must be that total
    or the breadcrumb sits below the bar and page content shows through. */
