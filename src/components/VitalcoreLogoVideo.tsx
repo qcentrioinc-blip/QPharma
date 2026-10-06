@@ -6,8 +6,17 @@ const LOGO_STILL = "/brand/vitalcore-logo.svg";
 
 type VitalcoreLogoVideoProps = {
   className?: string;
-  /** When false, the still mark stays up and the clip does not start. */
+  /** Clip to play. Defaults to the navbar / lock-screen mark. */
+  src?: string;
+  /** When false, the clip does not start. */
   play?: boolean;
+  /**
+   * When false, nothing is shown until the clip is allowed to play.
+   * Avoids a still-image flash before the animation.
+   */
+  still?: boolean;
+  /** Fires when the clip finishes, or when playback cannot start. */
+  onPlaybackSettled?: () => void;
 };
 
 function keyBlack(data: Uint8ClampedArray) {
@@ -16,81 +25,212 @@ function keyBlack(data: Uint8ClampedArray) {
     const g = data[i + 1];
     const b = data[i + 2];
     const m = Math.max(r, g, b);
-    if (m < 12) {
+    if (m < 16) {
       data[i + 3] = 0;
       continue;
     }
-    const alpha = Math.min(255, Math.round((m / 176) * 255));
-    const scale = 255 / alpha;
-    data[i] = Math.min(255, Math.round(r * scale));
-    data[i + 1] = Math.min(255, Math.round(g * scale));
-    data[i + 2] = Math.min(255, Math.round(b * scale));
+    // Keep the filmed teal. Boosting RGB to "un-premultiply" was washing the
+    // mark out on the white navbar. Only the dark fringe fades.
+    const alpha = m >= 78 ? 255 : Math.round(((m - 16) / 62) * 255);
     data[i + 3] = alpha;
   }
 }
 
-export default function VitalcoreLogoVideo({ className, play = true }: VitalcoreLogoVideoProps) {
+export default function VitalcoreLogoVideo({
+  className,
+  src = LOGO_VIDEO,
+  play = true,
+  still = true,
+  onPlaybackSettled,
+}: VitalcoreLogoVideoProps) {
   const reduced = Boolean(useReducedMotion());
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const settledRef = useRef(onPlaybackSettled);
   const [useStill, setUseStill] = useState(reduced);
+  settledRef.current = onPlaybackSettled;
+
+  useEffect(() => {
+    if (reduced || !play) settledRef.current?.();
+  }, [reduced, play]);
 
   useEffect(() => {
     if (reduced || !play) return;
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    if (!video || !canvas) return;
+    if (!video || !canvas) {
+      settledRef.current?.();
+      return;
+    }
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) {
       setUseStill(true);
+      settledRef.current?.();
       return;
     }
 
-    let frameId = 0;
+    const scratch = document.createElement("canvas");
+    const applySize = () => {
+      const frameW = video.videoWidth || canvas.width;
+      const frameH = video.videoHeight || canvas.height;
+      if (!frameW || !frameH) return;
+      const coarse = window.matchMedia("(pointer: coarse)").matches;
+      const scale = coarse ? Math.min(1, 640 / frameW) : Math.min(1, 1024 / frameW);
+      const w = Math.max(2, Math.round(frameW * scale));
+      const h = Math.max(2, Math.round(frameH * scale));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      scratch.width = w;
+      scratch.height = h;
+      canvas.style.aspectRatio = `${frameW} / ${frameH}`;
+    };
+    applySize();
+    video.addEventListener("loadedmetadata", applySize);
+    const sctx = scratch.getContext("2d", { willReadFrequently: true });
+    if (!sctx) {
+      setUseStill(true);
+      settledRef.current?.();
+      return;
+    }
+
+    let raf = 0;
     let stopped = false;
-    let started = false;
+    let looping = false;
+    let painted = false;
+    let settled = false;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      settledRef.current?.();
+    };
 
     const paint = () => {
-      if (video.readyState < 2) return;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      keyBlack(frame.data);
+      if (video.readyState < 2 || video.videoWidth === 0) return;
+      sctx.drawImage(video, 0, 0, scratch.width, scratch.height);
+      const frame = sctx.getImageData(0, 0, scratch.width, scratch.height);
+      const pixels = frame.data;
+      let lit = 0;
+      for (let i = 0; i < pixels.length; i += 64) {
+        if (Math.max(pixels[i], pixels[i + 1], pixels[i + 2]) > 20) lit += 1;
+      }
+      // The clip opens and closes on black. Don't wipe a painted frame with that.
+      if (lit < 8) return;
+      keyBlack(pixels);
       ctx.putImageData(frame, 0, 0);
+      painted = true;
     };
 
     const pump = () => {
       if (stopped) return;
       paint();
-      if (video.ended || video.paused) return;
-      const withFrame = video as HTMLVideoElement & {
-        requestVideoFrameCallback?: (cb: () => void) => number;
-      };
-      if (withFrame.requestVideoFrameCallback) {
-        frameId = withFrame.requestVideoFrameCallback(pump);
-      } else {
-        frameId = requestAnimationFrame(pump);
+      if (video.ended) {
+        looping = false;
+        finish();
+        return;
       }
+      if (video.paused) {
+        looping = false;
+        return;
+      }
+      raf = requestAnimationFrame(pump);
     };
 
+    const ensureLoop = () => {
+      if (stopped || looping) return;
+      looping = true;
+      pump();
+    };
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+
+    let retryTimer = 0;
+    let playTries = 0;
     const start = () => {
-      if (started || stopped) return;
-      started = true;
-      video.muted = true;
-      void video.play().then(pump).catch(() => setUseStill(true));
+      if (stopped || video.ended) return;
+      if (!video.paused) {
+        ensureLoop();
+        return;
+      }
+      const attempt = video.play();
+      if (!attempt) {
+        ensureLoop();
+        return;
+      }
+      void attempt.then(ensureLoop).catch((err: unknown) => {
+        if (stopped || painted || !video.paused) {
+          ensureLoop();
+          return;
+        }
+        const name = err instanceof DOMException ? err.name : "";
+        if ((name === "AbortError" || name === "NotAllowedError") && playTries < 4) {
+          playTries += 1;
+          retryTimer = window.setTimeout(start, 400 * playTries);
+          return;
+        }
+        finish();
+        setUseStill(true);
+      });
     };
 
-    video.addEventListener("loadeddata", start);
-    if (video.readyState >= 2) start();
+    const onPause = () => {
+      if (stopped || video.ended || !painted || document.hidden) return;
+      looping = false;
+      window.clearTimeout(retryTimer);
+      retryTimer = window.setTimeout(start, 250);
+    };
+
+    let capTimer = 0;
+    const armCap = () => {
+      window.clearTimeout(capTimer);
+      const duration = video.duration;
+      const ms =
+        Number.isFinite(duration) && duration > 0
+          ? Math.min(Math.max(duration * 1000 + 800, 2500), 20000)
+          : 12000;
+      capTimer = window.setTimeout(() => {
+        if (!stopped) finish();
+      }, ms);
+    };
+
+    start();
+    if (video.readyState >= 1) armCap();
+    video.addEventListener("loadedmetadata", armCap);
+    video.addEventListener("canplay", ensureLoop);
+    video.addEventListener("playing", ensureLoop);
+    video.addEventListener("pause", onPause);
+    video.addEventListener("ended", finish);
+
+    const giveUp = window.setTimeout(() => {
+      if (stopped || painted || video.currentTime > 0.2) return;
+      finish();
+      setUseStill(true);
+    }, 8000);
 
     return () => {
       stopped = true;
-      cancelAnimationFrame(frameId);
-      video.removeEventListener("loadeddata", start);
+      cancelAnimationFrame(raf);
+      window.clearTimeout(giveUp);
+      window.clearTimeout(retryTimer);
+      window.clearTimeout(capTimer);
+      video.removeEventListener("loadedmetadata", applySize);
+      video.removeEventListener("loadedmetadata", armCap);
+      video.removeEventListener("canplay", ensureLoop);
+      video.removeEventListener("playing", ensureLoop);
+      video.removeEventListener("pause", onPause);
+      video.removeEventListener("ended", finish);
       video.pause();
     };
-  }, [reduced, play]);
+  }, [reduced, play, src]);
 
   if (reduced || useStill || !play) {
+    if (!still && !reduced && !useStill) return null;
     return <img src={LOGO_STILL} alt="Vitalcore" className={className} draggable={false} />;
   }
 
@@ -98,18 +238,22 @@ export default function VitalcoreLogoVideo({ className, play = true }: Vitalcore
     <span className="relative inline-flex items-center">
       <video
         ref={videoRef}
-        src={LOGO_VIDEO}
+        src={src}
         muted
         playsInline
         preload="auto"
         aria-hidden
-        className="pointer-events-none absolute h-px w-px opacity-0"
+        width={1024}
+        height={576}
+        className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+        style={{ opacity: 0 }}
       />
       <canvas
         ref={canvasRef}
         width={1024}
         height={576}
         className={className}
+        style={{ aspectRatio: "1024 / 576" }}
         role="img"
         aria-label="Vitalcore"
       />
