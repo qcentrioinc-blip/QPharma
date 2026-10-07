@@ -9,6 +9,9 @@ import "./pageLoader.css";
 const MIN_LOADER_MS = 1200;
 /** Leaf travel, then the overlay fade finishes. Homepage appears under a second. */
 const ENTER_AFTER_MS = 860;
+/** Compact screens have no capsule, so the overlay only needs its fade. */
+const COMPACT_EXIT_MS = 280;
+const COMPACT_LOCK_QUERY = "(max-width: 1366px)";
 
 const ROTATING_TEXTS = [
   "Herbaceutical",
@@ -22,7 +25,6 @@ type PageLoaderProps = {
 };
 
 const ENTER_LEAF = "/brand/enter-leaf.jpg";
-const GLOW_LEAF = "/brand/enter-leaf-glow-filled.png";
 
 export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
   const reduced = Boolean(useReducedMotion());
@@ -33,9 +35,14 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
   const [canEnter, setCanEnter] = useState(false);
   const [exiting, setExiting] = useState(false);
   const [showLine, setShowLine] = useState(reduced);
+  const [logoSettled, setLogoSettled] = useState(reduced);
   const [finePointer] = useState(() => {
     if (typeof window === "undefined") return true;
     return window.matchMedia("(pointer: fine)").matches;
+  });
+  const [compact, setCompact] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(COMPACT_LOCK_QUERY).matches;
   });
   const [holdBackground, setHoldBackground] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -48,6 +55,14 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     return () => {
       document.body.style.overflow = prev;
     };
+  }, []);
+
+  useEffect(() => {
+    const query = window.matchMedia(COMPACT_LOCK_QUERY);
+    const sync = () => setCompact(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -74,15 +89,28 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     return () => window.clearTimeout(t);
   }, [ready]);
 
-  const enter = useCallback(() => {
-    if (!canEnter || enteredRef.current) return;
+  const dismiss = useCallback(() => {
+    if (enteredRef.current) return;
     enteredRef.current = true;
     setExiting(true);
-    window.setTimeout(onEnter, reduced ? 120 : ENTER_AFTER_MS);
-  }, [canEnter, onEnter, reduced]);
+    const compactNow = window.matchMedia(COMPACT_LOCK_QUERY).matches;
+    const wait = reduced ? 120 : compactNow ? COMPACT_EXIT_MS : ENTER_AFTER_MS;
+    window.setTimeout(onEnter, wait);
+  }, [onEnter, reduced]);
+
+  const enter = useCallback(() => {
+    if (!canEnter || compact) return;
+    dismiss();
+  }, [canEnter, compact, dismiss]);
 
   useEffect(() => {
-    if (!canEnter) return;
+    if (!compact || !ready || exiting) return;
+    if (!reduced && !logoSettled) return;
+    dismiss();
+  }, [compact, ready, reduced, logoSettled, exiting, dismiss]);
+
+  useEffect(() => {
+    if (!canEnter || compact) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -91,7 +119,17 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [canEnter, enter]);
+  }, [canEnter, compact, enter]);
+
+  useEffect(() => {
+    if (!canEnter || !finePointer || compact) return;
+    const node = cursorRef.current;
+    if (!node) return;
+    node.style.transform = `translate3d(${window.innerWidth * 0.58}px, ${window.innerHeight * 0.4}px, 0) translate(-50%, -50%)`;
+    node.classList.add("is-on");
+  }, [canEnter, finePointer, compact]);
+
+  const showEnterCursor = finePointer && !compact;
 
   const moveCursor = (e: MouseEvent) => {
     const node = cursorRef.current;
@@ -102,20 +140,20 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
 
   return createPortal(
     <div
-      className={`zephyr-page-loader${canEnter ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}${finePointer ? " has-leaf-cursor" : ""}`}
-      onMouseMove={finePointer ? moveCursor : undefined}
-      onClick={canEnter ? enter : undefined}
+      className={`zephyr-page-loader${canEnter ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}${compact ? " zephyr-page-loader--compact" : ""}${showEnterCursor ? " has-enter-cursor" : ""}`}
+      onMouseMove={showEnterCursor ? moveCursor : undefined}
+      onClick={!compact && canEnter ? enter : undefined}
       onKeyDown={(e) => {
-        if (!canEnter) return;
+        if (compact || !canEnter) return;
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           enter();
         }
       }}
-      role={canEnter ? "button" : undefined}
-      tabIndex={canEnter ? 0 : -1}
-      aria-busy={!canEnter}
-      aria-label={canEnter ? "For a better tomorrow" : undefined}
+      role={!compact && canEnter ? "button" : undefined}
+      tabIndex={!compact && canEnter ? 0 : -1}
+      aria-busy={compact ? !exiting : !canEnter}
+      aria-label={!compact && canEnter ? "For a better tomorrow" : undefined}
     >
       <div className="zephyr-page-loader__media" aria-hidden>
         <video
@@ -130,14 +168,10 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
         <div className="zephyr-page-loader__overlay" />
       </div>
 
-      {canEnter && finePointer ? (
+      {showEnterCursor && canEnter ? (
         <div ref={cursorRef} className="zephyr-page-loader__cursor" aria-hidden>
-          <div className={`zephyr-page-loader__cursor-leaf${reduced ? " is-still" : ""}`}>
-            <img src={GLOW_LEAF} alt="" draggable={false} />
-            <span className="zephyr-page-loader__cursor-label">
-              <span>Click to</span>
-              <span>enter</span>
-            </span>
+          <div className="zephyr-page-loader__enter-circle">
+            <span>Click to enter</span>
           </div>
         </div>
       ) : null}
@@ -147,9 +181,11 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
           className="zephyr-page-loader__logo"
           onPlaybackSettled={() => {
             setHoldBackground(false);
-            setShowLine(true);
+            setLogoSettled(true);
+            if (!window.matchMedia(COMPACT_LOCK_QUERY).matches) setShowLine(true);
           }}
         />
+        {compact ? null : (
         <LayoutGroup>
           <motion.p
             className="zephyr-page-loader__headline"
@@ -182,7 +218,8 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
             />
           </motion.p>
         </LayoutGroup>
-        {showLine && canEnter ? (
+        )}
+        {!compact && showLine && canEnter ? (
           <motion.div
             className="zephyr-page-loader__capsule"
             initial={reduced ? false : { opacity: 0, y: 8 }}

@@ -116,7 +116,7 @@ function AppContent({
     <div className="relative min-h-[100dvh]">
       <Seo />
       <ScrollToTop />
-      <Navbar animateLogo={playbackAllowed && pathname === '/'} />
+      <Navbar />
       <Breadcrumbs />
       {/* Only pages with breadcrumbs need a spacer; home keeps nav overlay on the hero */}
       {showCrumbs && (
