@@ -102,11 +102,12 @@ const NewFooter = () => {
           <div className="col-span-2 flex flex-col items-start text-left md:col-span-1">
             <Link
               to="/"
-              className="footer-logo-slot mb-3 inline-flex h-[4.25rem] w-[11.1rem] shrink-0 items-center justify-start overflow-hidden sm:h-[4.5rem] sm:w-[11.75rem] md:h-[4.95rem] md:w-[12.9rem]"
+              className="footer-logo-slot mb-3 inline-flex h-[4.75rem] w-[12.4rem] shrink-0 items-center justify-start overflow-hidden sm:h-[5.05rem] sm:w-[13.15rem] md:h-[5.55rem] md:w-[14.45rem]"
             >
               <VitalcoreLogoVideo
                 src="/videos/vitalcore-logo-footer.mp4"
                 play={playLogo}
+                still={false}
                 className="footer-logo-img h-full w-auto object-contain"
               />
             </Link>
@@ -121,7 +122,7 @@ const NewFooter = () => {
             </P> */}
           </div>
 
-          <div className="flex flex-col items-start text-left md:pt-[calc(4.95rem+0.75rem)] lg:pt-[calc(4.95rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(5.55rem+0.75rem)] lg:pt-[calc(5.55rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -142,7 +143,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-start text-left md:pt-[calc(4.95rem+0.75rem)] lg:pt-[calc(4.95rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(5.55rem+0.75rem)] lg:pt-[calc(5.55rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}

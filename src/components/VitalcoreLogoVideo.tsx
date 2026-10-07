@@ -70,24 +70,6 @@ export default function VitalcoreLogoVideo({
     }
 
     const scratch = document.createElement("canvas");
-    const applySize = () => {
-      const frameW = video.videoWidth || canvas.width;
-      const frameH = video.videoHeight || canvas.height;
-      if (!frameW || !frameH) return;
-      const coarse = window.matchMedia("(pointer: coarse)").matches;
-      const scale = coarse ? Math.min(1, 640 / frameW) : Math.min(1, 1024 / frameW);
-      const w = Math.max(2, Math.round(frameW * scale));
-      const h = Math.max(2, Math.round(frameH * scale));
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-      }
-      scratch.width = w;
-      scratch.height = h;
-      canvas.style.aspectRatio = `${frameW} / ${frameH}`;
-    };
-    applySize();
-    video.addEventListener("loadedmetadata", applySize);
     const sctx = scratch.getContext("2d", { willReadFrequently: true });
     if (!sctx) {
       setUseStill(true);
@@ -108,9 +90,18 @@ export default function VitalcoreLogoVideo({
     };
 
     const paint = () => {
-      if (video.readyState < 2 || video.videoWidth === 0) return;
-      sctx.drawImage(video, 0, 0, scratch.width, scratch.height);
-      const frame = sctx.getImageData(0, 0, scratch.width, scratch.height);
+      const frameW = video.videoWidth;
+      const frameH = video.videoHeight;
+      if (video.readyState < 2 || !frameW || !frameH) return;
+      if (canvas.width < 2 || canvas.height < 2) return;
+      if (scratch.width !== frameW || scratch.height !== frameH) {
+        scratch.width = frameW;
+        scratch.height = frameH;
+      }
+      sctx.imageSmoothingEnabled = true;
+      sctx.imageSmoothingQuality = "high";
+      sctx.drawImage(video, 0, 0, frameW, frameH);
+      const frame = sctx.getImageData(0, 0, frameW, frameH);
       const pixels = frame.data;
       let lit = 0;
       for (let i = 0; i < pixels.length; i += 64) {
@@ -119,8 +110,43 @@ export default function VitalcoreLogoVideo({
       // The clip opens and closes on black. Don't wipe a painted frame with that.
       if (lit < 8) return;
       keyBlack(pixels);
-      ctx.putImageData(frame, 0, 0);
+      sctx.putImageData(frame, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(scratch, 0, 0, canvas.width, canvas.height);
       painted = true;
+    };
+
+    // On-screen bitmap is the CSS size × pixel density, never larger than the file.
+    // The black key runs on the native frame first so the navbar shrink stays sharp.
+    const applySize = () => {
+      const frameW = video.videoWidth;
+      const frameH = video.videoHeight;
+      if (!frameW || !frameH) return;
+      const boxW = canvas.clientWidth;
+      const boxH = canvas.clientHeight;
+      if (boxW < 2 || boxH < 2) return;
+
+      const aspect = frameW / frameH;
+      let fittedW = boxW;
+      let fittedH = boxW / aspect;
+      if (fittedH > boxH) {
+        fittedH = boxH;
+        fittedW = boxH * aspect;
+      }
+
+      const viewScale = window.visualViewport?.scale || 1;
+      const pixelsPerCss = (window.devicePixelRatio || 1) * viewScale;
+      const limit = Math.min(1, frameW / (fittedW * pixelsPerCss), frameH / (fittedH * pixelsPerCss));
+      const w = Math.max(2, Math.round(fittedW * pixelsPerCss * limit));
+      const h = Math.max(2, Math.round(fittedH * pixelsPerCss * limit));
+
+      canvas.style.aspectRatio = `${frameW} / ${frameH}`;
+      if (canvas.width === w && canvas.height === h) return;
+      canvas.width = w;
+      canvas.height = h;
+      paint();
     };
 
     const pump = () => {
@@ -199,8 +225,29 @@ export default function VitalcoreLogoVideo({
       }, ms);
     };
 
+    const resizeObserver = new ResizeObserver(() => applySize());
+    resizeObserver.observe(canvas);
+
+    let resolutionQuery: MediaQueryList | null = null;
+    const onResolution = () => {
+      resolutionQuery?.removeEventListener("change", onResolution);
+      bindResolution();
+      applySize();
+    };
+    const bindResolution = () => {
+      resolutionQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+      resolutionQuery.addEventListener("change", onResolution);
+    };
+    bindResolution();
+
+    const onViewport = () => applySize();
+    window.visualViewport?.addEventListener("resize", onViewport);
+    window.addEventListener("resize", onViewport);
+
+    applySize();
     start();
     if (video.readyState >= 1) armCap();
+    video.addEventListener("loadedmetadata", applySize);
     video.addEventListener("loadedmetadata", armCap);
     video.addEventListener("canplay", ensureLoop);
     video.addEventListener("playing", ensureLoop);
@@ -219,6 +266,10 @@ export default function VitalcoreLogoVideo({
       window.clearTimeout(giveUp);
       window.clearTimeout(retryTimer);
       window.clearTimeout(capTimer);
+      resizeObserver.disconnect();
+      resolutionQuery?.removeEventListener("change", onResolution);
+      window.visualViewport?.removeEventListener("resize", onViewport);
+      window.removeEventListener("resize", onViewport);
       video.removeEventListener("loadedmetadata", applySize);
       video.removeEventListener("loadedmetadata", armCap);
       video.removeEventListener("canplay", ensureLoop);

@@ -154,23 +154,15 @@ h4 {
 }
 
 .nav-logo-img {
-  height: clamp(64px, 5vw, 88px);
-  max-height: var(--zephyr-nav-inner-h);
+  height: calc(var(--zephyr-nav-inner-h) * 0.86);
   width: auto;
   object-fit: contain;
-}
-
-/* The clip has empty space around the mark. Scale the painted frame so the
-   wordmark grows, while the layout box stays inside the bar. */
-canvas.nav-logo-img {
-  transform: scale(1.55);
-  transform-origin: center center;
 }
 
 /* Footer clip is a 16:9 frame with empty margin. The slot is just larger than the
    painted mark so the wordmark and tagline stay fully visible. */
 canvas.footer-logo-img {
-  height: 6.25rem;
+  height: 7rem;
   width: auto;
   max-width: none;
   flex: none;
@@ -180,13 +172,13 @@ canvas.footer-logo-img {
 
 @media (min-width: 640px) {
   canvas.footer-logo-img {
-    height: 6.75rem;
+    height: 7.55rem;
   }
 }
 
 @media (min-width: 768px) {
   canvas.footer-logo-img {
-    height: 7.4rem;
+    height: 8.3rem;
   }
 }
 
@@ -195,15 +187,14 @@ canvas.footer-logo-img {
    or the breadcrumb sits below the bar and page content shows through. */
 @media (max-width: 767px) {
   :root {
-    --zephyr-nav-inner-h: clamp(56px, 14vw, 64px);
+    --zephyr-nav-inner-h: 44px;
     --zephyr-nav-pad-y: 0.25rem;
     --zephyr-nav-gap: clamp(10px, 3vw, 16px);
     --zephyr-crumb-h: 2.75rem;
   }
 
   .nav-logo-img {
-    height: clamp(52px, 14vw, 64px);
-    max-height: var(--zephyr-nav-inner-h);
+    height: 32px;
   }
 }
 
@@ -230,7 +221,10 @@ canvas.footer-logo-img {
 
 .nav-bar-inner {
   gap: clamp(1rem, 1.5vw, 2.5rem);
+  height: var(--zephyr-nav-inner-h);
   min-height: var(--zephyr-nav-inner-h);
+  max-height: var(--zephyr-nav-inner-h);
+  overflow: visible;
 }
 
 .zephyr-breadcrumbs {

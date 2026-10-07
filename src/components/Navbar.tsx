@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import VitalcoreLogoVideo from '@/components/VitalcoreLogoVideo';
 
 interface NavLinkItem {
   name: string;
@@ -325,7 +324,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, onContactIntercept }: MobileM
   );
 };
 
-const Navbar = ({ animateLogo = false }: { animateLogo?: boolean }) => {
+const Navbar = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -442,7 +441,12 @@ const Navbar = ({ animateLogo = false }: { animateLogo?: boolean }) => {
           className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2"
           aria-label="Vitalcore home"
         >
-          <VitalcoreLogoVideo className="nav-logo-img relative z-10" play={animateLogo} />
+          <img
+            src="/brand/vitalcore-logo.svg"
+            alt="Vitalcore"
+            className="nav-logo-img relative z-10"
+            draggable={false}
+          />
         </Link>
 
         {/*
