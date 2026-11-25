@@ -1,4 +1,4 @@
-﻿/* Fixed header stack (navbar [+ breadcrumbs]) â€” keep page spacers / sticky toolbars aligned */
+/* Fixed header stack (navbar [+ breadcrumbs]) â€” keep page spacers / sticky toolbars aligned */
 :root {
   /*
    * Larger nav chrome for 100% + 75%. Caps â‰ˆ 1920 target Ã· 0.75 so zoom-out
@@ -153,10 +153,19 @@ h4 {
   padding: clamp(0.2rem, 0.25vw, 0.4rem) clamp(0.4rem, 0.45vw, 0.65rem);
 }
 
+.nav-logo-link,
+.nav-logo-img {
+  /* Safari ignores the link's hand cursor on an img once -webkit-user-drag is none,
+     and shows the text I-beam instead. Set the hand on the image itself. */
+  cursor: pointer;
+}
+
 .nav-logo-img {
   height: calc(var(--zephyr-nav-inner-h) * 0.86);
   width: auto;
   object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 /* Footer clip is a 16:9 frame with empty margin. The slot is just larger than the
@@ -1580,7 +1589,8 @@ img {
   opacity: 1;
 }
 
-.lifestyle-hero__video {
+.lifestyle-hero__video,
+.lifestyle-hero__poster {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1591,9 +1601,16 @@ img {
   display: block;
   pointer-events: none;
   background: transparent;
-  /* A transform on the live video blanks it on iPhone and Safari. */
   transform: none;
   backface-visibility: visible;
+}
+
+.lifestyle-hero__poster {
+  z-index: 0;
+}
+
+.lifestyle-hero__video {
+  z-index: 1;
 }
 
 /* Only this still moves. The <video> elements stay put. */
@@ -1730,6 +1747,16 @@ img {
     background-image: none;
     color: #113227;
     -webkit-text-fill-color: #113227;
+  }
+}
+
+/* Keep the scroll-to-top control neatly above the cookie banner while open. */
+html.zephyr-cookie-open .zephyr-scroll-top {
+  bottom: 11rem;
+}
+@media (min-width: 640px) {
+  html.zephyr-cookie-open .zephyr-scroll-top {
+    bottom: 7.25rem;
   }
 }
 

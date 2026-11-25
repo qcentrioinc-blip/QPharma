@@ -3,9 +3,9 @@ import { useReducedMotion } from "framer-motion";
 import { retryPlay } from "@/lib/play-video";
 
 const VIDEOS = [
-  { id: "slide-1", src: "/videos/slide-1.mp4" },
-  { id: "slide-2", src: "/videos/slide-2.mp4" },
-  { id: "slide-3", src: "/videos/slide-3.mp4" },
+  { id: "slide-1", src: "/videos/slide-1.mp4", poster: "/videos/slide-1-poster.webp" },
+  { id: "slide-2", src: "/videos/slide-2.mp4", poster: "/videos/slide-2-poster.webp" },
+  { id: "slide-3", src: "/videos/slide-3.mp4", poster: "/videos/slide-3-poster.webp" },
 ] as const;
 
 const SLIDE_MS = 720;
@@ -308,6 +308,15 @@ export default function LifestyleHero({
             key={video.id}
             className={`lifestyle-hero__slide${i === index ? " is-shown" : ""}`}
           >
+            {/* Instant poster image — paints immediately without waiting for video element decode */}
+            <img
+              src={video.poster}
+              alt=""
+              aria-hidden="true"
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding="async"
+              className="lifestyle-hero__poster"
+            />
             <video
               ref={(node) => {
                 videoRefs.current[i] = node;
@@ -315,9 +324,10 @@ export default function LifestyleHero({
               }}
               className="lifestyle-hero__video"
               src={video.src}
+              poster={video.poster}
               muted
               playsInline
-              preload="auto"
+              preload={i === 0 ? "auto" : "metadata"}
               aria-hidden
             />
           </div>

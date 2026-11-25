@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { TextRotate } from "@/components/ui/text-rotate";
+import BlurRotateText from "./BlurRotateText";
 import VitalcoreLogoVideo from "@/components/VitalcoreLogoVideo";
 import { retryPlay } from "@/lib/play-video";
 import "./pageLoader.css";
@@ -14,8 +14,8 @@ const COMPACT_EXIT_MS = 280;
 const COMPACT_LOCK_QUERY = "(max-width: 1366px)";
 
 const ROTATING_TEXTS = [
-  "Herbaceutical",
   "Nutraceutical",
+  "Herbaceutical",
   "Organic",
 ];
 
@@ -48,6 +48,16 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(pointer: coarse)").matches;
   });
+  const [playBackground, setPlayBackground] = useState(false);
+
+  useLayoutEffect(() => {
+    document.getElementById("zephyr-lock-mark")?.remove();
+  }, []);
+
+  useEffect(() => {
+    const start = window.setTimeout(() => setPlayBackground(true), 700);
+    return () => window.clearTimeout(start);
+  }, []);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -67,7 +77,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !playBackground) return;
 
     if (reduced || holdBackground) {
       video.pause();
@@ -79,7 +89,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       cancel();
       video.pause();
     };
-  }, [reduced, holdBackground]);
+  }, [reduced, holdBackground, playBackground]);
 
   useEffect(() => {
     if (!ready) return;
@@ -159,11 +169,11 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
         <video
           ref={videoRef}
           className="zephyr-page-loader__video"
-          src="/videos/page-lock.mp4"
+          src={playBackground ? "/videos/page-lock.mp4" : undefined}
           muted
           loop
           playsInline
-          preload={holdBackground ? "none" : "auto"}
+          preload={playBackground && !holdBackground ? "auto" : "none"}
         />
         <div className="zephyr-page-loader__overlay" />
       </div>
@@ -177,47 +187,43 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       ) : null}
 
       <div className="zephyr-page-loader__copy">
-        <VitalcoreLogoVideo
-          className="zephyr-page-loader__logo"
-          onPlaybackSettled={() => {
-            setHoldBackground(false);
-            setLogoSettled(true);
-            if (!window.matchMedia(COMPACT_LOCK_QUERY).matches) setShowLine(true);
-          }}
-        />
+        <div className="zephyr-page-loader__logo-slot">
+          <VitalcoreLogoVideo
+            className="zephyr-page-loader__logo"
+            revealOnFrame
+            onPlaybackSettled={() => {
+              setHoldBackground(false);
+              setLogoSettled(true);
+              if (!window.matchMedia(COMPACT_LOCK_QUERY).matches) setShowLine(true);
+            }}
+          />
+        </div>
         {compact ? null : (
-        <LayoutGroup>
-          <motion.p
-            className="zephyr-page-loader__headline"
-            initial={false}
-            animate={{ opacity: showLine ? 1 : 0, y: showLine ? 0 : 12 }}
-            transition={
-              reduced ? { duration: 0.2 } : { duration: 0.45, ease: "easeOut" }
-            }
-            aria-hidden={!showLine}
-          >
-            <motion.span
-              className="zephyr-page-loader__lead"
-              layout
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+          <LayoutGroup>
+            <motion.p
+              className={`zephyr-page-loader__headline${showLine ? " is-shown" : ""}`}
+              initial={false}
+              animate={{ opacity: showLine ? 1 : 0, y: showLine ? 0 : 12 }}
+              transition={
+                reduced ? { duration: 0.2 } : { duration: 0.45, ease: "easeOut" }
+              }
+              aria-hidden={!showLine}
             >
-              Partner for
-            </motion.span>
-            <TextRotate
-              texts={ROTATING_TEXTS}
-              mainClassName="text-white overflow-hidden justify-center"
-              staggerFrom="last"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={2000}
-              auto={showLine && !reduced}
-            />
-          </motion.p>
-        </LayoutGroup>
+              <motion.span
+                className="zephyr-page-loader__lead"
+                layout
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              >
+                Partner for
+              </motion.span>
+              <BlurRotateText
+                texts={ROTATING_TEXTS}
+                interval={2600}
+                auto={showLine && !reduced}
+                className="text-white"
+              />
+            </motion.p>
+          </LayoutGroup>
         )}
         {!compact && showLine && canEnter ? (
           <motion.div
