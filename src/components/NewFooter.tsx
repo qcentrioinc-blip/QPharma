@@ -78,7 +78,7 @@ const NewFooter = () => {
     { name: "Nutraceutical", url: "/nutraceutical" },
     { name: "Herbaceutical", url: "/herbaceutical" },
     { name: "Organic", url: "/organic" },
-    { name: "Bioceuticals", url: "#", comingSoon: true },
+    { name: "Bioceuticals", url: "/bioceutical" },
   ];
 
   const companyLinks: FooterLink[] = [
@@ -239,7 +239,7 @@ const NewFooter = () => {
             </P>
             <P className="text-white/50">
               VitalCore, by{" "}
-              <span className="font-bold tracking-[0.08em]">ZEPHYR</span>.
+              <span className="font-bold tracking-[0.08em] ml-1">{""}ZEPHYR</span>.
             </P>
           </div>
           <P className="text-white/50">

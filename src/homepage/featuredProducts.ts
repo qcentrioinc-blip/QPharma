@@ -15,6 +15,10 @@ import {
   categories as organicCategories,
   theme as organicTheme,
 } from "../organic/data";
+import {
+  categories as bioCategories,
+  theme as bioTheme,
+} from "../bioceutical/data";
 
 export type RangeMeta = {
   id: FormulaRangeId;
@@ -24,7 +28,7 @@ export type RangeMeta = {
   theme: RangeTheme;
 };
 
-/** Display order: Nutraceutical → Herbaceutical → Organic */
+/** Display order: Nutraceutical → Herbaceutical → Organic → Bioceutical */
 export const FEATURED_RANGES: RangeMeta[] = [
   {
     id: "nutraceutical",
@@ -47,12 +51,20 @@ export const FEATURED_RANGES: RangeMeta[] = [
     href: "/organic",
     theme: organicTheme,
   },
+  {
+    id: "bioceutical",
+    label: "Bioceutical",
+    shortLabel: "Bioceutical",
+    href: "/bioceutical",
+    theme: bioTheme,
+  },
 ];
 
 const CATALOGS: Record<FormulaRangeId, FormulaCategory[]> = {
   nutraceutical: nutraCategories,
   herbaceutical: herbCategories,
   organic: organicCategories,
+  bioceutical: bioCategories,
 };
 
 /** Full category list with formulas for a range. */

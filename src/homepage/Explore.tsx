@@ -49,13 +49,12 @@ const ITEMS: ExploreItem[] = [
   {
     title: "Bioceuticals",
     description:
-      "Next-generation bio-fermented and bio-enhanced formulations. Launching soon.",
+      "Next-generation bio-fermented and bio-enhanced formulations engineered for high bioavailability.",
     image: "/homepage/bioceutical.webp",
     color: "bg-[#1E5D57]",
     borderColor: "#1E5D57",
     textColor: "#1E5D57",
-    link: "#",
-    comingSoon: true,
+    link: "/bioceutical",
   },
 ];
 
@@ -167,9 +166,8 @@ function ExploreCard({
 
   const cardInner = (
     <div
-      className={`relative rounded-full bg-white ${sizeClassName} ${
-        item.comingSoon ? "cursor-none" : ""
-      }`}
+      className={`relative rounded-full bg-white ${sizeClassName} ${item.comingSoon ? "cursor-none" : ""
+        }`}
     >
       <CircularLabel
         title={item.title}
@@ -188,17 +186,15 @@ function ExploreCard({
           alt={item.title}
           loading="lazy"
           decoding="async"
-          className={`h-full w-full rounded-full object-cover transition-all duration-500 ${
-            showFx ? "scale-[1.03]" : "scale-100"
-          }`}
+          className={`h-full w-full rounded-full object-cover transition-all duration-500 ${showFx ? "scale-[1.03]" : "scale-100"
+            }`}
         />
 
         {/* Regular hover reveal overlay for other items */}
         {!item.comingSoon ? (
           <div
-            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-2 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-3 md:p-4 ${
-              showFx ? "[clip-path:inset(0%_0_0_0)]" : "[clip-path:inset(100%_0_0_0)]"
-            }`}
+            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-2 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-3 md:p-4 ${showFx ? "[clip-path:inset(0%_0_0_0)]" : "[clip-path:inset(100%_0_0_0)]"
+              }`}
           >
             <H3 className="mb-1 text-white !text-[12px] sm:!text-[14px] md:!text-[15px] lg:!text-[16px]" animate={false}>
               {item.title}
@@ -223,22 +219,22 @@ function ExploreCard({
         {/* Premium Floating circular badge right at pointer position */}
         {isHovered && cursorPos && typeof document !== "undefined"
           ? createPortal(
-              <div
-                className="pointer-events-none fixed top-0 left-0 z-[99999] opacity-100 will-change-transform"
-                style={{
-                  transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%)`,
-                  transition: "transform 0.08s linear",
-                }}
-                aria-hidden="true"
-              >
-                <div className="flex h-[74px] w-[74px] items-center justify-center rounded-full border border-white/75 bg-[#0e271f]/85 shadow-[0_12px_32px_rgba(0,0,0,0.38)] backdrop-blur-md animate-in fade-in zoom-in-75 duration-200">
-                  <span className="font-manrope text-[10px] font-bold uppercase tracking-[0.09em] leading-tight text-white text-center max-w-[8ch]">
-                    Coming Soon
-                  </span>
-                </div>
-              </div>,
-              document.body
-            )
+            <div
+              className="pointer-events-none fixed top-0 left-0 z-[99999] opacity-100 will-change-transform"
+              style={{
+                transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%)`,
+                transition: "transform 0.08s linear",
+              }}
+              aria-hidden="true"
+            >
+              <div className="flex h-[74px] w-[74px] items-center justify-center rounded-full border border-white/75 bg-[#0e271f]/85 shadow-[0_12px_32px_rgba(0,0,0,0.38)] backdrop-blur-md animate-in fade-in zoom-in-75 duration-200">
+                <span className="font-manrope text-[10px] font-bold uppercase tracking-[0.09em] leading-tight text-white text-center max-w-[8ch]">
+                  Coming Soon
+                </span>
+              </div>
+            </div>,
+            document.body
+          )
           : null}
       </div>
     );

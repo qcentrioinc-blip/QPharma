@@ -4,6 +4,7 @@ const RANGE_LABEL: Record<FormulaRangeId, string> = {
   herbaceutical: "Herbaceutical",
   nutraceutical: "Nutraceutical",
   organic: "Organic",
+  bioceutical: "Bioceutical",
 };
 
 const CATEGORY_BENEFITS: Record<string, string[]> = {
@@ -107,7 +108,9 @@ export function buildFormulaBenefits(
       ? "Organic and clean-label positioning for US natural products retail"
       : rangeId === "herbaceutical"
         ? "Botanical ingredient story suitable for herbaceutical brand lines"
-        : "Commercial nutraceutical manufacturing for vitamins and specialty supplements";
+        : rangeId === "bioceutical"
+          ? "Targeted bioceutical and bio-enhanced formulation engineered for maximum bioavailability"
+          : "Commercial nutraceutical manufacturing for vitamins and specialty supplements";
 
   return [
     rangeNote,

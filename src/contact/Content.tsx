@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   motion,
@@ -47,6 +47,7 @@ const Content = () => {
   const [otpError, setOtpError] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [otpLoading, setOtpLoading] = useState(false);
+  const otpSessionRef = useRef<{ token?: string; expiresAt?: number }>({});
 
   const detailsUnlocked =
     emailVerified && verifiedEmail === form.email.trim().toLowerCase();
@@ -57,6 +58,7 @@ const Content = () => {
     setEmailVerified(false);
     setVerifiedEmail("");
     setOtpError("");
+    otpSessionRef.current = {};
   };
 
   const resetForm = () => {
@@ -104,6 +106,10 @@ const Content = () => {
         setStatus("error");
         return false;
       }
+      otpSessionRef.current = {
+        token: data.token,
+        expiresAt: data.expiresAt,
+      };
       setOtp("");
       setVerifiedEmail(form.email.trim().toLowerCase());
       setEmailVerified(false);
@@ -133,7 +139,12 @@ const Content = () => {
 
     setOtpLoading(true);
     try {
-      const { ok, data } = await verifyOtpRequest(form.email, otp);
+      const { ok, data } = await verifyOtpRequest(
+        form.email,
+        otp,
+        otpSessionRef.current.token,
+        otpSessionRef.current.expiresAt,
+      );
       if (!ok) {
         setOtpError(data.error || "Verification failed.");
         return;

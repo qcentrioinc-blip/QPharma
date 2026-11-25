@@ -553,13 +553,15 @@ html::-webkit-scrollbar-thumb:hover {
 /* Shared sizing for product catalog panels */
 .zephyr-scroll-herba,
 .zephyr-scroll-nutra,
-.zephyr-scroll-organic {
+.zephyr-scroll-organic,
+.zephyr-scroll-bio {
   scrollbar-width: thin;
 }
 
 .zephyr-scroll-herba::-webkit-scrollbar,
 .zephyr-scroll-nutra::-webkit-scrollbar,
-.zephyr-scroll-organic::-webkit-scrollbar {
+.zephyr-scroll-organic::-webkit-scrollbar,
+.zephyr-scroll-bio::-webkit-scrollbar {
   width: 9px;
 }
 
@@ -747,6 +749,68 @@ html::-webkit-scrollbar-thumb:hover {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.75),
     0 0 14px rgba(84, 122, 61, 0.38);
+}
+
+/* Bioceutical — deep teal (#1E5D57) */
+.zephyr-scroll-bio {
+  scrollbar-color: rgba(30, 93, 87, 0.55) rgba(30, 93, 87, 0.08);
+}
+
+.zephyr-scroll-bio::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(30, 93, 87, 0.05),
+    rgba(30, 93, 87, 0.12),
+    rgba(30, 93, 87, 0.05)
+  );
+}
+
+.zephyr-scroll-bio::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(30, 93, 87, 0.28) 28%,
+      rgba(30, 93, 87, 0.48) 60%,
+      rgba(15, 60, 55, 0.35) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(30, 93, 87, 0.55),
+      rgba(30, 93, 87, 0.22)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(15, 60, 55, 0.18),
+    0 0 10px rgba(30, 93, 87, 0.25);
+}
+
+.zephyr-scroll-bio::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(30, 93, 87, 0.4) 22%,
+      rgba(30, 93, 87, 0.58) 55%,
+      rgba(15, 60, 55, 0.4) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(30, 93, 87, 0.75),
+      rgba(30, 93, 87, 0.35)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 0 14px rgba(30, 93, 87, 0.38);
 }
 
 /* â”€â”€â”€ Mac / Safari (WebKit) hardening â”€â”€â”€

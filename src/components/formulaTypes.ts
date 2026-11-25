@@ -24,4 +24,4 @@ export interface RangeTheme {
   overlay: string;
 }
 
-export type FormulaRangeId = "herbaceutical" | "nutraceutical" | "organic";
+export type FormulaRangeId = "herbaceutical" | "nutraceutical" | "organic" | "bioceutical";

@@ -47,15 +47,27 @@ export async function postJson<T>(
 }
 
 export async function sendOtpRequest(email: string, firstName = "") {
-  return postJson<{ error?: string }>("/api/send-otp", {
+  return postJson<{
+    ok?: boolean;
+    error?: string;
+    token?: string;
+    expiresAt?: number;
+  }>("/api/send-otp", {
     email: email.trim(),
     firstName: firstName.trim(),
   });
 }
 
-export async function verifyOtpRequest(email: string, otp: string) {
-  return postJson<{ error?: string }>("/api/verify-otp", {
+export async function verifyOtpRequest(
+  email: string,
+  otp: string,
+  token?: string,
+  expiresAt?: number,
+) {
+  return postJson<{ ok?: boolean; error?: string }>("/api/verify-otp", {
     email: email.trim(),
     otp: otp.trim(),
+    token: token || "",
+    expiresAt: expiresAt || 0,
   });
 }

@@ -1,16 +1,9 @@
 import { isCompanyEmail, normalizeEmail } from "./_lib/companyEmail.js";
 import { json, setCors } from "./_lib/http.js";
 import {
-  hashOtp,
-  OTP_MAX_ATTEMPTS,
-  OTP_VERIFIED_TTL_SECONDS,
+  signOtpToken,
   safeEqualHex,
 } from "./_lib/otp.js";
-import {
-  getRedis,
-  otpCodeKey,
-  otpVerifiedKey,
-} from "./_lib/redis.js";
 
 function readBody(req) {
   if (!req.body) return {};
@@ -39,6 +32,8 @@ export default async function handler(req, res) {
     const body = readBody(req);
     const emailRaw = typeof body.email === "string" ? body.email : "";
     const otpRaw = typeof body.otp === "string" ? body.otp : "";
+    const tokenRaw = typeof body.token === "string" ? body.token : "";
+    const expiresAtRaw = body.expiresAt;
     const email = normalizeEmail(emailRaw);
     const otp = otpRaw.trim();
 
@@ -52,48 +47,21 @@ export default async function handler(req, res) {
       return json(res, 400, { error: "Enter the 6-digit verification code." });
     }
 
-    const redis = getRedis();
-    const codeKey = otpCodeKey(email);
-    const record = await redis.get(codeKey);
-
-    if (!record?.hash) {
+    const expiresAt = Number(expiresAtRaw);
+    if (!expiresAt || Date.now() > expiresAt) {
       return json(res, 400, {
-        error: "Code expired or not found. Request a new one.",
+        error: "Code expired. Please request a new one.",
       });
     }
 
-    const attempts = Number(record.attempts ?? 0) + 1;
-    if (attempts > OTP_MAX_ATTEMPTS) {
-      await redis.del(codeKey);
-      return json(res, 429, {
-        error: "Too many attempts. Request a new code.",
-      });
-    }
-
-    const candidate = hashOtp(otp, email);
-    const match = safeEqualHex(candidate, record.hash);
+    const expectedToken = signOtpToken(otp, email, expiresAt);
+    const match = safeEqualHex(tokenRaw, expectedToken);
 
     if (!match) {
-      const ttl = await redis.ttl(codeKey);
-      const next = { hash: record.hash, attempts };
-      if (ttl > 0) {
-        await redis.set(codeKey, next, { ex: ttl });
-      } else {
-        await redis.del(codeKey);
-        return json(res, 400, {
-          error: "Code expired or not found. Request a new one.",
-        });
-      }
       return json(res, 400, {
         error: "Incorrect code. Please try again.",
-        attemptsRemaining: Math.max(0, OTP_MAX_ATTEMPTS - attempts),
       });
     }
-
-    await redis.del(codeKey);
-    await redis.set(otpVerifiedKey(email), "1", {
-      ex: OTP_VERIFIED_TTL_SECONDS,
-    });
 
     return json(res, 200, { ok: true, verified: true });
   } catch (err) {

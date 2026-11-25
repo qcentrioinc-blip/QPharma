@@ -31,6 +31,7 @@ const Contact = lazy(() => import('./contact/Contact'))
 const HerbaceuticalPage = lazy(() => import('./herbaceutical/HerbaceuticalPage'))
 const NutraceuticalPage = lazy(() => import('./nutraceutical/NutraceuticalPage'))
 const OrganicPage = lazy(() => import('./organic/OrganicPage'))
+const BioceuticalPage = lazy(() => import('./bioceutical/BioceuticalPage'))
 
 function RouteFallback() {
   return (
@@ -145,6 +146,7 @@ function AppContent({
             <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
             <Route path="/nutraceutical" element={<NutraceuticalPage />} />
             <Route path="/organic" element={<OrganicPage />} />
+            <Route path="/bioceutical" element={<BioceuticalPage />} />
           </Routes>
         </RouteReady>
       </Suspense>
