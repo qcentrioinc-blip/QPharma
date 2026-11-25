@@ -21,6 +21,7 @@ type Props = {
   gallery?: string[];
   alt: string;
   accent: string;
+  showPackagingSlides?: boolean;
 };
 
 export default function FormulaModalGallery({
@@ -28,11 +29,16 @@ export default function FormulaModalGallery({
   gallery,
   alt,
   accent,
+  showPackagingSlides = true,
 }: Props) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
-    () => (gallery ?? buildFormulaSlides(bottleImage)).map(publicAssetSrc),
-    [bottleImage, gallery],
+    () => {
+      if (gallery) return gallery.map(publicAssetSrc);
+      if (!showPackagingSlides) return [publicAssetSrc(bottleImage)];
+      return buildFormulaSlides(bottleImage).map(publicAssetSrc);
+    },
+    [bottleImage, gallery, showPackagingSlides],
   );
   const labels = useMemo(
     () => SLIDE_LABELS.slice(0, slides.length),

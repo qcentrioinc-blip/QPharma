@@ -3,17 +3,10 @@ import { sendOtpEmail } from "./_lib/emailjs.js";
 import { json, setCors } from "./_lib/http.js";
 import {
   generateOtp,
-  hashOtp,
-  OTP_MAX_SENDS_PER_HOUR,
+  signOtpToken,
   OTP_RESEND_COOLDOWN_SECONDS,
   OTP_TTL_SECONDS,
 } from "./_lib/otp.js";
-import {
-  getRedis,
-  otpCodeKey,
-  otpHourKey,
-  otpRateKey,
-} from "./_lib/redis.js";
 
 function readBody(req) {
   if (!req.body) return {};
@@ -52,44 +45,16 @@ export default async function handler(req, res) {
       });
     }
 
-    const redis = getRedis();
-    const rateKey = otpRateKey(email);
-    const hourKey = otpHourKey(email);
-
-    const cooldown = await redis.get(rateKey);
-    if (cooldown) {
-      return json(res, 429, {
-        error: "Please wait before requesting another code.",
-        retryAfterSeconds: OTP_RESEND_COOLDOWN_SECONDS,
-      });
-    }
-
-    const hourCount = Number((await redis.get(hourKey)) ?? 0);
-    if (hourCount >= OTP_MAX_SENDS_PER_HOUR) {
-      return json(res, 429, {
-        error: "Too many OTP requests. Try again later.",
-      });
-    }
-
     const otp = generateOtp();
-    const record = {
-      hash: hashOtp(otp, email),
-      attempts: 0,
-    };
+    const expiresAt = Date.now() + OTP_TTL_SECONDS * 1000;
+    const token = signOtpToken(otp, email, expiresAt);
 
     await sendOtpEmail({ toEmail: email, otp, firstName });
 
-    await redis.set(otpCodeKey(email), record, { ex: OTP_TTL_SECONDS });
-    await redis.set(rateKey, "1", { ex: OTP_RESEND_COOLDOWN_SECONDS });
-
-    if (hourCount === 0) {
-      await redis.set(hourKey, 1, { ex: 60 * 60 });
-    } else {
-      await redis.incr(hourKey);
-    }
-
     return json(res, 200, {
       ok: true,
+      token,
+      expiresAt,
       expiresInSeconds: OTP_TTL_SECONDS,
       retryAfterSeconds: OTP_RESEND_COOLDOWN_SECONDS,
     });

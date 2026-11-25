@@ -22,6 +22,7 @@ type FormulaCardSlideshowProps = {
   imageFit?: "cover" | "contain";
   /** First-row cards only. The rest wait until they are near the screen. */
   priority?: boolean;
+  showPackagingSlides?: boolean;
 };
 
 function preload(src: string) {
@@ -39,13 +40,20 @@ export default function FormulaCardSlideshow({
   className = "",
   imageFit = "cover",
   priority = false,
+  showPackagingSlides = true,
 }: FormulaCardSlideshowProps) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
-    () => buildFormulaSlides(bottleImage).map(publicAssetSrc),
-    [bottleImage],
+    () =>
+      showPackagingSlides
+        ? buildFormulaSlides(bottleImage).map(publicAssetSrc)
+        : [publicAssetSrc(bottleImage)],
+    [bottleImage, showPackagingSlides],
   );
-  const packaging = useMemo(() => slides.slice(1), [slides]);
+  const packaging = useMemo(
+    () => (showPackagingSlides ? slides.slice(1) : []),
+    [slides, showPackagingSlides],
+  );
   const [index, setIndex] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [packReady, setPackReady] = useState(false);
@@ -71,14 +79,14 @@ export default function FormulaCardSlideshow({
   };
 
   const ensurePackaging = () => {
-    if (preloadStarted.current) return;
+    if (!showPackagingSlides || preloadStarted.current) return;
     preloadStarted.current = true;
     void Promise.all(packaging.map(preload)).then(() => setPackReady(true));
   };
 
   useEffect(() => {
     clearCycle();
-    if (reduceMotion || !hovering || !packReady) return;
+    if (!showPackagingSlides || reduceMotion || !hovering || !packReady) return;
 
     startDelayRef.current = setTimeout(() => {
       setIndex((i) => (i === 0 ? 1 : i));
@@ -88,26 +96,45 @@ export default function FormulaCardSlideshow({
     }, HOVER_START_DELAY_MS);
 
     return clearCycle;
-  }, [hovering, reduceMotion, packReady, slides.length]);
+  }, [hovering, reduceMotion, packReady, slides.length, showPackagingSlides]);
 
   const onEnter = () => {
-    if (reduceMotion) return;
+    if (!showPackagingSlides || reduceMotion) return;
     ensurePackaging();
     setHovering(true);
   };
 
   const onLeave = () => {
+    if (!showPackagingSlides) return;
     setHovering(false);
     clearCycle();
     setIndex(0);
   };
 
   const onTapCycle = (e: MouseEvent | TouchEvent) => {
-    if (reduceMotion) return;
+    if (!showPackagingSlides || reduceMotion) return;
     e.preventDefault();
     ensurePackaging();
     setIndex((i) => (i + 1) % slides.length);
   };
+
+  if (!showPackagingSlides) {
+    return (
+      <div className={`relative h-full w-full overflow-hidden ${className}`}>
+        {slides[0] ? (
+          <img
+            src={slides[0]}
+            alt={alt}
+            draggable={false}
+            decoding="async"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "low"}
+            className={`h-full w-full ${objectClass}`}
+          />
+        ) : null}
+      </div>
+    );
+  }
 
   return (
     <div

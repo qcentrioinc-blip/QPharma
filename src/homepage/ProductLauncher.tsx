@@ -36,6 +36,7 @@ const SCROLL_CLASS: Record<FormulaRangeId, string> = {
   nutraceutical: "zephyr-scroll-nutra",
   herbaceutical: "zephyr-scroll-herba",
   organic: "zephyr-scroll-organic",
+  bioceutical: "zephyr-scroll-bio",
 };
 
 export default function ProductLauncher({ enabled = true }: ProductLauncherProps) {
@@ -224,13 +225,13 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
               style={
                 active
                   ? {
-                      backgroundColor: range.theme.accent,
-                      color: "#fff",
-                    }
+                    backgroundColor: range.theme.accent,
+                    color: "#fff",
+                  }
                   : {
-                      backgroundColor: range.theme.accentSoft,
-                      color: range.theme.accent,
-                    }
+                    backgroundColor: range.theme.accentSoft,
+                    color: range.theme.accent,
+                  }
               }
             >
               <span className="block truncate">{range.shortLabel}</span>
@@ -262,9 +263,8 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
                     {cat.name}
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
-                      isExpanded ? "rotate-180" : ""
-                    }`}
+                    className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""
+                      }`}
                     style={{ color: rangeMeta.theme.accent }}
                     strokeWidth={2}
                     aria-hidden

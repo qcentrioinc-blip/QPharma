@@ -112,6 +112,7 @@ export default function FormulaProductModal({
                 gallery={item.gallery}
                 alt={item.formula}
                 accent={theme.accent}
+                showPackagingSlides={rangeId !== "bioceutical"}
               />
 
               <div className="flex min-h-0 flex-col overflow-y-auto p-5 sm:p-6 lg:p-7">

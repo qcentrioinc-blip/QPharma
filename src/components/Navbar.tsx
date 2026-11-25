@@ -20,7 +20,7 @@ const PRODUCT_LINKS: ProductLink[] = [
   { name: 'Nutraceutical', path: '/nutraceutical' },
   { name: 'Herbaceutical', path: '/herbaceutical' },
   { name: 'Organic', path: '/organic' },
-  { name: 'Bioceutical', path: '#', badge: 'Coming soon', comingSoon: true },
+  { name: 'Bioceutical', path: '/bioceutical' },
 ];
 
 const NAV_LINKS: NavLinkItem[] = [

@@ -19,6 +19,9 @@ type FormulaCardProps = {
   onOpen: () => void;
   imageFit?: "cover" | "contain";
   priority?: boolean;
+  showPackagingSlides?: boolean;
+  aspectClass?: string;
+  contentPadding?: string;
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -95,7 +98,17 @@ function searchKey(value: string) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover", priority = false }: FormulaCardProps) {
+function FormulaCard({
+  item,
+  category,
+  enquireHref,
+  onOpen,
+  imageFit = "cover",
+  priority = false,
+  showPackagingSlides = true,
+  aspectClass = "aspect-[3/4]",
+  contentPadding = "p-3 sm:gap-2.5",
+}: FormulaCardProps) {
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -113,26 +126,39 @@ function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover", 
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={handleKeyDown}
-      className="group flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="group flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{ outlineColor: "var(--formula-accent, #113227)" }}
     >
-      <div className="relative aspect-[3/4] w-full">
-        <FormulaCardSlideshow bottleImage={item.image} alt="" imageFit={imageFit} priority={priority} />
+      <div className={`relative ${aspectClass} w-full overflow-hidden bg-gray-50`}>
+        <FormulaCardSlideshow
+          bottleImage={item.image}
+          alt=""
+          imageFit={imageFit}
+          priority={priority}
+          showPackagingSlides={showPackagingSlides}
+        />
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-3">
-        <h4 className="line-clamp-3 text-[13px] font-semibold leading-snug text-gray-900">
+      <div className={`flex flex-1 flex-col gap-3 ${contentPadding}`}>
+        <h4 className="line-clamp-2 text-[14px] font-semibold leading-snug text-gray-900 sm:text-[15px]">
           {item.formula}
         </h4>
-        <Link
-          to={enquireHref(item.formula, category)}
-          onClick={(e: MouseEvent) => e.stopPropagation()}
-          className="mt-auto inline-flex w-full items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-white transition hover:opacity-90"
-          style={{ backgroundColor: "var(--formula-accent)" }}
-        >
-          Request MOQ
-          <Send className="h-3 w-3" />
-        </Link>
+        {item.description && (
+          <p className="line-clamp-3 text-[12px] leading-relaxed text-gray-500">
+            {item.description}
+          </p>
+        )}
+        <div className="mt-auto pt-2">
+          <Link
+            to={enquireHref(item.formula, category)}
+            onClick={(e: MouseEvent) => e.stopPropagation()}
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90 shadow-sm"
+            style={{ backgroundColor: "var(--formula-accent)" }}
+          >
+            Request MOQ
+            <Send className="h-3 w-3" />
+          </Link>
+        </div>
       </div>
     </motion.article>
   );
@@ -459,12 +485,14 @@ export default function FormulaCatalog({
               {theme.subtitle}
             </P>
             <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-gray-700">
-              <span
-                className="rounded-full px-3 py-1 font-medium text-white"
-                style={{ backgroundColor: theme.accent }}
-              >
-                {categories.length} categories
-              </span>
+              {categories.length > 1 && (
+                <span
+                  className="rounded-full px-3 py-1 font-medium text-white"
+                  style={{ backgroundColor: theme.accent }}
+                >
+                  {categories.length} categories
+                </span>
+              )}
               <span
                 className="rounded-full px-3 py-1 font-medium"
                 style={{ backgroundColor: theme.accentSoft, color: theme.accent }}
@@ -480,7 +508,77 @@ export default function FormulaCatalog({
       </section>
 
       <section className="zephyr-container zephyr-section">
-        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
+        {categories.length <= 1 ? (
+          <div>
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="relative w-full max-w-md">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search formulas…"
+                  className="w-full rounded-full border border-gray-200 bg-[#F7F8F9] py-2.5 pl-10 pr-4 text-sm outline-none focus:border-gray-400"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 sm:justify-end">
+                <P className="text-gray-500">
+                  Showing{" "}
+                  <strong className="text-gray-800">{visibleCount}</strong>{" "}
+                  formula{visibleCount === 1 ? "" : "s"}
+                </P>
+                <Link
+                  to={`/contact?subject=${encodeURIComponent(
+                    `Partnership inquiry - ${theme.title}`,
+                  )}`}
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                  style={{ backgroundColor: theme.accent }}
+                >
+                  Request range MOQ
+                  <Send className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {filtered.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-gray-300 p-10 text-center text-gray-500">
+                No formulas match your search.
+              </div>
+            ) : (
+              <div
+                className={
+                  rangeId === "bioceutical"
+                    ? "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+                    : "grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4"
+                }
+              >
+                {filtered.flatMap((category) =>
+                  category.formulas.map((item) => (
+                    <FormulaCard
+                      key={item.id}
+                      item={item}
+                      category={category.name}
+                      enquireHref={enquireHref}
+                      imageFit={rangeId === "bioceutical" ? "contain" : "cover"}
+                      priority={priorityIds.has(item.id)}
+                      showPackagingSlides={rangeId !== "bioceutical"}
+                      aspectClass={rangeId === "bioceutical" ? "aspect-square" : "aspect-[3/4]"}
+                      contentPadding={rangeId === "bioceutical" ? "p-5 sm:p-6" : "p-3 sm:gap-2.5"}
+                      onOpen={() =>
+                        setSelected({
+                          item,
+                          category: category.name,
+                        })
+                      }
+                    />
+                  )),
+                )}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           <aside className="hidden shrink-0 lg:block lg:w-72">
             <div className="space-y-4 lg:sticky lg:top-[calc(var(--zephyr-header-stack)+1rem)]">
               <div className="relative">
@@ -671,6 +769,7 @@ export default function FormulaCatalog({
                                   enquireHref={enquireHref}
                                   imageFit="contain"
                                   priority={priorityIds.has(item.id)}
+                                  showPackagingSlides={rangeId !== "bioceutical"}
                                   onOpen={() =>
                                     setSelected({
                                       item,
@@ -690,6 +789,7 @@ export default function FormulaCatalog({
             )}
           </div>
         </div>
+        )}
       </section>
 
       <FormulaProductModal
